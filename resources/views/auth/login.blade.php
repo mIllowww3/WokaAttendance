@@ -50,14 +50,14 @@
                   <form method="POST" action="{{ url('/login') }}" role="form" class="text-start">
                     @csrf
                     <div class="input-group input-group-outline my-3">
-                      <label class="form-label text-center">Email</label>
+                      <label class="form-label">Email</label>
                       <input type="email" name="email" value="{{ old('email') }}" class="form-control">
                     </div>
                     @error('email')
                     <div class="text-danger">{{ $message }}</div>
                     @enderror
                     <div class="input-group input-group-outline mb-3">
-                      <label class="form-label text-center">Password</label>
+                      <label class="form-label">Password</label>
                       <input type="password" name="password" class="form-control">
                     </div>
                     @error('password')
