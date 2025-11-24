@@ -10,41 +10,37 @@ class AuthController extends Controller
 {
     // FORM LOGIN
     public function login()
-    { 
+    {
         return view('auth.login');
     }
     public function authenticate(Request $request)
     {
-        $request->validate([
-            'email'    => 'required|email',
-            'password' => 'required',
+        $credentials = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
         ]);
 
-        $credentials = $request->only('email', 'password');
+        if (Auth::attempt($credentials)) {
 
-        if (!Auth::attempt($credentials)) {
-            return back()->withErrors([
-                'email' => 'Email atau password salah!'
-            ])->withInput();
-        }
+            $request->session()->regenerate(); // WAJIB
 
-        $user = Auth::user();
+            $role = Auth::user()->role;
 
-        if ($user->role === 'staff') {
-            if ($user->pegawai && $user->pegawai->status == 'nonaktif') {
-                Auth::logout();
-                return back()->withErrors([
-                    'email' => 'Akun anda dinonaktifkan!'
-                ]);
+            if ($role === 'admin') {
+                return redirect()->route('admin.dashboard')
+                    ->with('success', 'Selamat Datang Admin!');
+            }
+
+            if ($role === 'staff') {
+                return redirect()->route('staff.dashboard')
+                    ->with('success', 'Selamat Datang Staff!');
             }
         }
 
-        if ($user->role === 'admin') {
-            return redirect()->route('admin.dashboard');
-        }
-
-        return redirect()->route('staff.dashboard');
+        return back()->withErrors(['login' => 'email atau password salah!'])
+            ->onlyInput('email');
     }
+
 
     public function logout(Request $request)
     {

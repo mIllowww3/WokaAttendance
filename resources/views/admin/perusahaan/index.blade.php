@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Perusahaan</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background: #f4f6f9;
+        }
+
+        .table thead th {
+            background: #161617ff;
+            color: white;
+            text-transform: uppercase;
+        }
+
+        .btn-add {
+            font-weight: 600;
+        }
+
+        .card {
+            border-radius: 10px;
+        }
+
+        .badge-status {
+            padding: 6px 10px;
+            border-radius: 5px;
+            font-size: 13px;
+        }
+
+        .badge-aktif {
+            background: #28a745;
+            color: white;
+        }
+
+        .badge-nonaktif {
+            background: #dc3545;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container mt-5">
+
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                <h4 class="mb-0">Data Perusahaan</h4>
+
+                <a href="{{ route('perusahaan.create') }}" class="btn btn-light text-primary fw-bold btn-sm">
+                    + Tambah Perusahaan
+                </a>
+            </div>
+
+            <div class="card-body">
+
+                <!-- Table -->
+                <div class="table-responsive mt-3">
+                    <table class="table table-bordered table-hover align-middle">
+                        <thead>
+                            <tr class="text-center">
+                                <th>No</th>
+                                <th>Nama Kantor</th>
+                                <th>Latitude</th>
+                                <th>Longitude</th>
+                                <th>Radius (m)</th>
+                                <th>Status</th>
+                                <th width="18%">Aksi</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @forelse ($perusahaan as $index => $p)
+                                <tr>
+                                    <td class="text-center">{{ $index + 1 }}</td>
+                                    <td>{{ $p->nama_kantor }}</td>
+                                    <td>{{ $p->latitude }}</td>
+                                    <td>{{ $p->longitude }}</td>
+                                    <td>{{ $p->radius }} m</td>
+
+                                    <td class="text-center">
+                                        @if ($p->status == 'aktif')
+                                            <span class="badge-status badge-aktif">Aktif</span>
+                                        @else
+                                            <span class="badge-status badge-nonaktif">Nonaktif</span>
+                                        @endif
+                                    </td>
+
+                                    <td class="text-center">
+
+                                        <!-- Edit -->
+                                        <a href="{{ route('perusahaan.edit', $p->id) }}"
+                                            class="btn btn-warning btn-sm text-white fw-bold">
+                                            Edit
+                                        </a>
+
+                                        <!-- Delete -->
+                                        <form action="{{ route('perusahaan.destroy', $p->id) }}" method="POST"
+                                            class="d-inline"
+                                            onsubmit="return confirm('Yakin ingin menghapus perusahaan ini?')">
+
+                                            @csrf
+                                            @method('DELETE')
+
+                                            <button class="btn btn-danger btn-sm fw-bold">
+                                                Hapus
+                                            </button>
+                                        </form>
+
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="7" class="text-center text-muted py-3">
+                                        Tidak ada data perusahaan.
+                                    </td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

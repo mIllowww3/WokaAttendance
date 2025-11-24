@@ -2,64 +2,73 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\departemen;
+use App\Models\Departemen;
 use Illuminate\Http\Request;
 
 class DepartemenController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
+   public function index(Request $request)
+{
+    // Ambil kata kunci pencarian
+    $cari = $request->cari;
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+    // Query dengan pencarian
+    $departemen = Departemen::when($cari, function($query) use ($cari) {
+            $query->where('nama_departemen', 'LIKE', '%' . $cari . '%');
+        })
+        ->latest()
+        ->get();
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    return view('admin.departemen.index', compact('departemen'));
+}
+
+public function create()
+{
+    return view('admin.departemen.create');
+}
+
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nama_departemen' => 'required|max:255',
+            'deskripsi' => 'nullable',
+        ]);
+
+        Departemen::create([
+            'nama_departemen' => $request->nama_departemen,
+            'deskripsi' => $request->deskripsi,
+        ]);
+
+        return redirect()->route('departemen.index')->with('success', 'Departemen berhasil ditambahkan!');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(departemen $departemen)
+    public function edit($id)
     {
-        //
+        $departemen = Departemen::findOrFail($id);
+        return view('admin.departemen.edit', compact('departemen'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(departemen $departemen)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'nama_departemen' => 'required|max:255',
+            'deskripsi' => 'nullable',
+        ]);
+
+        $departemen = Departemen::findOrFail($id);
+        $departemen->update([
+            'nama_departemen' => $request->nama_departemen,
+            'deskripsi' => $request->deskripsi,
+        ]);
+
+        return redirect()->route('departemen.index')->with('success', 'Departemen berhasil diperbarui!');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, departemen $departemen)
+    public function destroy($id)
     {
-        //
-    }
+        $departemen = Departemen::findOrFail($id);
+        $departemen->delete();
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(departemen $departemen)
-    {
-        //
+        return redirect()->route('departemen.index')->with('success', 'Departemen berhasil dihapus!');
     }
 }
