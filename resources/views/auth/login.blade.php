@@ -50,14 +50,14 @@
                   <form method="POST" action="{{ url('/login') }}" role="form" class="text-start">
                     @csrf
                     <div class="input-group input-group-outline my-3">
-                      <label class="form-label">Email</label>
+                      <label class="form-label text-center">Email</label>
                       <input type="email" name="email" value="{{ old('email') }}" class="form-control">
                     </div>
                     @error('email')
                     <div class="text-danger">{{ $message }}</div>
                     @enderror
                     <div class="input-group input-group-outline mb-3">
-                      <label class="form-label">Password</label>
+                      <label class="form-label text-center">Password</label>
                       <input type="password" name="password" class="form-control">
                     </div>
                     @error('password')
@@ -77,24 +77,7 @@
             </div>
 
             <!-- RIGHT SIDE IMAGE -->
-            <div class="col-6 d-lg-flex d-none h-100 my-auto pe-0 position-absolute 
-                top-0 end-0 text-center justify-content-center flex-column">
-
-              <div class="position-relative bg-gradient-primary h-100 m-3 px-7 border-radius-lg 
-                  d-flex flex-column justify-content-center overflow-hidden"
-                style="background-image: url('https://raw.githubusercontent.com/creativetimofficial/public-assets/master/argon-dashboard-pro/assets/img/signin-ill.jpg');
-                background-size: cover;">
-
-                <span class="mask bg-gradient-primary opacity-6"></span>
-                <h4 class="mt-5 text-white font-weight-bolder position-relative">
-                  "Attendance Made Simple"
-                </h4>
-                <p class="text-white position-relative">
-                  Woka Attendance — Smart, Accurate, Real-time Attendance Tracking.
-                </p>
-              </div>
-
-            </div>
+            
 
           </div>
         </div>
