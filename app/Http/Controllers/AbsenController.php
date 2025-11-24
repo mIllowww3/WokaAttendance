@@ -2,64 +2,83 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\absen;
+use App\Models\Absen;
+use App\Models\Pegawai;
 use Illuminate\Http\Request;
 
 class AbsenController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $absens = Absen::with('pegawai')->orderBy('tanggal', 'desc')->get();
+        return view('absen.index', compact('absens'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        $pegawai = Pegawai::all();
+        return view('absen.create', compact('pegawai'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'pegawai_id'    => 'required|exists:pegawais,id',
+            'tanggal'       => 'required|date',
+            'jam_masuk'     => 'nullable',
+            'jam_pulang'    => 'nullable',
+            'status'        => 'required|string',
+            'lokasi_masuk'  => 'nullable|string',
+            'lokasi_pulang' => 'nullable|string',
+            'jarak_masuk'   => 'nullable|numeric',
+            'jarak_pulang'  => 'nullable|numeric',
+            'catatan'       => 'nullable|string',
+        ]);
+
+        Absen::create($request->all());
+
+        return redirect()->route('absen.index')->with('success', 'Data absen berhasil ditambahkan!');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(absen $absen)
+    public function show($id)
     {
-        //
+        $absen = Absen::with('pegawai')->findOrFail($id);
+        return view('absen.show', compact('absen'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(absen $absen)
+    public function edit($id)
     {
-        //
+        $absen = Absen::findOrFail($id);
+        $pegawai = Pegawai::all();
+        return view('absen.edit', compact('absen', 'pegawai'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, absen $absen)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'pegawai_id'    => 'required|exists:pegawais,id',
+            'tanggal'       => 'required|date',
+            'jam_masuk'     => 'nullable',
+            'jam_pulang'    => 'nullable',
+            'status'        => 'required|string',
+            'lokasi_masuk'  => 'nullable|string',
+            'lokasi_pulang' => 'nullable|string',
+            'jarak_masuk'   => 'nullable|numeric',
+            'jarak_pulang'  => 'nullable|numeric',
+            'catatan'       => 'nullable|string',
+        ]);
+
+        $absen = Absen::findOrFail($id);
+        $absen->update($request->all());
+
+        return redirect()->route('absen.index')->with('success', 'Data absen berhasil diperbarui!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(absen $absen)
+    public function destroy($id)
     {
-        //
+        $absen = Absen::findOrFail($id);
+        $absen->delete();
+
+        return redirect()->route('absen.index')->with('success', 'Data absen berhasil dihapus!');
     }
 }
