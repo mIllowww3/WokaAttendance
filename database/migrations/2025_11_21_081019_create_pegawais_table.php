@@ -6,16 +6,24 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
-    {
-        Schema::create('pegawais', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
-    }
+public function up()
+{
+    Schema::create('pegawai', function (Blueprint $table) {
+        $table->bigIncrements('id');
+
+        $table->foreignId('user_id')->constrained('users');
+        $table->foreignId('departemen_id')->constrained('departement');
+        $table->foreignId('kantor_id')->constrained('perusahaan');
+
+        $table->string('uid_qr')->unique();
+        $table->string('foto')->nullable();
+        $table->string('no_hp')->nullable();
+        $table->text('alamat')->nullable();
+        $table->enum('status', ['aktif','nonaktif']);
+
+        $table->timestamps();
+    });
+}
 
     /**
      * Reverse the migrations.

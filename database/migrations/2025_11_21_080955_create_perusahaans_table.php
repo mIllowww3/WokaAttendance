@@ -6,16 +6,20 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
-    {
-        Schema::create('perusahaans', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
-    }
+   public function up()
+{
+    Schema::create('perusahaan', function (Blueprint $table) {
+        $table->bigIncrements('id');
+        $table->string('nama_kantor');
+        $table->decimal('latitude', 10, 8);
+        $table->decimal('longitude', 11, 8);
+        $table->integer('radius')->default(50);
+        $table->string('alamat')->nullable();
+        $table->enum('status', ['aktif','nonaktif']);
+        $table->timestamps();
+    });
+}
+
 
     /**
      * Reverse the migrations.

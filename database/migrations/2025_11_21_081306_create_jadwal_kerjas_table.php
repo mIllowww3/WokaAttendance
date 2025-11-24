@@ -6,16 +6,18 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
-    {
-        Schema::create('jadwal_kerjas', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
-    }
+public function up()
+{
+    Schema::create('jadwal_kerja', function (Blueprint $table) {
+        $table->bigIncrements('id');
+        $table->enum('hari', [
+            'Senin','Selasa','Rabu','Kamis','Jumat','Sabtu','Minggu'
+        ]);
+        $table->time('jam_masuk');
+        $table->time('jam_pulang');
+        $table->timestamps();
+    });
+}
 
     /**
      * Reverse the migrations.
