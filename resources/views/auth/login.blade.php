@@ -36,9 +36,9 @@
     <section>
       <div class="page-header min-vh-100">
         <div class="container">
-          <div class="row">
+          <div class="row justify-content-center">
 
-            <div class="col-xl-4 col-lg-5 col-md-7 d-flex flex-column mx-lg-0 mx-auto">
+            <div class="col-xl-4 col-lg-5 col-md-7 flex-column mx-lg-0 mx-auto">
               <div class="card card-plain">
 
                 <div class="card-header pb-0 text-start">
@@ -47,18 +47,16 @@
                 </div>
 
                 <div class="card-body">
-                  <form method="POST" action="{{ url('/login') }}" role="form" class="text-start">
+                  <form method="POST" action="{{ route('login.post') }}" role="form" class="text-start">
                     @csrf
                     <div class="input-group input-group-outline my-3">
-                      <label class="form-label">Email</label>
-                      <input type="email" name="email" value="{{ old('email') }}" class="form-control">
+                      <input type="email" name="email" value="{{ old('email') }}" placeholder="masukkan email" class="form-control form-control-lg">
                     </div>
                     @error('email')
                     <div class="text-danger">{{ $message }}</div>
                     @enderror
                     <div class="input-group input-group-outline mb-3">
-                      <label class="form-label">Password</label>
-                      <input type="password" name="password" class="form-control">
+                      <input type="password" name="password" placeholder="masukkan password" class="form-control form-control-lg">
                     </div>
                     @error('password')
                     <div class="text-danger">{{ $message }}</div>
@@ -75,10 +73,6 @@
 
               </div>
             </div>
-
-            <!-- RIGHT SIDE IMAGE -->
-            
-
           </div>
         </div>
       </div>

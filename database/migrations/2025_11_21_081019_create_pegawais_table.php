@@ -8,7 +8,7 @@ return new class extends Migration
 {
 public function up()
 {
-    Schema::create('pegawai', function (Blueprint $table) {
+    Schema::create('pegawais', function (Blueprint $table) {
         $table->bigIncrements('id');
 
         $table->foreignId('user_id')->constrained('users');

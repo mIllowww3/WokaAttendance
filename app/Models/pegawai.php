@@ -2,16 +2,20 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class pegawai extends Model
+class Pegawai extends Model
 {
-    use HasFactory;
-
+    //
     protected $fillable = [
-        'user_id','departemen_id','kantor_id','uid_qr',
-        'foto','no_hp','alamat','status'
+        'user_id',
+        'departemen_id',
+        'kantor_id',
+        'uid_qr',
+        'foto',
+        'no_hp',
+        'alamat',
+        'status',
     ];
 
     public function user()
@@ -38,5 +42,4 @@ class pegawai extends Model
     {
         return $this->hasMany(izin::class);
     }
-
 }

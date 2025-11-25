@@ -8,7 +8,7 @@ return new class extends Migration
 {
    public function up()
 {
-    Schema::create('perusahaan', function (Blueprint $table) {
+    Schema::create('perusahaans', function (Blueprint $table) {
         $table->bigIncrements('id');
         $table->string('nama_kantor');
         $table->decimal('latitude', 10, 8);

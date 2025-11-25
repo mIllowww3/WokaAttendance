@@ -8,7 +8,7 @@ return new class extends Migration
 {
 public function up()
 {
-    Schema::create('departement', function (Blueprint $table) {
+    Schema::create('departemens', function (Blueprint $table) {
         $table->bigIncrements('id');
         $table->string('nama_departemen');
         $table->text('deskripsi')->nullable();
