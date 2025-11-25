@@ -25,7 +25,7 @@
 <div class="card">
     <h2>Tambah Perusahaan</h2>
 
-    <form method="POST" action="{{ route('perusahaan.store') }}">
+    <form method="POST" action="{{ route('admin.perusahaan.store') }}">
         @csrf
 
         <label>Nama Kantor</label>
@@ -54,7 +54,7 @@
 
         <br>
         <button type="submit">Simpan</button>
-        <a href="{{ route('perusahaan.index') }}">Kembali</a>
+        <a href="{{ route('admin.perusahaan.index') }}">Kembali</a>
     </form>
 </div>
 

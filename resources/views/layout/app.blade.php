@@ -16,7 +16,7 @@
     <!-- Font Awesome Icons -->
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
     <!-- CSS Files -->
-    <link id="pagestyle" href="../assets/css/argon-dashboard.css?v=2.1.0" rel="stylesheet">
+    <link id="pagestyle" href="{{ asset('assets/css/argon-dashboard.css?v=2.1.0') }}" rel="stylesheet">
 </head>
 
 <body class="g-sidenav-show   bg-gray-100">
@@ -41,7 +41,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('departemen.index') }}">
+                    <a class="nav-link" href="{{ route('admin.departemen.index') }}">
                         <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="ni ni-calendar-grid-58 text-dark text-sm opacity-10"></i>
                         </div>
@@ -50,7 +50,7 @@
 
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('perusahaan.index') }}">
+                    <a class="nav-link" href="{{ route('admin.perusahaan.index') }}">
                         <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="ni ni-credit-card text-dark text-sm opacity-10"></i>
                         </div>
@@ -58,7 +58,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('pegawai.index') }}">
+                    <a class="nav-link" href="{{ route('admin.pegawai.index') }}">
                         <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="ni ni-app text-dark text-sm opacity-10"></i>
                         </div>
@@ -74,7 +74,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="">
+                    <a class="nav-link" href="admin.izin.index">
                         <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="ni ni-world-2 text-dark text-sm opacity-10"></i>
                         </div>
@@ -82,7 +82,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="">
+                    <a class="nav-link" href="admin.absen.index">
                         <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="ni ni-world-2 text-dark text-sm opacity-10"></i>
                         </div>
@@ -158,7 +158,7 @@
                                     <a class="dropdown-item border-radius-md" href="javascript:;">
                                         <div class="d-flex py-1">
                                             <div class="my-auto">
-                                                <img src="../assets/img/small-logos/logo-spotify.svg" class="avatar avatar-sm bg-gradient-dark  me-3 ">
+                                                <img src="/assets/img/small-logos/logo-spotify.svg" class="avatar avatar-sm bg-gradient-dark  me-3 ">
                                             </div>
                                             <div class="d-flex flex-column justify-content-center">
                                                 <h6 class="text-sm font-weight-normal mb-1">
@@ -212,11 +212,11 @@
         @yield('content')
     </main>
     <!--   Core JS Files   -->
-    <script src="../assets/js/core/popper.min.js"></script>
-    <script src="../assets/js/core/bootstrap.min.js"></script>
-    <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
-    <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
-    <script src="../assets/js/plugins/chartjs.min.js"></script>
+    <script src="{{asset ('assets/js/core/popper.min.js') }}"></script>
+    <script src="{{asset('assets/js/core/bootstrap.min.js') }}"></script>
+    <script src="{{asset('assets/js/plugins/perfect-scrollbar.min.js')}}"></script>
+    <script src="{{asset('assets/js/plugins/smooth-scrollbar.min.js')}}"></script>
+    <script src="{{asset('assets/js/plugins/chartjs.min.js')}}"></script>
     <script>
         var ctx1 = document.getElementById("chart-line").getContext("2d");
 
@@ -312,7 +312,7 @@
     <!-- Github buttons -->
     <script async="" defer="" src="https://buttons.github.io/buttons.js"></script>
     <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
-    <script src="../assets/js/argon-dashboard.min.js?v=2.1.0"></script>
+    <script src="{{asset('/assets/js/argon-dashboard.min.js?v=2.1.0')}}"></script>
 
 
 </body>

@@ -21,7 +21,7 @@
                     </div>
 
                     <div class="card-body">
-                        <form action="{{ route('departemen.store') }}" method="POST">
+                        <form action="{{ route('admin.departemen.store') }}" method="POST">
                             @csrf
 
                             <!-- Nama Departemen -->
@@ -38,7 +38,7 @@
 
                             <!-- Tombol -->
                             <div class="d-flex justify-content-between">
-                                <a href="{{ route('departemen.index') }}" class="btn btn-secondary">
+                                <a href="{{ route('admin.departemen.index') }}" class="btn btn-secondary">
                                     Kembali
                                 </a>
 

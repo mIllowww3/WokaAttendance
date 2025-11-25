@@ -9,7 +9,7 @@ return new class extends Migration
    public function up()
 {
     Schema::create('perusahaans', function (Blueprint $table) {
-        $table->bigIncrements('id');
+        $table->id();
         $table->string('nama_kantor');
         $table->decimal('latitude', 10, 8);
         $table->decimal('longitude', 11, 8);
