@@ -79,12 +79,12 @@
                     <div class="row">
                         <div class="col-8">
                             <div class="numbers">
-                                <p class="text-sm mb-0 text-uppercase font-weight-bold">Sales</p>
+                                <p class="text-sm mb-0 text-uppercase font-weight-bold">Total Absen</p>
                                 <h5 class="font-weight-bolder">
-                                    $103,430
+                                    {{ $totalAbsen }}
                                 </h5>
                                 <p class="mb-0">
-                                    <span class="text-success text-sm font-weight-bolder">+5%</span> than last month
+                                    <span class="text-success text-sm font-weight-bolder"></span> <a href="{{ route('absen.index') }}"></a>
                                 </p>
                             </div>
                         </div>

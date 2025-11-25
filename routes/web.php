@@ -40,11 +40,15 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/pegawai', [PegawaiController::class, 'index'])->name('pegawai.index');
     Route::get('/pegawai/create', [PegawaiController::class, 'create'])->name('pegawai.create');
     Route::post('/pegawai/store', [PegawaiController::class, 'store'])->name('pegawai.store');
-
     Route::get('/pegawai/edit/{id}', [PegawaiController::class, 'edit'])->name('pegawai.edit');
     Route::put('/pegawai/update/{id}', [PegawaiController::class, 'update'])->name('pegawai.update');
-
     Route::delete('/pegawai/delete/{id}', [PegawaiController::class, 'delete'])->name('pegawai.delete');
+
+    Route::get('/absen', [AbsenController::class, 'absen'])->name('admin.absen.index');
+    Route::get('/absen/{id}', [AbsenController::class, 'show'])->name('admin.absen.show');
+
+
+
 });
 
 Route::middleware(['auth', 'role:staff'])->group(function () {

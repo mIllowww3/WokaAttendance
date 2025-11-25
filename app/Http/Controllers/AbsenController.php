@@ -8,6 +8,11 @@ use Illuminate\Http\Request;
 
 class AbsenController extends Controller
 {
+    public function absen()
+    {
+        $absens = Absen::with(['pegawai'])->orderBy('tanggal','desc')->get();
+        return view('admin.absen.index', compact('absens'));
+    }
     public function index()
     {
         $absens = Absen::with('pegawai')->orderBy('tanggal', 'desc')->get();
