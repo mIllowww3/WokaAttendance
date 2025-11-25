@@ -1,61 +1,85 @@
-@extends('layouts.index')
+@extends('layout.app')
+
 
 @section('content')
-<style>
-</style>
 
-<div class="page-header">
-  <div>
-    <h3>Kelola Departent</h3>
-    <p>Daftar departement di sistem.</p>
-  </div>
-  <a href="#"class="btn-add">+ Tambah Departement</a>
-</div>
+<body class="bg-light">
 
-@if (session('success'))
-  <div class="alert-succes">{{ session('success') }}</div>
-@endif
-@if (session('error'))
-  <div class="alert-danger">{{ session('error') }}</div>
-@endif
+    <div class="container mt-5">
 
-<div class="table-container">
-  <table id="departemen" class="display">
-    <thead>
-      <tr>
-        <th>No</th>
-        <th>Nama Departement</th>
-        <th>Aksi</th>
-      </tr>
-    </thead>
-    <tbody>
-      @forelse ($data as $index => $departemen)
-      <tr>
-        <td>{{ $loop->iteration }}</td>
-        <td>{{ $departemen->nama-departemen }}</td>
-        <td>
-          <a href="#" class="btn btn-edit">Edit</a>
-          <form action="#" method="POST" style="display:inline;" onsubmit="return confirm('Yakin mau hapus kelas ini?')">
-            @csrf
-            @method('DELETE')
-            <button type="submit" class="btn btn-delete">Hapus</button>
-          </form>
-        </td>
-      </tr>
-      @empty
-      <tr>
-        <td colspan="3">Belum ada data kelas</td>
-      </tr>
-      @endforelse
-    </tbody>
-  </table>
-</div>
-@endsection
+        <div class="card shadow border-0">
+            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                <h4 class="mb-0">Data Departemen</h4>
+                <a href="{{ route('departemen.create') }}" class="btn btn-light btn-sm text-primary fw-bold">
+                    + Tambah Departemen
+                </a>
+            </div>
 
-@section('scripts')
-<script>
-  $(document).ready(function() {
-    $('#kelas').DataTable(); 
-  });
-</script>
+            <div class="card-body">
+
+                <!-- Search -->
+                <form method="GET" class="mb-3">
+                    <div class="input-group">
+                        <input type="text" name="cari" class="form-control" placeholder="Cari departemen..."
+                            value="{{ request('cari') }}">
+                        <button class="btn btn-primary">Cari</button>
+                    </div>
+                </form>
+
+                <!-- Table -->
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover align-middle">
+                        <thead>
+                            <tr class="text-center">
+                                <th width="5%">No</th>
+                                <th>Nama Departemen</th>
+                                <th>Deskripsi</th>
+                                <th width="20%">Aksi</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @forelse ($departemen as $i => $item)
+                            <tr>
+                                <td class="text-center">{{ $i + 1 }}</td>
+                                <td>{{ $item->nama_departemen }}</td>
+                                <td>{{ $item->deskripsi ?? '-' }}</td>
+
+                                <td class="text-center">
+                                    <a href="{{ route('departemen.edit', $item->id) }}"
+                                        class="btn btn-warning btn-sm text-white">
+                                        Edit
+                                    </a>
+
+                                    <form action="{{ route('departemen.destroy', $item->id) }}"
+                                        method="POST" class="d-inline"
+                                        onsubmit="return confirm('Yakin ingin menghapus?')">
+                                        @csrf
+                                        @method('DELETE')
+
+                                        <button class="btn btn-danger btn-sm">
+                                            Hapus
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            @empty
+                            <tr>
+                                <td colspan="4" class="text-center text-muted">Tidak ada data departemen.</td>
+                            </tr>
+                            @endforelse
+                        </tbody>
+
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
 @endsection

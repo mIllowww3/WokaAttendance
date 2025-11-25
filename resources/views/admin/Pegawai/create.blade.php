@@ -1,77 +1,58 @@
-@extends('layouts.app')
+@extends('layout.app')
 
 @section('content')
-<div class="container">
-    <h4>Tambah Pegawai</h4>
+<div class="container mt-4">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white fw-bold">
+            Tambah Pegawai
+        </div>
 
-    <div class="card">
         <div class="card-body">
 
             <form action="{{ route('pegawai.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
-                <div class="mb-3">
-                    <label>User</label>
-                    <select name="user_id" class="form-control" required>
-                        <option value="">-- PILIH USER --</option>
-                        @foreach($user as $u)
+                <label>User (Nama Akun)</label>
+                <select name="user_id" class="form-control" required>
+                    <option value="">-- Pilih User --</option>
+                    @foreach ($users as $u)
                         <option value="{{ $u->id }}">{{ $u->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
+                    @endforeach
+                </select>
 
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label>Departemen</label>
-                        <select name="departemen_id" class="form-control" required>
-                            <option>-- PILIH DEPARTEMEN --</option>
-                            @foreach($departemen as $d)
-                            <option value="{{ $d->id }}">{{ $d->nama }}</option>
-                            @endforeach
-                        </select>
-                    </div>
+                <label class="mt-3">Departemen</label>
+                <select name="departemen_id" class="form-control" required>
+                    <option value="">-- Pilih Departemen --</option>
+                    @foreach ($departemen as $d)
+                        <option value="{{ $d->id }}">{{ $d->nama_departemen }}</option>
+                    @endforeach
+                </select>
 
-                    <div class="col-md-6 mb-3">
-                        <label>Kantor</label>
-                        <select name="kantor_id" class="form-control" required>
-                            <option>-- PILIH KANTOR --</option>
-                            @foreach($kantor as $k)
-                            <option value="{{ $k->id }}">{{ $k->nama }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
+                <label class="mt-3">Kantor</label>
+                <select name="kantor_id" class="form-control" required>
+                    <option value="">-- Pilih Kantor --</option>
+                    @foreach ($kantor as $k)
+                        <option value="{{ $k->id }}">{{ $k->nama_kantor }}</option>
+                    @endforeach
+                </select>
 
-                <div class="mb-3">
-                    <label>UID QR</label>
-                    <input type="text" name="uid_qr" class="form-control">
-                </div>
+                <label class="mt-3">No HP</label>
+                <input type="text" name="no_hp" class="form-control">
 
-                <div class="mb-3">
-                    <label>Foto</label>
-                    <input type="file" name="foto" class="form-control">
-                </div>
+                <label class="mt-3">Alamat</label>
+                <textarea name="alamat" class="form-control" rows="3"></textarea>
 
-                <div class="mb-3">
-                    <label>No HP</label>
-                    <input type="text" name="no_hp" class="form-control" required>
-                </div>
+                <label class="mt-3">Status</label>
+                <select name="status" class="form-control">
+                    <option value="aktif">Aktif</option>
+                    <option value="nonaktif">Nonaktif</option>
+                </select>
 
-                <div class="mb-3">
-                    <label>Alamat</label>
-                    <textarea name="alamat" class="form-control" rows="3"></textarea>
-                </div>
+                <label class="mt-3">Foto Pegawai</label>
+                <input type="file" name="foto" class="form-control">
 
-                <div class="mb-3">
-                    <label>Status</label>
-                    <select name="status" class="form-control">
-                        <option value="aktif">Aktif</option>
-                        <option value="nonaktif">Nonaktif</option>
-                    </select>
-                </div>
-
-                <button class="btn btn-primary">Simpan</button>
-                <a href="{{ route('pegawai.index') }}" class="btn btn-secondary">Kembali</a>
+                <button class="btn btn-success mt-4">Simpan</button>
+                <a href="{{ route('pegawai.index') }}" class="btn btn-secondary mt-4">Kembali</a>
             </form>
 
         </div>
