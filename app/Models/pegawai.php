@@ -15,7 +15,7 @@ class Pegawai extends Model
         'foto',
         'no_hp',
         'alamat',
-        'status'
+        'status',
     ];
 
     public function user()

@@ -59,7 +59,8 @@ class PerusahaanController extends Controller
 
     public function destroy($id)
     {
-        Perusahaan::findOrFail($id)->delete();
+        $perusahaan = Perusahaan::findOrFail($id);
+        $perusahaan->delete();
         return back()->with('success', 'Data perusahaan berhasil dihapus');
     }
 }

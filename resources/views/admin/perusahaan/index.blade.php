@@ -1,5 +1,7 @@
-<!DOCTYPE html>
-<html lang="id">
+@extends('layout.app')
+
+
+@section('content')
 
 <head>
     <meta charset="UTF-8">
@@ -71,6 +73,7 @@
                                 <th>Latitude</th>
                                 <th>Longitude</th>
                                 <th>Radius (m)</th>
+                                <th>Alamat</th>
                                 <th>Status</th>
                                 <th width="18%">Aksi</th>
                             </tr>
@@ -78,50 +81,50 @@
 
                         <tbody>
                             @forelse ($perusahaan as $index => $p)
-                                <tr>
-                                    <td class="text-center">{{ $index + 1 }}</td>
-                                    <td>{{ $p->nama_kantor }}</td>
-                                    <td>{{ $p->latitude }}</td>
-                                    <td>{{ $p->longitude }}</td>
-                                    <td>{{ $p->radius }} m</td>
+                            <tr>
+                                <td class="text-center">{{ $index + 1 }}</td>
+                                <td>{{ $p->nama_kantor }}</td>
+                                <td>{{ $p->latitude }}</td>
+                                <td>{{ $p->longitude }}</td>
+                                <td>{{ $p->radius }} m</td>
+                                <td>{{ $p->alamat }}</td>
 
-                                    <td class="text-center">
-                                        @if ($p->status == 'aktif')
-                                            <span class="badge-status badge-aktif">Aktif</span>
-                                        @else
-                                            <span class="badge-status badge-nonaktif">Nonaktif</span>
-                                        @endif
-                                    </td>
+                                <td class="text-center">
+                                    @if ($p->status == 'aktif')
+                                    <span class="badge-status badge-aktif">Aktif</span>
+                                    @else
+                                    <span class="badge-status badge-nonaktif">Nonaktif</span>
+                                    @endif
+                                </td>
 
-                                    <td class="text-center">
+                                <td class="text-center">
 
-                                        <!-- Edit -->
-                                        <a href="{{ route('perusahaan.edit', $p->id) }}"
-                                            class="btn btn-warning btn-sm text-white fw-bold">
-                                            Edit
-                                        </a>
+                                    <!-- Edit -->
+                                    <a href="{{ route('perusahaan.edit', $p->id) }}" class="btn btn-warning btn-sm text-white fw-bold">
+                                        Edit
+                                    </a>
 
-                                        <!-- Delete -->
-                                        <form action="{{ route('perusahaan.destroy', $p->id) }}" method="POST"
-                                            class="d-inline"
-                                            onsubmit="return confirm('Yakin ingin menghapus perusahaan ini?')">
+                                    <!-- Delete -->
+                                    <form action="{{ route('perusahaan.destroy', $p->id) }}"
+                                        method="POST" class="d-inline"
+                                        onsubmit="return confirm('Yakin ingin menghapus?')">
+                                        @csrf
+                                        @method('DELETE')
 
-                                            @csrf
-                                            @method('DELETE')
+                                        <button class="btn btn-danger btn-sm">
+                                            Hapus
+                                        </button>
+                                    </form>
 
-                                            <button class="btn btn-danger btn-sm fw-bold">
-                                                Hapus
-                                            </button>
-                                        </form>
 
-                                    </td>
-                                </tr>
+                                </td>
+                            </tr>
                             @empty
-                                <tr>
-                                    <td colspan="7" class="text-center text-muted py-3">
-                                        Tidak ada data perusahaan.
-                                    </td>
-                                </tr>
+                            <tr>
+                                <td colspan="7" class="text-center text-muted py-3">
+                                    Tidak ada data perusahaan.
+                                </td>
+                            </tr>
                             @endforelse
                         </tbody>
 
@@ -137,5 +140,4 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
-
-</html>
+@endsection

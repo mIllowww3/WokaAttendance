@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DepartemenController;
 use App\Http\Controllers\PerusahaanController;
 use App\Http\Controllers\AbsenController;
+use App\Http\Controllers\PegawaiController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -27,12 +28,23 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::put('/departemen/update/{id}', [DepartemenController::class, 'update'])->name('departemen.update');
     Route::delete('/departemen/delete/{id}', [DepartemenController::class, 'destroy'])->name('departemen.destroy');
 
+    // CRUD Perusahaan
     Route::get('/perusahaan', [PerusahaanController::class, 'index'])->name('perusahaan.index');
     Route::get('/perusahaan/create', [PerusahaanController::class, 'create'])->name('perusahaan.create');
     Route::post('/perusahaan/store', [PerusahaanController::class, 'store'])->name('perusahaan.store');
     Route::get('/perusahaan/edit/{id}', [PerusahaanController::class, 'edit'])->name('perusahaan.edit');
     Route::post('/perusahaan/update/{id}', [PerusahaanController::class, 'update'])->name('perusahaan.update');
-    Route::get('/perusahaan/delete/{id}', [PerusahaanController::class, 'destroy'])->name('perusahaan.delete');
+    Route::delete('/perusahaan/delete/{id}', [PerusahaanController::class, 'destroy'])->name('perusahaan.destroy');
+
+    // Pegawai
+    Route::get('/pegawai', [PegawaiController::class, 'index'])->name('pegawai.index');
+    Route::get('/pegawai/create', [PegawaiController::class, 'create'])->name('pegawai.create');
+    Route::post('/pegawai/store', [PegawaiController::class, 'store'])->name('pegawai.store');
+
+    Route::get('/pegawai/edit/{id}', [PegawaiController::class, 'edit'])->name('pegawai.edit');
+    Route::put('/pegawai/update/{id}', [PegawaiController::class, 'update'])->name('pegawai.update');
+
+    Route::delete('/pegawai/delete/{id}', [PegawaiController::class, 'delete'])->name('pegawai.delete');
 });
 
 Route::middleware(['auth', 'role:staff'])->group(function () {
