@@ -31,7 +31,7 @@
                                 <span class="text-muted">Tidak ada</span>
                             @endif
                         </td>
-
+                        
                         <td>{{ $p->user->name ?? '-' }}</td>
                         <td>{{ $p->departemen->nama ?? '-' }}</td>
                         <td>{{ $p->kantor->nama ?? '-' }}</td>
@@ -41,7 +41,6 @@
                                 {{ ucfirst($p->status) }}
                             </span>
                         </td>
-
                         <td>
                             <a href="{{ route('pegawai.show',$p->id) }}" class="btn btn-info btn-sm">Detail</a>
                             <a href="{{ route('pegawai.edit',$p->id) }}" class="btn btn-warning btn-sm">Edit</a>
@@ -53,7 +52,6 @@
                                 </button>
                             </form>
                         </td>
-
                     </tr>
                     @endforeach
                 </tbody>
