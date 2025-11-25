@@ -66,7 +66,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="">
+                    <a class="nav-link" href="{{ route('jadwal.index') }}">
                         <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="ni ni-app text-dark text-sm opacity-10"></i>
                         </div>
@@ -89,6 +89,18 @@
                         <span class="nav-link-text ms-1">Absen</span>
                     </a>
                 </li>
+                <li class="nav-item mt-4">
+                    <form action="{{ route('logout') }}" method="POST" class="d-flex">
+                        @csrf
+                        <button class="nav-link border-0 bg-transparent text-start w-100" style="cursor: pointer;">
+                            <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                                <i class="ni ni-button-power text-danger text-sm opacity-10"></i>
+                            </div>
+                            <span class="nav-link-text ms-1 text-danger fw-bold">Logout</span>
+                        </button>
+                    </form>
+                </li>
+
             </ul>
         </div>
     </aside>
