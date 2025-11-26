@@ -16,6 +16,7 @@ Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'login'])->name('login');
     Route::post('/login/post', [AuthController::class, 'authenticate'])->name('login.post');
 });
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'admin'])->name('dashboard');
@@ -44,14 +45,14 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::put('/pegawai/update/{id}', [PegawaiController::class, 'update'])->name('pegawai.update');
     Route::delete('/pegawai/delete/{id}', [PegawaiController::class, 'destroy'])->name('pegawai.destroy');
 
-    Route::get('/absen', [AbsenController::class, 'absen'])->name('admin.absen.index');
-    Route::get('/absen/{id}', [AbsenController::class, 'show'])->name('admin.absen.show');
+    Route::get('/absen', [AbsenController::class, 'absen'])->name('absen.index');
+    Route::get('/absen/{id}', [AbsenController::class, 'show'])->name('absen.show');
 
 
 
 });
 
 Route::middleware(['auth','role:staff'])->prefix('staff')->name('staff.')->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'staff'])->name('staff.dashboard');
-
+    Route::get('/dashboard', [DashboardController::class, 'staff'])->name('dashboard');
+    
 });

@@ -39,7 +39,7 @@ public function create()
             'deskripsi' => $request->deskripsi,
         ]);
 
-        return redirect()->route('departemen.index')->with('success', 'Departemen berhasil ditambahkan!');
+        return redirect()->route('admin.departemen.index')->with('success', 'Departemen berhasil ditambahkan!');
     }
 
     public function edit($id)
@@ -69,6 +69,6 @@ public function create()
         $departemen = Departemen::findOrFail($id);
         $departemen->delete();
 
-        return redirect()->route('departemen.index')->with('success', 'Departemen berhasil dihapus!');
+        return redirect()->route('admin.departemen.index')->with('success', 'Departemen berhasil dihapus!');
     }
 }

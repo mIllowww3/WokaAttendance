@@ -31,7 +31,10 @@
         </div>
         <hr class="horizontal dark mt-0">
         <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
+
             <ul class="navbar-nav">
+    @if(auth()->user()->role == 'admin')
+
                 <li class="nav-item">
                     <a class="nav-link active" href="{{ route('admin.dashboard') }}">
                         <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
@@ -89,6 +92,58 @@
                         <span class="nav-link-text ms-1">Absen</span>
                     </a>
                 </li>
+    @endif
+
+       @if(auth()->user()->role == 'staff')
+
+                <li class="nav-item">
+                    <a class="nav-link active" href="{{ route('staff.dashboard') }}">
+                        <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="ni ni-tv-2 text-dark text-sm opacity-10"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="">
+                        <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="ni ni-calendar-grid-58 text-dark text-sm opacity-10"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">Absen</span>
+                    </a>
+
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="">
+                        <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="ni ni-credit-card text-dark text-sm opacity-10"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">Izin</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="">
+                        <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="ni ni-app text-dark text-sm opacity-10"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">Profile</span>
+                    </a>
+                </li>
+    @endif
+
+<li class="nav-item mt-3">
+    <form action="{{ route('logout') }}" method="POST">
+        @csrf
+        <button type="submit" 
+            class="btn w-100 d-flex align-items-center px-3 py-2 bg-gradient-danger text-white border-0"
+            style="border-radius: 0.5rem;">
+            
+            <i class="ni ni-button-power text-white me-3"></i>
+            <span class="fw-bold">Logout</span>
+        </button>
+    </form>
+</li>
+
             </ul>
         </div>
     </aside>

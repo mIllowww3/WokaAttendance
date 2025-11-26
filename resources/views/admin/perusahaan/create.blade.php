@@ -21,9 +21,13 @@
     </style>
 </head>
 <body>
+<div class="container mt-4">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white fw-bold">
+            Tambah Pegawai
+        </div>
 
-<div class="card">
-    <h2>Tambah Perusahaan</h2>
+<div class="card-body">
 
     <form method="POST" action="{{ route('admin.perusahaan.store') }}">
         @csrf
