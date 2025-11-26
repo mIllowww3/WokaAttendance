@@ -7,7 +7,7 @@
     <div class="card shadow border-0">
         <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
             <h4 class="mb-0 fw-bold">Jadwal Kerja</h4>
-            <a href="{{ route('jadwal.create') }}" class="btn btn-light btn-sm text-primary fw-bold shadow-sm">
+            <a href="{{ route('admin.jadwal.create') }}" class="btn btn-light btn-sm text-primary fw-bold shadow-sm">
                 + Tambah Jadwal
             </a>
         </div>
@@ -42,12 +42,12 @@
 
                             <td class="text-center">
 
-                                <a href="{{ route('jadwal.edit', $j->id) }}"
+                                <a href="{{ route('admin.jadwal.edit', $j->id) }}"
                                    class="btn btn-warning btn-sm text-white me-1 shadow-sm">
                                     Edit
                                 </a>
 
-                                <form action="{{ route('jadwal.destroy', $j->id) }}"
+                                <form action="{{ route('admin.jadwal.destroy', $j->id) }}"
                                       method="POST"
                                       class="d-inline"
                                       onsubmit="return confirm('Yakin ingin menghapus jadwal ini?')">
