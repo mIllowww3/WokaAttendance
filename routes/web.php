@@ -64,31 +64,16 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     */
     Route::get('/absen', [AbsenController::class, 'absen'])->name('absen.index');
     Route::get('/absen/{id}', [AbsenController::class, 'show'])->name('absen.show');
-
     Route::delete('/pegawai/delete/{id}', [PegawaiController::class, 'delete'])->name('pegawai.delete');
-
-    /*
-    |--------------------------------------------------------------------------
-    | Izin Sakit (Admin)
-    |--------------------------------------------------------------------------
-    */
     Route::resource('jadwal', JadwalKerjaController::class);
-    /*
-    |--------------------------------------------------------------------------
-    | Izin Sakit (Admin)
-    |--------------------------------------------------------------------------
-    */
     Route::resource('izin', IzinSakitController::class);
+    Route::post('izin/{id}/approve', [IzinSakitController::class, 'approve'])->name('izin.approve');
 
-    Route::post('izin/{id}/approve', [IzinSakitController::class, 'approve'])
-        ->name('izin.approve');
-
-    Route::post('izin/{id}/reject', [IzinSakitController::class, 'reject'])
-        ->name('izin.reject');
+    Route::post('izin/{id}/reject', [IzinSakitController::class, 'reject'])->name('izin.reject');
 
 });
 
 Route::middleware(['auth','role:staff'])->prefix('staff')->name('staff.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'staff'])->name('dashboard');
-
+    
 });

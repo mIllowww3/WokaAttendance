@@ -14,7 +14,7 @@
                 @csrf
 
                 <label>User (Nama Akun)</label>
-                <input type="text" name="name" class="form-control" placeholder="Nama Lengkap Siswa">
+                <input type="text" name="name" class="form-control" placeholder="Nama Lengkap Pegawai">
                 @error('name')
                 <div class="text-danger">{{ $message }}</div>
                 @enderror

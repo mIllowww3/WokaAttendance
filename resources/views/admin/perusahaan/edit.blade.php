@@ -82,7 +82,7 @@
             <div id="map"></div>
 
             <br>
-            <button type="submit">Update</button>
+            <button type="submit" class="btn btn-secondary">Update</button>
             <a href="{{ route('admin.perusahaan.index') }}">Kembali</a>
 
         </form>

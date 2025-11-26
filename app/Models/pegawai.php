@@ -12,11 +12,14 @@ class Pegawai extends Model
         'departemen_id',
         'kantor_id',
         'uid_qr',
+        'qr_image',
+        'qr_generated_at',
         'foto',
         'no_hp',
         'alamat',
         'status',
     ];
+
 
     public function user()
     {
