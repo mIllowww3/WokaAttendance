@@ -36,7 +36,7 @@ Route::middleware('guest')->group(function () {
     Route::post('/login/post', [AuthController::class, 'authenticate'])->name('login.post');
 
 });
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
 
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'admin'])->name('dashboard');
