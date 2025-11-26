@@ -86,8 +86,8 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     | Absen
     |--------------------------------------------------------------------------
     */
-    Route::get('/absen', [AbsenController::class, 'absen'])->name('admin.absen.index');
-    Route::get('/absen/{id}', [AbsenController::class, 'show'])->name('admin.absen.show');
+    Route::get('/absen', [AbsenController::class, 'absen'])->name('absen.index');
+    Route::get('/absen/{id}', [AbsenController::class, 'show'])->name('absen.show');
 
 
     /*
