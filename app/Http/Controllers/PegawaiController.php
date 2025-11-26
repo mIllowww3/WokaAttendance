@@ -6,9 +6,13 @@ use App\Models\Pegawai;
 use App\Models\User;
 use App\Models\Departemen;
 use App\Models\Perusahaan;
+use Endroid\QrCode\Builder\Builder;
+use Endroid\QrCode\Writer\PngWriter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class PegawaiController extends Controller
 {
@@ -43,17 +47,20 @@ class PegawaiController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|string|min:6',
             'departemen_id' => 'required',
             'kantor_id' => 'required',
             'no_hp' => 'nullable|string',
             'status' => 'required',
-            'foto' => 'required|image|max:2048'
+            'foto' => 'required|image|max:2048',
         ]);
 
-        if ($request->hasFile('foto')) {
-            $gambar = $request->file('foto')->store('staff', 'public');
-        }
+        // Simpan foto staff
+        $gambar = $request->file('foto')->store('staff', 'public');
 
+        // Buat user login
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -61,18 +68,40 @@ class PegawaiController extends Controller
             'role' => 'staff',
         ]);
 
+        // Generate UID untuk QR
+        $uid = Str::uuid();
+
+        // File name QR
+        $qrFileName = $uid . '.png';
+
+        // Generate QR binary
+        $qrImage = Builder::create()
+            ->writer(new PngWriter()) // <- pakai GD, aman
+            ->data($uid)
+            ->size(300)
+            ->build()
+            ->getString(); // hasil binary PNG
+
+        // Simpan QR ke storage
+        Storage::disk('public')->put('qrcodes/' . $qrFileName, $qrImage);
+
+        // Simpan data pegawai
         Pegawai::create([
             'user_id' => $user->id,
             'departemen_id' => $request->departemen_id,
             'kantor_id' => $request->kantor_id,
-            'uid_qr' => Str::uuid(),
+            'uid_qr' => $uid,
+            'qr_image' => 'qrcodes/' . $qrFileName,
+            'qr_generated_at' => now(), // <-- WAKTU QR DIBUAT
             'foto' => $gambar,
             'no_hp' => $request->no_hp,
             'alamat' => $request->alamat,
-            'status' => $request->status
+            'status' => $request->status,
         ]);
 
-        return redirect()->route('admin.pegawai.index')->with('success', 'Pegawai berhasil ditambahkan');
+        return redirect()
+            ->route('admin.pegawai.index')
+            ->with('success', 'Pegawai berhasil ditambahkan');
     }
 
     // EDIT

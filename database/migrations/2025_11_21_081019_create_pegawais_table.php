@@ -14,7 +14,6 @@ public function up()
         $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
         $table->foreignId('departemen_id')->constrained('departemens')->cascadeOnDelete();
         $table->foreignId('kantor_id')->constrained('perusahaans')->cascadeOnDelete();
-
         $table->string('uid_qr')->unique();
         $table->string('foto')->nullable();
         $table->string('no_hp')->nullable();
