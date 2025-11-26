@@ -26,7 +26,12 @@
     <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
 
     <style>
-        #map { width: 100%; height: 300px; border-radius: 8px; margin-top: 15px; }
+        #map {
+            width: 100%;
+            height: 300px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
     </style>
 </head>
 
@@ -44,7 +49,7 @@
         <div class="collapse navbar-collapse  w-auto " id="sidenav-collapse-main">
 
             <ul class="navbar-nav">
-    @if(auth()->user()->role == 'admin')
+                @if(auth()->user()->role == 'admin')
 
                 <li class="nav-item">
                     <a class="nav-link active" href="{{ route('admin.dashboard') }}">
@@ -80,7 +85,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="">
+                    <a class="nav-link" href="{{ route('admin.jadwal.index') }}">
                         <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="ni ni-app text-dark text-sm opacity-10"></i>
                         </div>
@@ -103,9 +108,9 @@
                         <span class="nav-link-text ms-1">Absen</span>
                     </a>
                 </li>
-    @endif
+                @endif
 
-       @if(auth()->user()->role == 'staff')
+                @if(auth()->user()->role == 'staff')
 
                 <li class="nav-item">
                     <a class="nav-link active" href="{{ route('staff.dashboard') }}">
@@ -140,20 +145,20 @@
                         <span class="nav-link-text ms-1">Profile</span>
                     </a>
                 </li>
-    @endif
+                @endif
 
-<li class="nav-item mt-3">
-    <form action="{{ route('logout') }}" method="POST">
-        @csrf
-        <button type="submit" 
-            class="btn w-100 d-flex align-items-center px-3 py-2 bg-gradient-danger text-white border-0"
-            style="border-radius: 0.5rem;">
-            
-            <i class="ni ni-button-power text-white me-3"></i>
-            <span class="fw-bold">Logout</span>
-        </button>
-    </form>
-</li>
+                <li class="nav-item mt-3">
+                    <form action="{{ route('logout') }}" method="POST">
+                        @csrf
+                        <button type="submit"
+                            class="btn w-100 d-flex align-items-center px-3 py-2 bg-gradient-danger text-white border-0"
+                            style="border-radius: 0.5rem;">
+
+                            <i class="ni ni-button-power text-white me-3"></i>
+                            <span class="fw-bold">Logout</span>
+                        </button>
+                    </form>
+                </li>
 
             </ul>
         </div>
@@ -284,62 +289,62 @@
     <script src="{{asset('assets/js/plugins/smooth-scrollbar.min.js')}}"></script>
     <script src="{{asset('assets/js/plugins/chartjs.min.js')}}"></script>
     <script>
-    // Default posisi (Jakarta)
-    var map = L.map('map').setView([-6.200000, 106.816666], 12);
+        // Default posisi (Jakarta)
+        var map = L.map('map').setView([-6.200000, 106.816666], 12);
 
-    // Layer OpenStreetMap
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19
-    }).addTo(map);
+        // Layer OpenStreetMap
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19
+        }).addTo(map);
 
-    var marker = null;
+        var marker = null;
 
-    // Tambah Search Box
-    var geocoder = L.Control.geocoder({
-        defaultMarkGeocode: false
-    })
-    .on('markgeocode', function(e) {
-        var center = e.geocode.center;
+        // Tambah Search Box
+        var geocoder = L.Control.geocoder({
+                defaultMarkGeocode: false
+            })
+            .on('markgeocode', function(e) {
+                var center = e.geocode.center;
 
-        // Update marker
-        if (marker) map.removeLayer(marker);
-        marker = L.marker(center).addTo(map);
+                // Update marker
+                if (marker) map.removeLayer(marker);
+                marker = L.marker(center).addTo(map);
 
-        map.setView(center, 16);
+                map.setView(center, 16);
 
-        // Set ke input
-        document.getElementById('lat').value = center.lat;
-        document.getElementById('lng').value = center.lng;
-    })
-    .addTo(map);
+                // Set ke input
+                document.getElementById('lat').value = center.lat;
+                document.getElementById('lng').value = center.lng;
+            })
+            .addTo(map);
 
-    function updateMarker() {
-        var lat = parseFloat(document.getElementById('lat').value);
-        var lng = parseFloat(document.getElementById('lng').value);
+        function updateMarker() {
+            var lat = parseFloat(document.getElementById('lat').value);
+            var lng = parseFloat(document.getElementById('lng').value);
 
-        if (!isNaN(lat) && !isNaN(lng)) {
-            if (marker) map.removeLayer(marker);
+            if (!isNaN(lat) && !isNaN(lng)) {
+                if (marker) map.removeLayer(marker);
 
-            marker = L.marker([lat, lng]).addTo(map);
-            map.setView([lat, lng], 16);
+                marker = L.marker([lat, lng]).addTo(map);
+                map.setView([lat, lng], 16);
+            }
         }
-    }
 
-    // Input manual update marker
-    document.getElementById('lat').addEventListener('keyup', updateMarker);
-    document.getElementById('lng').addEventListener('keyup', updateMarker);
+        // Input manual update marker
+        document.getElementById('lat').addEventListener('keyup', updateMarker);
+        document.getElementById('lng').addEventListener('keyup', updateMarker);
 
-    // Klik pada map -> pindahkan marker & isi input
-    map.on('click', function(e) {
-        var lat = e.latlng.lat;
-        var lng = e.latlng.lng;
+        // Klik pada map -> pindahkan marker & isi input
+        map.on('click', function(e) {
+            var lat = e.latlng.lat;
+            var lng = e.latlng.lng;
 
-        document.getElementById('lat').value = lat;
-        document.getElementById('lng').value = lng;
+            document.getElementById('lat').value = lat;
+            document.getElementById('lng').value = lng;
 
-        updateMarker();
-    });
-</script>
+            updateMarker();
+        });
+    </script>
     <script>
         var ctx1 = document.getElementById("chart-line").getContext("2d");
 

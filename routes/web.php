@@ -18,14 +18,8 @@ use App\Http\Controllers\AbsenController;
 
 // IZIN SAKIT (ADMIN)
 use App\Http\Controllers\Admin\IzinSakitController;
+use App\Http\Controllers\JadwalKerjaController;
 
-
-
-/*
-|--------------------------------------------------------------------------
-| Guest Routes
-|--------------------------------------------------------------------------
-*/
 Route::get('/', function () {
     return view('auth.login');
 });
@@ -41,12 +35,6 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middl
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'admin'])->name('dashboard');
 
-
-    /*
-    |--------------------------------------------------------------------------
-    | Departemen
-    |--------------------------------------------------------------------------
-    */
     Route::get('/departemen', [DepartemenController::class, 'index'])->name('departemen.index');
     Route::get('/departemen/create', [DepartemenController::class, 'create'])->name('departemen.create');
     Route::post('/departemen/store', [DepartemenController::class, 'store'])->name('departemen.store');
@@ -54,12 +42,6 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::put('/departemen/update/{id}', [DepartemenController::class, 'update'])->name('departemen.update');
     Route::delete('/departemen/delete/{id}', [DepartemenController::class, 'destroy'])->name('departemen.destroy');
 
-
-    /*
-    |--------------------------------------------------------------------------
-    | Perusahaan
-    |--------------------------------------------------------------------------
-    */
     Route::get('/perusahaan', [PerusahaanController::class, 'index'])->name('perusahaan.index');
     Route::get('/perusahaan/create', [PerusahaanController::class, 'create'])->name('perusahaan.create');
     Route::post('/perusahaan/store', [PerusahaanController::class, 'store'])->name('perusahaan.store');
@@ -67,12 +49,6 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::post('/perusahaan/update/{id}', [PerusahaanController::class, 'update'])->name('perusahaan.update');
     Route::delete('/perusahaan/delete/{id}', [PerusahaanController::class, 'destroy'])->name('perusahaan.destroy');
 
-
-    /*
-    |--------------------------------------------------------------------------
-    | Pegawai
-    |--------------------------------------------------------------------------
-    */
     Route::get('/pegawai', [PegawaiController::class, 'index'])->name('pegawai.index');
     Route::get('/pegawai/create', [PegawaiController::class, 'create'])->name('pegawai.create');
     Route::post('/pegawai/store', [PegawaiController::class, 'store'])->name('pegawai.store');
@@ -89,7 +65,14 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/absen', [AbsenController::class, 'absen'])->name('absen.index');
     Route::get('/absen/{id}', [AbsenController::class, 'show'])->name('absen.show');
 
+    Route::delete('/pegawai/delete/{id}', [PegawaiController::class, 'delete'])->name('pegawai.delete');
 
+    /*
+    |--------------------------------------------------------------------------
+    | Izin Sakit (Admin)
+    |--------------------------------------------------------------------------
+    */
+    Route::resource('jadwal', JadwalKerjaController::class);
     /*
     |--------------------------------------------------------------------------
     | Izin Sakit (Admin)
