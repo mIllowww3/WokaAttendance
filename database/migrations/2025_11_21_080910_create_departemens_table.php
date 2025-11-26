@@ -9,7 +9,7 @@ return new class extends Migration
 public function up()
 {
     Schema::create('departemens', function (Blueprint $table) {
-        $table->bigIncrements('id');
+        $table->id();
         $table->string('nama_departemen');
         $table->text('deskripsi')->nullable();
         $table->timestamps();

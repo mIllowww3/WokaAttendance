@@ -21,7 +21,7 @@
                     </div>
 
                     <div class="card-body">
-                        <form action="{{ route('departemen.update', $departemen->id) }}" method="POST">
+                        <form action="{{ route('admin.departemen.update', $departemen->id) }}" method="POST">
                             @csrf
                             @method('PUT')
 
@@ -43,7 +43,7 @@
 
                             <!-- Tombol -->
                             <div class="d-flex justify-content-between">
-                                <a href="{{ route('departemen.index') }}" class="btn btn-secondary">
+                                <a href="{{ route('admin.departemen.index') }}" class="btn btn-secondary">
                                     Kembali
                                 </a>
 

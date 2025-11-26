@@ -9,7 +9,7 @@
 
         <div class="card-body">
 
-            <form action="{{ route('pegawai.update', $pegawai->id) }}" 
+            <form action="{{ route('admin.pegawai.update', $pegawai->id) }}" 
                   method="POST" enctype="multipart/form-data">
 
                 @csrf
@@ -62,7 +62,7 @@
                 @endif
 
                 <button class="btn btn-warning mt-4">Update</button>
-                <a href="{{ route('pegawai.index') }}" class="btn btn-secondary mt-4">Kembali</a>
+                <a href="{{ route('admin.pegawai.index') }}" class="btn btn-secondary mt-4">Kembali</a>
 
             </form>
 

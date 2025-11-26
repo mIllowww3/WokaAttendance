@@ -7,7 +7,7 @@
     <div class="card shadow border-0">
         <div class="card-header bg- text-white d-flex justify-content-between align-items-center">
             <h4 class="mb-0 fw-bold">Data Pegawai</h4>
-            <a href="{{ route('pegawai.create') }}" class="btn btn-light btn-sm text-primary fw-bold shadow-sm">
+            <a href="{{ route('admin.pegawai.create') }}" class="btn btn-light btn-sm text-primary fw-bold shadow-sm">
                 + Tambah Pegawai
             </a>
         </div>
@@ -30,6 +30,7 @@
                         <tr>
                             <th width="5%">No</th>
                             <th>Nama User</th>
+                            <th>Email</th>
                             <th>Departemen</th>
                             <th>Kantor</th>
                             <th>No HP</th>
@@ -44,6 +45,7 @@
                             <td class="text-center fw-bold">{{ $pegawai->firstItem() + $i }}</td>
 
                             <td>{{ $p->user->name ?? '-' }}</td>
+                            <td>{{ $p->user->email ?? '-' }}</td>
                             <td>{{ $p->departemen->nama_departemen ?? '-' }}</td>
                             <td>{{ $p->kantor->nama_kantor ?? '-' }}</td>
                             <td>{{ $p->no_hp ?? '-' }}</td>
@@ -56,12 +58,12 @@
 
                             <td class="text-center">
 
-                                <a href="{{ route('pegawai.edit', $p->id) }}"
+                                <a href="{{ route('admin.pegawai.edit', $p->id) }}"
                                     class="btn btn-warning btn-sm text-white me-1 shadow-sm">
                                     Edit
                                 </a>
 
-                                <form action="{{ route('pegawai.destroy', $p->id) }}"
+                                <form action="{{ route('admin.pegawai.destroy', $p->id) }}"
                                     method="POST"
                                     class="d-inline"
                                     onsubmit="return confirm('Yakin ingin menghapus pegawai ini?')">

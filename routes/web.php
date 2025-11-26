@@ -37,17 +37,8 @@ Route::middleware('guest')->group(function () {
 
 });
 
-
-
-/*
-|--------------------------------------------------------------------------
-| Admin Routes
-|--------------------------------------------------------------------------
-*/
-Route::middleware(['auth', 'role:admin'])->group(function () {
-
-    // Dashboard
-    Route::get('/dashboard', [DashboardController::class, 'admin'])->name('admin.dashboard');
+Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'admin'])->name('dashboard');
 
 
     /*
@@ -86,7 +77,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::post('/pegawai/store', [PegawaiController::class, 'store'])->name('pegawai.store');
     Route::get('/pegawai/edit/{id}', [PegawaiController::class, 'edit'])->name('pegawai.edit');
     Route::put('/pegawai/update/{id}', [PegawaiController::class, 'update'])->name('pegawai.update');
-    Route::delete('/pegawai/delete/{id}', [PegawaiController::class, 'delete'])->name('pegawai.delete');
+    Route::delete('/pegawai/delete/{id}', [PegawaiController::class, 'destroy'])->name('pegawai.destroy');
 
 
     /*
@@ -113,17 +104,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
 });
 
-
-
-/*
-|--------------------------------------------------------------------------
-| Staff Routes
-|--------------------------------------------------------------------------
-*/
-Route::middleware(['auth', 'role:staff'])->group(function () {
-
-    Route::get('/staff/dashboard', function () {
-        return view('staff.dashboard');
-    })->name('staff.dashboard');
+Route::middleware(['auth','role:staff'])->prefix('staff')->name('staff.')->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'staff'])->name('staff.dashboard');
 
 });

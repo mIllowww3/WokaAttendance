@@ -12,7 +12,7 @@
                                 <p class="text-sm mb-0 text-uppercase font-weight-bold">Total Departemen</p>
                                 <h5 class="font-weight-bolder">{{ $totalDepartemen }}</h5>
                                 <p class="mb-0">
-                                    <span class="text-success text-sm font-weight-bolder"></span><a href="{{ route('departemen.index') }}">Lihat Departemen</a>
+                                    <span class="text-success text-sm font-weight-bolder"></span><a href="{{ route('admin.departemen.index') }}">Lihat Departemen</a>
                                 </p>
                             </div>
                         </div>
@@ -36,7 +36,7 @@
                                     {{ $totalPerusahaan }}
                                 </h5>
                                 <p class="mb-0">
-                                    <span class="text-success text-sm font-weight-bolder"></span><a href="{{ route('perusahaan.index') }}">Lihat Perusahaan</a>
+                                    <span class="text-success text-sm font-weight-bolder"></span><a href="{{ route('admin.perusahaan.index') }}">Lihat Perusahaan</a>
                                 </p>
                             </div>
                         </div>
@@ -60,7 +60,7 @@
                                     {{ $totalPegawai }}
                                 </h5>
                                 <p class="mb-0">
-                                    <span class="text-danger text-sm font-weight-bolder"></span><a href="{{ route('pegawai.index') }}">Lihat Pegawai</a>
+                                    <span class="text-danger text-sm font-weight-bolder"></span><a href="{{ route('admin.pegawai.index') }}">Lihat Pegawai</a>
                                 </p>
                             </div>
                         </div>
