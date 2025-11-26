@@ -6,7 +6,7 @@
     <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
     <link rel="icon" type="image/png" href="../assets/img/favicon.png">
     <title>
-        Argon Dashboard 3 by Creative Tim
+        WokaAttendence
     </title>
     <!--     Fonts and icons     -->
     <link href="{{ asset('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,o') }}https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
@@ -74,7 +74,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="admin.izin.index">
+                    <a class="nav-link" href="{{ route('izin.index') }}">
                         <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="ni ni-world-2 text-dark text-sm opacity-10"></i>
                         </div>
