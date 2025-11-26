@@ -84,7 +84,7 @@
                                     {{ $totalAbsen }}
                                 </h5>
                                 <p class="mb-0">
-                                    <span class="text-success text-sm font-weight-bolder"></span> <a href="{{ route('absen.index') }}"></a>
+                                    <span class="text-success text-sm font-weight-bolder"></span> <a href="{{ route('admin.absen.index') }}">Lihat Absen</a>
                                 </p>
                             </div>
                         </div>
