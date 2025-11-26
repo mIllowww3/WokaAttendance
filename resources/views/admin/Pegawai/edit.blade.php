@@ -9,36 +9,31 @@
 
         <div class="card-body">
 
-            <form action="{{ route('admin.pegawai.update', $pegawai->id) }}" 
-                  method="POST" enctype="multipart/form-data">
+            <form action="{{ route('admin.pegawai.update', $pegawai->id) }}"
+                method="POST" enctype="multipart/form-data">
 
                 @csrf
                 @method('PUT')
 
-                <label>User</label>
-                <select name="user_id" class="form-control" required>
-                    @foreach ($users as $u)
-                        <option value="{{ $u->id }}" {{ $pegawai->user_id == $u->id ? 'selected' : '' }}>
-                            {{ $u->name }}
-                        </option>
-                    @endforeach
-                </select>
+                <label class="mt-3">User</label>
+                <input type="text" name="no_hp" class="form-control" value="{{ $pegawai->user->name }}">
+
 
                 <label class="mt-3">Departemen</label>
                 <select name="departemen_id" class="form-control" required>
                     @foreach ($departemen as $d)
-                        <option value="{{ $d->id }}" {{ $pegawai->departemen_id == $d->id ? 'selected' : '' }}>
-                            {{ $d->nama_departemen }}
-                        </option>
+                    <option value="{{ $d->id }}" {{ $pegawai->departemen_id == $d->id ? 'selected' : '' }}>
+                        {{ $d->nama_departemen }}
+                    </option>
                     @endforeach
                 </select>
 
                 <label class="mt-3">Kantor</label>
                 <select name="kantor_id" class="form-control" required>
                     @foreach ($kantor as $k)
-                        <option value="{{ $k->id }}" {{ $pegawai->kantor_id == $k->id ? 'selected' : '' }}>
-                            {{ $k->nama_kantor }}
-                        </option>
+                    <option value="{{ $k->id }}" {{ $pegawai->kantor_id == $k->id ? 'selected' : '' }}>
+                        {{ $k->nama_kantor }}
+                    </option>
                     @endforeach
                 </select>
 
@@ -58,7 +53,7 @@
                 <input type="file" name="foto" class="form-control">
 
                 @if($pegawai->foto)
-                    <img src="/uploads/pegawai/{{ $pegawai->foto }}" class="mt-2 rounded" width="90">
+                <img src="/uploads/pegawai/{{ $pegawai->foto }}" class="mt-2 rounded" width="90">
                 @endif
 
                 <button class="btn btn-warning mt-4">Update</button>

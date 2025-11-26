@@ -29,6 +29,7 @@
                     <thead class="text-center" style="background: #f8f9fa; font-weight: bold;">
                         <tr>
                             <th width="5%">No</th>
+                            <th>QR</th>
                             <th>Nama User</th>
                             <th>Email</th>
                             <th>Departemen</th>
@@ -43,6 +44,15 @@
                         @forelse ($pegawai as $i => $p)
                         <tr>
                             <td class="text-center fw-bold">{{ $pegawai->firstItem() + $i }}</td>
+                            <td class="text-center">
+                                @if($p->qr_image)
+                                <img src="{{ asset('storage/' . $p->qr_image) }}"
+                                    width="60"
+                                    class="img-thumbnail">
+                                @else
+                                <span class="text-muted">-</span>
+                                @endif
+                            </td>
 
                             <td>{{ $p->user->name ?? '-' }}</td>
                             <td>{{ $p->user->email ?? '-' }}</td>
@@ -63,7 +73,7 @@
                                     Edit
                                 </a>
 
-                                <form action="{{ route('admin.pegawai.destroy', $p->id) }}"
+                                <form action="{{ route('admin.pegawai.delete', $p->id) }}"
                                     method="POST"
                                     class="d-inline"
                                     onsubmit="return confirm('Yakin ingin menghapus pegawai ini?')">
