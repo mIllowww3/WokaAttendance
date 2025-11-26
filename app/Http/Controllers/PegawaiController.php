@@ -72,7 +72,7 @@ class PegawaiController extends Controller
             'status' => $request->status
         ]);
 
-        return redirect()->route('pegawai.index')->with('success', 'Pegawai berhasil ditambahkan');
+        return redirect()->route('admin.pegawai.index')->with('success', 'Pegawai berhasil ditambahkan');
     }
 
     // EDIT
@@ -120,7 +120,7 @@ class PegawaiController extends Controller
             'status' => $request->status
         ]);
 
-        return redirect()->route('pegawai.index')->with('success', 'Data pegawai berhasil diperbarui');
+        return redirect()->route('admin.pegawai.index')->with('success', 'Data pegawai berhasil diperbarui');
     }
 
     // DELETE
@@ -134,6 +134,6 @@ class PegawaiController extends Controller
 
         $pegawai->delete();
 
-        return redirect()->route('pegawai.index')->with('success', 'Pegawai berhasil dihapus');
+        return redirect()->route('admin.pegawai.index')->with('success', 'Pegawai berhasil dihapus');
     }
 }

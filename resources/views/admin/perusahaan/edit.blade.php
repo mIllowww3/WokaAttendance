@@ -54,7 +54,7 @@
     <div class="card">
         <h2>Edit Perusahaan</h2>
 
-        <form method="POST" action="{{ route('perusahaan.update', $perusahaan->id) }}">
+        <form method="POST" action="{{ route('admin.perusahaan.update', $perusahaan->id) }}">
             @csrf
 
             <label>Nama Kantor</label>
@@ -83,7 +83,7 @@
 
             <br>
             <button type="submit">Update</button>
-            <a href="{{ route('perusahaan.index') }}">Kembali</a>
+            <a href="{{ route('admin.perusahaan.index') }}">Kembali</a>
 
         </form>
     </div>

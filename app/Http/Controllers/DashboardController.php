@@ -20,4 +20,10 @@ class DashboardController extends Controller
 
         return view("admin.dashboard", compact("totalPegawai","totalDepartemen","totalPerusahaan","totalAbsen"));
     }
+
+    public function staff()
+{
+    return view('staff.dashboard');
+}
+
 }

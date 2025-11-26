@@ -5,9 +5,6 @@
 
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h3 class="mt-4">Data Izin & Sakit</h3>
-        <a href="{{ route('izin.create') }}" class="btn btn-primary">
-            + Tambah Izin/Sakit
-        </a>
     </div>
 
     <div class="card shadow-sm">

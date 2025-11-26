@@ -31,7 +31,7 @@ class PerusahaanController extends Controller
 
         Perusahaan::create($request->all());
 
-        return redirect()->route('perusahaan.index')->with('success','Data perusahaan berhasil ditambahkan');
+        return redirect()->route('admin.perusahaan.index')->with('success','Data perusahaan berhasil ditambahkan');
     }
 
     public function edit($id)
@@ -54,7 +54,7 @@ class PerusahaanController extends Controller
         $perusahaan = Perusahaan::findOrFail($id);
         $perusahaan->update($request->all());
 
-        return redirect()->route('perusahaan.index')->with('success','Data perusahaan berhasil diperbarui');
+        return redirect()->route('admin.perusahaan.index')->with('success','Data perusahaan berhasil diperbarui');
     }
 
     public function destroy($id)

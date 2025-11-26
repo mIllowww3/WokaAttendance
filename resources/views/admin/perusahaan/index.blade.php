@@ -3,52 +3,6 @@
 
 @section('content')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data Perusahaan</title>
-
-    <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <style>
-        body {
-            background: #f4f6f9;
-        }
-
-        .table thead th {
-            background: #fafafcff;
-            color: white;
-            text-transform: uppercase;
-        }
-
-        .btn-add {
-            font-weight: 600;
-        }
-
-        .card {
-            border-radius: 10px;
-        }
-
-        .badge-status {
-            padding: 6px 10px;
-            border-radius: 5px;
-            font-size: 13px;
-        }
-
-        .badge-aktif {
-            background: #28a745;
-            color: white;
-        }
-
-        .badge-nonaktif {
-            background: #dc3545;
-            color: white;
-        }
-    </style>
-</head>
-
-<body>
 
     <div class="container mt-5">
 
@@ -135,9 +89,4 @@
         </div>
 
     </div>
-
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
-</body>
 @endsection

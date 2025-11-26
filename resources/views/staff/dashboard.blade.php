@@ -10,9 +10,9 @@
                         <div class="col-8">
                             <div class="numbers">
                                 <p class="text-sm mb-0 text-uppercase font-weight-bold">Total Departemen</p>
-                                <h5 class="font-weight-bolder">{{ $totalDepartemen }}</h5>
+                                <h5 class="font-weight-bolder"></h5>
                                 <p class="mb-0">
-                                    <span class="text-success text-sm font-weight-bolder"></span><a href="{{ route('departemen.index') }}">Lihat Departemen</a>
+                                    <span class="text-success text-sm font-weight-bolder"></span><a href="">Lihat Departemen</a>
                                 </p>
                             </div>
                         </div>
@@ -57,10 +57,10 @@
                             <div class="numbers">
                                 <p class="text-sm mb-0 text-uppercase font-weight-bold">Total Pegawai</p>
                                 <h5 class="font-weight-bolder">
-                                    {{ $totalPegawai }}
+                                    
                                 </h5>
                                 <p class="mb-0">
-                                    <span class="text-danger text-sm font-weight-bolder"></span><a href="{{ route('pegawai.index') }}">Lihat Pegawai</a>
+                                    <span class="text-danger text-sm font-weight-bolder"></span><a href="">Lihat Pegawai</a>
                                 </p>
                             </div>
                         </div>

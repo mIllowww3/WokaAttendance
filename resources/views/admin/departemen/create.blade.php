@@ -1,24 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tambah Departemen</title>
+@extends('layout.app')
 
-    <!-- Bootstrap CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body class="bg-light">
+@section('content')
 
-    <div class="container mt-5">
-
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-
-                <div class="card shadow-lg border-0">
-                    <div class="card-header text-white bg-primary">
-                        <h4 class="mb-0">Tambah Departemen</h4>
-                    </div>
+    <div class="container mt-4">
+<div class="container mt-4">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white fw-bold">
+            Tambah Departement
+        </div>
 
                     <div class="card-body">
                         <form action="{{ route('admin.departemen.store') }}" method="POST">
@@ -55,8 +44,5 @@
         </div>
 
     </div>
+@endsection
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
