@@ -40,6 +40,6 @@ class Pegawai extends Model
 
     public function izinSakit()
     {
-        return $this->hasMany(izin::class);
+        return $this->hasMany(Izinsakit::class);
     }
 }

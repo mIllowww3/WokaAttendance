@@ -52,7 +52,7 @@
                 @if(auth()->user()->role == 'admin')
 
                 <li class="nav-item">
-                    <a class="nav-link active" href="{{ route('admin.dashboard') }}">
+                    <a class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : ' text-dark' }}" href="{{ route('admin.dashboard') }}">
                         <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="ni ni-tv-2 text-dark text-sm opacity-10"></i>
                         </div>
@@ -60,7 +60,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('admin.departemen.index') }}">
+                    <a class="nav-link {{ request()->routeIs('admin.departemen.*') ? 'active' : ' text-dark' }}" href="{{ route('admin.departemen.index') }}">
                         <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="ni ni-calendar-grid-58 text-dark text-sm opacity-10"></i>
                         </div>
@@ -69,7 +69,7 @@
 
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('admin.perusahaan.index') }}">
+                    <a class="nav-link {{ request()->routeIs('admin.perusahaan.*') ? 'active' : ' text-dark' }}" href="{{ route('admin.perusahaan.index') }}">
                         <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="ni ni-credit-card text-dark text-sm opacity-10"></i>
                         </div>
@@ -77,7 +77,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('admin.pegawai.index') }}">
+                    <a class="nav-link {{ request()->routeIs('admin.pegawai.*') ? 'active' : ' text-dark' }}" href="{{ route('admin.pegawai.index') }}">
                         <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="ni ni-app text-dark text-sm opacity-10"></i>
                         </div>
@@ -85,7 +85,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('admin.jadwal.index') }}">
+                    <a class="nav-link {{ request()->routeIs('admin.jadwal.*') ? 'active' : ' text-dark' }}" href="{{ route('admin.jadwal.index') }}">
                         <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="ni ni-app text-dark text-sm opacity-10"></i>
                         </div>
@@ -93,7 +93,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('admin.izin.index') }}">
+                    <a class="nav-link {{ request()->routeIs('admin.izin.*') ? 'active' : ' text-dark' }}" href="{{ route('admin.izin.index') }}">
                         <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="ni ni-world-2 text-dark text-sm opacity-10"></i>
                         </div>
@@ -101,7 +101,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('admin.absen.index') }}">
+                    <a class="nav-link {{ request()->routeIs('admin.absen.*') ? 'active' : ' text-dark' }}" href="{{ route('admin.absen.index') }}">
                         <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="ni ni-world-2 text-dark text-sm opacity-10"></i>
                         </div>
