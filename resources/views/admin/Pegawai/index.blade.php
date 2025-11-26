@@ -5,7 +5,7 @@
 <div class="container mt-5">
 
     <div class="card shadow border-0">
-        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+        <div class="card-header bg- text-white d-flex justify-content-between align-items-center">
             <h4 class="mb-0 fw-bold">Data Pegawai</h4>
             <a href="{{ route('admin.pegawai.create') }}" class="btn btn-light btn-sm text-primary fw-bold shadow-sm">
                 + Tambah Pegawai

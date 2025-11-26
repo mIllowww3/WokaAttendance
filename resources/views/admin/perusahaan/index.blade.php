@@ -7,7 +7,7 @@
     <div class="container mt-5">
 
         <div class="card shadow-sm border-0">
-            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <div class="card-header bg-primary text-gray d-flex justify-content-between align-items-center">
                 <h4 class="mb-0">Data Perusahaan</h4>
 
                 <a href="{{ route('admin.perusahaan.create') }}" class="btn btn-light text-primary fw-bold btn-sm">
