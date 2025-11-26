@@ -10,7 +10,7 @@
         <div class="card shadow border-0">
             <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
                 <h4 class="mb-0">Data Departemen</h4>
-                <a href="{{ route('departemen.create') }}" class="btn btn-light btn-sm text-primary fw-bold">
+                <a href="{{ route('admin.departemen.create') }}" class="btn btn-light btn-sm text-primary fw-bold">
                     + Tambah Departemen
                 </a>
             </div>
@@ -46,12 +46,12 @@
                                 <td>{{ $item->deskripsi ?? '-' }}</td>
 
                                 <td class="text-center">
-                                    <a href="{{ route('departemen.edit', $item->id) }}"
+                                    <a href="{{ route('admin.departemen.edit', $item->id) }}"
                                         class="btn btn-warning btn-sm text-white">
                                         Edit
                                     </a>
 
-                                    <form action="{{ route('departemen.destroy', $item->id) }}"
+                                    <form action="{{ route('admin.departemen.destroy', $item->id) }}"
                                         method="POST" class="d-inline"
                                         onsubmit="return confirm('Yakin ingin menghapus?')">
                                         @csrf

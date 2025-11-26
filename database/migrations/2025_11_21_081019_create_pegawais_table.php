@@ -11,9 +11,9 @@ public function up()
     Schema::create('pegawais', function (Blueprint $table) {
         $table->bigIncrements('id');
 
-        $table->foreignId('user_id')->constrained('users');
-        $table->foreignId('departemen_id')->constrained('departement');
-        $table->foreignId('kantor_id')->constrained('perusahaan');
+        $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+        $table->foreignId('departemen_id')->constrained('departemens')->cascadeOnDelete();
+        $table->foreignId('kantor_id')->constrained('perusahaans')->cascadeOnDelete();
 
         $table->string('uid_qr')->unique();
         $table->string('foto')->nullable();

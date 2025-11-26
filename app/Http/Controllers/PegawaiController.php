@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Departemen;
 use App\Models\Perusahaan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 class PegawaiController extends Controller
@@ -42,26 +43,30 @@ class PegawaiController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'user_id' => 'required',
             'departemen_id' => 'required',
             'kantor_id' => 'required',
             'no_hp' => 'nullable|string',
             'status' => 'required',
-            'foto' => 'nullable|image|max:2048'
+            'foto' => 'required|image|max:2048'
         ]);
 
-        $fileName = null;
         if ($request->hasFile('foto')) {
-            $fileName = time() . '-' . $request->foto->getClientOriginalName();
-            $request->foto->move('uploads/pegawai/', $fileName);
+            $gambar = $request->file('foto')->store('staff', 'public');
         }
 
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => 'staff',
+        ]);
+
         Pegawai::create([
-            'user_id' => $request->user_id,
+            'user_id' => $user->id,
             'departemen_id' => $request->departemen_id,
             'kantor_id' => $request->kantor_id,
             'uid_qr' => Str::uuid(),
-            'foto' => $fileName,
+            'foto' => $gambar,
             'no_hp' => $request->no_hp,
             'alamat' => $request->alamat,
             'status' => $request->status

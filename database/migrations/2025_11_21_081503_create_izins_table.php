@@ -9,9 +9,9 @@ return new class extends Migration
 public function up()
 {
     Schema::create('izin_sakit', function (Blueprint $table) {
-        $table->bigIncrements('id');
+        $table->id();
 
-        $table->foreignId('pegawai_id')->constrained('pegawai');
+        $table->foreignId('pegawai_id')->constrained('pegawais')->cascadeOnDelete();
 
         $table->date('tanggal_mulai');
         $table->date('tanggal_selesai');
@@ -22,7 +22,7 @@ public function up()
 
         $table->enum('status', ['pending','disetujui','ditolak'])->default('pending');
 
-        $table->foreignId('approved_by')->nullable()->constrained('users');
+        $table->foreignId('approved_by')->nullable()->constrained('users')->cascadeOnDelete();
 
         $table->timestamps();
     });

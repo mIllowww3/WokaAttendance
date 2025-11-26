@@ -18,10 +18,8 @@ Route::middleware('guest')->group(function () {
     Route::post('/login/post', [AuthController::class, 'authenticate'])->name('login.post');
 });
 
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-
-Route::middleware(['auth', 'role:admin'])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'admin'])->name('admin.dashboard');
+Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'admin'])->name('dashboard');
 
     // CRUD Departemen
     Route::get('/departemen', [DepartemenController::class, 'index'])->name('departemen.index');
@@ -43,9 +41,12 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/pegawai', [PegawaiController::class, 'index'])->name('pegawai.index');
     Route::get('/pegawai/create', [PegawaiController::class, 'create'])->name('pegawai.create');
     Route::post('/pegawai/store', [PegawaiController::class, 'store'])->name('pegawai.store');
-
     Route::get('/pegawai/edit/{id}', [PegawaiController::class, 'edit'])->name('pegawai.edit');
     Route::put('/pegawai/update/{id}', [PegawaiController::class, 'update'])->name('pegawai.update');
+    Route::delete('/pegawai/delete/{id}', [PegawaiController::class, 'destroy'])->name('pegawai.destroy');
+
+    Route::get('/absen', [AbsenController::class, 'absen'])->name('admin.absen.index');
+    Route::get('/absen/{id}', [AbsenController::class, 'show'])->name('admin.absen.show');
 
     Route::delete('/pegawai/delete/{id}', [PegawaiController::class, 'delete'])->name('pegawai.delete');
 
@@ -53,15 +54,12 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/jadwal', [JadwalKerjaController::class, 'index'])->name('jadwal.index');
     Route::get('/jadwal/create', [JadwalKerjaController::class, 'create'])->name('jadwal.create');
     Route::post('/jadwal/store', [JadwalKerjaController::class, 'store'])->name('jadwal.store');
-
     Route::get('/jadwal/edit/{id}', [JadwalKerjaController::class, 'edit'])->name('jadwal.edit');
-    Route::put('/jadwal/update/{id}', [JadwalKerjaController::class, 'update'])->name('jadwal.update');
-
+    Route::put('/jadwal/update/{id}', [JadwalKerjaController::class, 'update'])->name('jadwal.update'); 
     Route::delete('/jadwal/delete/{id}', [JadwalKerjaController::class, 'destroy'])->name('jadwal.destroy');
 });
 
-Route::middleware(['auth', 'role:staff'])->group(function () {
-    Route::get('/staff/dashboard', function () {
-        return view('staff.dashboard');
-    })->name('staff.dashboard');
+Route::middleware(['auth','role:staff'])->prefix('staff')->name('staff.')->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'staff'])->name('staff.dashboard');
+
 });

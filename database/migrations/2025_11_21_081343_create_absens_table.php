@@ -8,10 +8,10 @@ return new class extends Migration
 {
 public function up()
 {
-    Schema::create('absen', function (Blueprint $table) {
-        $table->bigIncrements('id');
+    Schema::create('absens', function (Blueprint $table) {
+        $table->id();
 
-        $table->foreignId('pegawai_id')->constrained('pegawai');
+        $table->foreignId('pegawai_id')->constrained('pegawais')->cascadeOnDelete();
 
         $table->date('tanggal');
         $table->time('jam_masuk')->nullable();

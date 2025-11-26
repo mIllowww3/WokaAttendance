@@ -56,7 +56,7 @@
             <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
                 <h4 class="mb-0">Data Perusahaan</h4>
 
-                <a href="{{ route('perusahaan.create') }}" class="btn btn-light text-primary fw-bold btn-sm">
+                <a href="{{ route('admin.perusahaan.create') }}" class="btn btn-light text-primary fw-bold btn-sm">
                     + Tambah Perusahaan
                 </a>
             </div>
@@ -100,12 +100,12 @@
                                 <td class="text-center">
 
                                     <!-- Edit -->
-                                    <a href="{{ route('perusahaan.edit', $p->id) }}" class="btn btn-warning btn-sm text-white fw-bold">
+                                    <a href="{{ route('admin.perusahaan.edit', $p->id) }}" class="btn btn-warning btn-sm text-white fw-bold">
                                         Edit
                                     </a>
 
                                     <!-- Delete -->
-                                    <form action="{{ route('perusahaan.destroy', $p->id) }}"
+                                    <form action="{{ route('admin.perusahaan.destroy', $p->id) }}"
                                         method="POST" class="d-inline"
                                         onsubmit="return confirm('Yakin ingin menghapus?')">
                                         @csrf
