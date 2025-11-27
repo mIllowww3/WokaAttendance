@@ -31,6 +31,7 @@ class JadwalKerjaController extends Controller
             'hari'        => 'required|in:Senin,Selasa,Rabu,Kamis,Jumat,Sabtu,Minggu',
             'jam_masuk'   => 'required',
             'jam_pulang'  => 'required',
+            'jadwal'      => 'required',
         ]);
 
         Jadwal_kerja::create($request->all());

@@ -3,148 +3,134 @@
 @section('content')
 <div class="container-fluid py-4">
     <div class="row">
-        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
-            <div class="card">
-                <div class="card-body p-3">
-                    <div class="row">
-                        <div class="col-8">
-                            <div class="numbers">
-                                <p class="text-sm mb-0 text-uppercase font-weight-bold">Total Departemen</p>
-                                <h5 class="font-weight-bolder"></h5>
-                                <p class="mb-0">
-                                    <span class="text-success text-sm font-weight-bolder"></span><a href="">Lihat Departemen</a>
-                                </p>
-                            </div>
+        <div class="row g-3 mt-4">
+            <div class="col-xl-6 col-md-6 col-sm-12">
+                <div class="card shadow border-0">
+                    <div class="card-body d-flex align-items-center justify-content-between">
+                        <!-- Teks -->
+                        <div>
+                            <p class="text-sm mb-1 text-uppercase font-weight-bold">Total Absen</p>
+                            <h4 class="font-weight-bolder mb-1">{{ $totalAbsen ?? 0 }}</h4>
+                            <a href="{{ route('admin.absen.index') }}" class="text-primary small">Lihat Absen</a>
                         </div>
-                        <div class="col-4 text-end">
-                            <div class="icon icon-shape bg-gradient-primary shadow-primary text-center rounded-circle">
-                                <i class="ni ni-money-coins text-lg opacity-10" aria-hidden="true"></i>
-                            </div>
+
+                        <!-- Icon -->
+                        <div class="icon bg-gradient-primary shadow text-white rounded-circle d-flex align-items-center justify-content-center" style="width:60px; height:60px;">
+                            <i class="ni ni-calendar-grid-58 fs-4"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-6 col-md-6 col-sm-12">
+                <div class="card shadow border-0">
+                    <div class="card-body d-flex align-items-center justify-content-between">
+                        <!-- Teks -->
+                        <div>
+                            <p class="text-sm mb-1 text-uppercase font-weight-bold">Total Izin</p>
+                            <h4 class="font-weight-bolder mb-1">{{ $totalIzin ?? 0 }}</h4>
+                            <a href="{{ route('admin.izin.index') }}" class="text-danger small">Lihat Izin</a>
+                        </div>
+
+                        <!-- Icon -->
+                        <div class="icon bg-gradient-danger shadow text-white rounded-circle d-flex align-items-center justify-content-center" style="width:60px; height:60px;">
+                            <i class="ni ni-badge fs-4"></i>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
-            <div class="card">
-                <div class="card-body p-3">
-                    <div class="row">
-                        <div class="col-8">
-                            <div class="numbers">
-                                <p class="text-sm mb-0 text-uppercase font-weight-bold">Total Perusahaan</p>
-                                <h5 class="font-weight-bolder">
-                                    
-                                </h5>
-                                <p class="mb-0">
-                                    <span class="text-success text-sm font-weight-bolder"></span><a href="">Lihat Perusahaan</a>
-                                </p>
-                            </div>
-                        </div>
-                        <div class="col-4 text-end">
-                            <div class="icon icon-shape bg-gradient-danger shadow-danger text-center rounded-circle">
-                                <i class="ni ni-world text-lg opacity-10" aria-hidden="true"></i>
-                            </div>
-                        </div>
+
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card shadow border-0">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0 fw-bold">
+                            <i class="ni ni-time-alarm me-2"></i>
+                            Jadwal Kerja Mingguan
+                        </h5>
                     </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
-            <div class="card">
-                <div class="card-body p-3">
-                    <div class="row">
-                        <div class="col-8">
-                            <div class="numbers">
-                                <p class="text-sm mb-0 text-uppercase font-weight-bold">Total Pegawai</p>
-                                <h5 class="font-weight-bolder">
-                                    
-                                </h5>
-                                <p class="mb-0">
-                                    <span class="text-danger text-sm font-weight-bolder"></span><a href="">Lihat Pegawai</a>
-                                </p>
-                            </div>
-                        </div>
-                        <div class="col-4 text-end">
-                            <div class="icon icon-shape bg-gradient-success shadow-success text-center rounded-circle">
-                                <i class="ni ni-paper-diploma text-lg opacity-10" aria-hidden="true"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-3 col-sm-6">
-            <div class="card">
-                <div class="card-body p-3">
-                    <div class="row">
-                        <div class="col-8">
-                            <div class="numbers">
-                                <p class="text-sm mb-0 text-uppercase font-weight-bold">Sales</p>
-                                <h5 class="font-weight-bolder">
-                                    $103,430
-                                </h5>
-                                <p class="mb-0">
-                                    <span class="text-success text-sm font-weight-bolder">+5%</span> than last month
-                                </p>
-                            </div>
-                        </div>
-                        <div class="col-4 text-end">
-                            <div class="icon icon-shape bg-gradient-warning shadow-warning text-center rounded-circle">
-                                <i class="ni ni-cart text-lg opacity-10" aria-hidden="true"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row mt-4">
-        <div class="col-lg-5">
-            <div class="card card-carousel overflow-hidden h-100 p-0">
-                <div id="carouselExampleCaptions" class="carousel slide h-100" data-bs-ride="carousel">
-                    <div class="carousel-inner border-radius-lg h-100">
-                        <div class="carousel-item h-100 active" style="background-image: url('../assets/img/carousel-1.jpg');
-      background-size: cover;">
-                            <div class="carousel-caption d-none d-md-block bottom-0 text-start start-0 ms-5">
-                                <div class="icon icon-shape icon-sm bg-white text-center border-radius-md mb-3">
-                                    <i class="ni ni-camera-compact text-dark opacity-10"></i>
+
+                    <div class="card-body">
+                        @if($jadwal->count() > 0)
+
+                        <div class="row g-4">
+                            @php
+                            $colors = [
+                            'Senin' => 'bg-gradient-primary',
+                            'Selasa' => 'bg-gradient-success',
+                            'Rabu' => 'bg-gradient-info',
+                            'Kamis' => 'bg-gradient-warning',
+                            'Jumat' => 'bg-gradient-danger',
+                            'Sabtu' => 'bg-gradient-secondary',
+                            'Minggu' => 'bg-gradient-dark'
+                            ];
+
+                            $icons = [
+                            'Senin' => 'ni ni-calendar-grid-58',
+                            'Selasa' => 'ni ni-watch-time',
+                            'Rabu' => 'ni ni-time-alarm',
+                            'Kamis' => 'ni ni-check-bold',
+                            'Jumat' => 'ni ni-calendar-grid-58',
+                            'Sabtu' => 'ni ni-calendar-grid-58',
+                            'Minggu' => 'ni ni-calendar-grid-58'
+                            ];
+                            @endphp
+
+                            @foreach($jadwal as $j)
+                            <div class="col-lg-4 col-md-6 col-sm-12">
+                                <div class="card shadow-sm border-0 h-100 p-3 rounded-4 jadwal-card"
+                                    style="border-top: 5px solid {{ str_replace('bg-gradient-', '', $colors[$j->hari]) }}">
+
+                                    <div class="text-center mb-3">
+                                        <div class="icon {{ $colors[$j->hari] }} shadow text-white rounded-circle"
+                                            style="width:55px; height:55px; display:flex; align-items:center; justify-content:center;">
+                                            <i class="{{ $icons[$j->hari] }} text-lg"></i>
+                                        </div>
+                                    </div>
+
+                                    <h4 class="fw-bold text-center mb-2">{{ $j->hari }}</h4>
+
+                                    <div class="text-center">
+                                        <p class="mb-1">
+                                            <i class="ni ni-watch-time text-primary"></i>
+                                            <strong>Masuk:</strong>
+                                            {{ \Carbon\Carbon::parse($j->jam_masuk)->format('H:i') }}
+                                        </p>
+
+                                        <p>
+                                            <i class="ni ni-time-alarm text-danger"></i>
+                                            <strong>Pulang:</strong>
+                                            {{ \Carbon\Carbon::parse($j->jam_pulang)->format('H:i') }}
+                                        </p>
+                                    </div>
+
                                 </div>
-                                <h5 class="text-white mb-1">Get started with Argon</h5>
-                                <p>There’s nothing I really wanted to do in life that I wasn’t able to get good at.</p>
                             </div>
+                            @endforeach
                         </div>
-                        <div class="carousel-item h-100" style="background-image: url('../assets/img/carousel-2.jpg');
-      background-size: cover;">
-                            <div class="carousel-caption d-none d-md-block bottom-0 text-start start-0 ms-5">
-                                <div class="icon icon-shape icon-sm bg-white text-center border-radius-md mb-3">
-                                    <i class="ni ni-bulb-61 text-dark opacity-10"></i>
-                                </div>
-                                <h5 class="text-white mb-1">Faster way to create web pages</h5>
-                                <p>That’s my skill. I’m not really specifically talented at anything except for the ability to learn.</p>
-                            </div>
+
+                        @else
+                        <div class="text-center py-4 text-muted">
+                            <i class="ni ni-calendar-grid-58 text-lg"></i>
+                            <p class="mt-2">Belum ada jadwal kerja.</p>
                         </div>
-                        <div class="carousel-item h-100" style="background-image: url('../assets/img/carousel-3.jpg');
-      background-size: cover;">
-                            <div class="carousel-caption d-none d-md-block bottom-0 text-start start-0 ms-5">
-                                <div class="icon icon-shape icon-sm bg-white text-center border-radius-md mb-3">
-                                    <i class="ni ni-trophy text-dark opacity-10"></i>
-                                </div>
-                                <h5 class="text-white mb-1">Share with us your design tips!</h5>
-                                <p>Don’t be afraid to be wrong because you can’t learn anything from a compliment.</p>
-                            </div>
-                        </div>
+                        @endif
                     </div>
-                    <button class="carousel-control-prev w-5 me-3" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next w-5 me-3" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
                 </div>
             </div>
         </div>
+
+        <style>
+            .jadwal-card {
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+
+            .jadwal-card:hover {
+                transform: translateY(-8px);
+                box-shadow: 0 15px 25px rgba(0, 0, 0, 0.15);
+            }
+        </style>
     </div>
     <div class="row mt-4">
     </div>
