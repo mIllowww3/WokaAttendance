@@ -74,12 +74,13 @@ Route::middleware(['auth','role:staff'])->prefix('staff')->name('staff.')->group
     Route::get('/profile', [PegawaiController::class, 'profile'])->name('profile.index');
     Route::put('/profile/update/{id}', [PegawaiController::class, 'profileUpdate'])->name('profile.update');
 
-    Route::get('/staff/izin', [IzinSakitController::class, 'staffIndex'])->name('izin.index');
-    Route::get('/staff/izin/create', [IzinSakitController::class, 'staffCreate'])->name('izin.create');
-    Route::post('/staff/izin/store', [IzinSakitController::class, 'staffStore'])->name('izin.store');
-    Route::get('/izin/show/{id}', [IzinSakitController::class, 'staffShow'])->name('izin.show');
-    Route::get('/izin/edit/{id}', [IzinSakitController::class, 'staffEdit'])->name('izin.edit');
-    Route::delete('/izin/delete/{id}', [IzinSakitController::class, 'destroy'])->name('izin.destroy');
+    Route::get('izin', [IzinSakitController::class, 'staffIndex'])->name('izin.index');
+    Route::get('izin/create', [IzinSakitController::class, 'staffCreate'])->name('izin.create');
+    Route::post('izin/store', [IzinSakitController::class, 'staffStore'])->name('izin.store');
+    Route::get('izin/show/{id}', [IzinSakitController::class, 'staffShow'])->name('izin.show');
+    Route::get('izin/edit/{id}', [IzinSakitController::class, 'staffEdit'])->name('izin.edit');
+    Route::delete('/delete/{id}', [IzinSakitController::class, 'destroy'])->name('izin.destroy');
+    Route::put('izin/update/{id}', [IzinSakitController::class, 'staffUpdate'])->name('izin.update');
 
 
 

@@ -11,7 +11,7 @@ class IzinsakitController extends Controller
 {
     public function index()
     {
-        $data = IzinSakit::with(['pegawai.user','approver'])->latest()->get();
+        $data = IzinSakit::with(['pegawai.user', 'approver'])->latest()->get();
         return view('admin.izin.index', compact('data'));
     }
 
@@ -31,15 +31,43 @@ class IzinsakitController extends Controller
         return view('admin.izin.show', compact('izin'));
     }
 
-    public function edit(string $id)
+    public function edit($id)
     {
-        abort(404, 'Admin tidak mengedit izin.');
+        $izin = IzinSakit::findOrFail($id);
+
+        return view('staff.izin.edit', compact('izin'));
     }
 
-    public function update(Request $request, string $id)
+
+    public function update(Request $request, $id)
     {
-        abort(404, 'Admin tidak mengedit izin.');
+        $request->validate([
+            'jenis' => 'required',
+            'tanggal_mulai' => 'required|date',
+            'tanggal_selesai' => 'required|date',
+            'alasan' => 'required',
+            'lampiran' => 'nullable|file|mimes:jpg,png,pdf',
+        ]);
+
+        $izin = IzinSakit::findOrFail($id);
+
+        // Upload file jika ada
+        if ($request->hasFile('lampiran')) {
+            $file = $request->file('lampiran');
+            $namaFile = time() . '_' . $file->getClientOriginalName();
+            $file->storeAs('izin', $namaFile, 'public');
+            $izin->lampiran = 'izin/' . $namaFile;
+        }
+
+        $izin->jenis = $request->jenis;
+        $izin->tanggal_mulai = $request->tanggal_mulai;
+        $izin->tanggal_selesai = $request->tanggal_selesai;
+        $izin->alasan = $request->alasan;
+        $izin->save();
+
+        return redirect()->route('staff.izin.index')->with('success', 'Data izin berhasil diperbarui!');
     }
+
 
     public function destroy(string $id)
     {
@@ -72,7 +100,7 @@ class IzinsakitController extends Controller
 
         return back()->with('success', 'Izin berhasil ditolak.');
     }
-        /* ============================================================
+    /* ============================================================
        STAFF: MENAMPILKAN RIWAYAT IZIN
     ============================================================ */
     public function staffIndex()
@@ -130,6 +158,51 @@ class IzinsakitController extends Controller
         return redirect()->route('staff.izin.index')
             ->with('success', 'Pengajuan izin berhasil dikirim dan menunggu persetujuan.');
     }
+    public function staffEdit($id)
+    {
+        $izin = IzinSakit::findOrFail($id);
+        return view('staff.izin.create', compact('izin'));
+    }
 
+    public function staffUpdate(Request $request, $id)
+    {
+        // VALIDASI
+        $request->validate([
+            'jenis'             => 'required|in:izin,sakit',
+            'tanggal_mulai'     => 'required|date',
+            'tanggal_selesai'   => 'required|date|after_or_equal:tanggal_mulai',
+            'alasan'            => 'required|string|max:255',
+            'lampiran'          => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
+        ]);
+
+        // AMBIL DATA
+        $izin = IzinSakit::findOrFail($id);
+
+        // UPDATE DATA UTAMA
+        $izin->jenis            = $request->jenis;
+        $izin->tanggal_mulai    = $request->tanggal_mulai;
+        $izin->tanggal_selesai  = $request->tanggal_selesai;
+        $izin->alasan           = $request->alasan;
+
+        // JIKA ADA LAMPIRAN BARU
+        if ($request->hasFile('lampiran')) {
+
+            // HAPUS FILE LAMA JIKA ADA
+            if ($izin->lampiran && file_exists(storage_path('app/public/' . $izin->lampiran))) {
+                unlink(storage_path('app/public/' . $izin->lampiran));
+            }
+
+            // SIMPAN FILE BARU
+            $file = $request->file('lampiran');
+            $path = $file->store('lampiran_izin', 'public');
+            $izin->lampiran = $path;
+        }
+
+        // SIMPAN KE DATABASE
+        $izin->save();
+
+        return redirect()
+            ->route('staff.izin.index')
+            ->with('success', 'Data izin berhasil diperbarui.');
+    }
 }
-

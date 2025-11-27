@@ -79,26 +79,35 @@
                             <td>{{ $izin->approver->name ?? '-' }}</td>
 
                             <td>
-                                {{-- EDIT — tampil hanya jika masih pending --}}
-                                @if ($izin->status == 'pending')
-                                <a href="{{ route('staff.izin.edit', $izin->id) }}" 
-                                   class="btn btn-sm btn-warning mb-1">
-                                   Edit
-                                </a>
-                                @endif
 
-                                {{-- HAPUS --}}
-                                <form action="{{ route('staff.izin.destroy', $izin->id) }}" 
-                                      method="POST" 
-                                      class="d-inline"
-                                      onsubmit="return confirm('Hapus data ini?')">
-                                    @csrf 
-                                    @method('DELETE')
-                                    <button class="btn btn-sm btn-danger">
-                                        Hapus
-                                    </button>
-                                </form>
-                            </td>
+    {{-- Jika pending → tampilkan Edit + Hapus --}}
+    @if ($izin->status == 'pending')
+
+        <a href="{{ route('staff.izin.edit', $izin->id) }}" 
+           class="btn btn-sm btn-warning mb-1">
+            Edit
+        </a>
+
+        <form action="{{ route('staff.izin.destroy', $izin->id) }}" 
+              method="POST" 
+              class="d-inline"
+              onsubmit="return confirm('Hapus data ini?')">
+            @csrf 
+            @method('DELETE')
+            <button class="btn btn-sm btn-danger">
+                Hapus
+            </button>
+        </form>
+
+    @else
+        {{-- Jika disetujui atau ditolak → tombol jadi Selesai / disabled --}}
+        <button class="btn btn-sm btn-secondary" disabled>
+            Selesai
+        </button>
+    @endif
+
+</td>
+
 
                         </tr>
                         @endforeach
