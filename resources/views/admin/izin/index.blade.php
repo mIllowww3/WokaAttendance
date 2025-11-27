@@ -11,7 +11,7 @@
         <div class="card-body">
 
             @if (session('success'))
-                <div class="alert alert-success">{{ session('success') }}</div>
+            <div class="alert alert-success">{{ session('success') }}</div>
             @endif
 
             <div class="table-responsive">
@@ -52,45 +52,56 @@
 
                             <td>
                                 @if ($izin->lampiran)
-                                    <a href="{{ asset('storage/'.$izin->lampiran) }}" 
-                                       class="btn btn-sm btn-secondary" target="_blank">
-                                        Lihat
-                                    </a>
+                                <a href="{{ asset('storage/'.$izin->lampiran) }}"
+                                    class="btn btn-sm btn-secondary" target="_blank">
+                                    Lihat
+                                </a>
                                 @else
-                                    -
+                                -
                                 @endif
                             </td>
 
                             <td>
                                 @if ($izin->status == 'pending')
-                                    <span class="badge bg-secondary">Pending</span>
+                                <span class="badge bg-secondary">Pending</span>
 
                                 @elseif ($izin->status == 'disetujui')
-                                    <span class="badge bg-success">Disetujui</span>
+                                <span class="badge bg-success">Disetujui</span>
 
                                 @else
-                                    <span class="badge bg-danger">Ditolak</span>
+                                <span class="badge bg-danger">Ditolak</span>
                                 @endif
                             </td>
 
                             <td>{{ $izin->approver->name ?? '-' }}</td>
 
                             <td>
-                                <a href="{{ route('izin.show', $izin->id) }}" class="btn btn-sm btn-info">
-                                    Detail
-                                </a>
 
-                                <a href="{{ route('izin.edit', $izin->id) }}" class="btn btn-sm btn-warning">
-                                    Edit
-                                </a>
+                                {{-- Hanya tampil jika status masih pending --}}
+                                @if ($izin->status == 'pending')
 
-                                <form action="{{ route('izin.destroy', $izin->id) }}" method="POST" class="d-inline"
-                                      onsubmit="return confirm('Hapus data ini?')">
-                                    @csrf 
-                                    @method('DELETE')
-                                    <button class="btn btn-sm btn-danger">Hapus</button>
+                                {{-- SETUJUI --}}
+                                <form action="{{ route('admin.izin.approve', $izin->id) }}"
+                                    method="POST" class="d-inline">
+                                    @csrf
+                                    <button class="btn btn-sm btn-success mb-1">
+                                        Setujui
+                                    </button>
                                 </form>
+
+                                {{-- TOLAK --}}
+                                <form action="{{ route('admin.izin.reject', $izin->id) }}"
+                                    method="POST" class="d-inline">
+                                    @csrf
+                                    <button class="btn btn-sm btn-danger mb-1">
+                                        Tolak
+                                    </button>
+                                </form>
+
+                                @endif
+
                             </td>
+
 
                         </tr>
                         @endforeach

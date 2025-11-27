@@ -33,7 +33,7 @@
                             <th>Nama User</th>
                             <th>Email</th>
                             <th>Departemen</th>
-                            <th>Kantor</th>
+                            <th>Perusahaan</th>
                             <th>No HP</th>
                             <th>Status</th>
                             <th width="20%">Aksi</th>

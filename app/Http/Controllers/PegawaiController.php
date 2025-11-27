@@ -9,6 +9,7 @@ use App\Models\Perusahaan;
 use Endroid\QrCode\QrCode;
 use Endroid\QrCode\Writer\PngWriter;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -162,5 +163,74 @@ class PegawaiController extends Controller
         $pegawai->delete();
 
         return redirect()->route('admin.pegawai.index')->with('success', 'Pegawai berhasil dihapus');
+    }
+    public function profile()
+    {
+        $user = Auth::user();
+        $pegawai = Pegawai::with(['departemen', 'kantor'])->where('user_id', $user->id)->first();
+
+        return view('staff.profile.index', compact('pegawai'));
+    }
+
+    public function profileUpdate(Request $request, $id)
+    {
+        // Ambil data pegawai berdasarkan id
+        $pegawai = Pegawai::findOrFail($id);
+        $user = $pegawai->user;
+
+        // Validasi input
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'password' => 'nullable|min:8',
+
+            'no_hp' => 'nullable|string|max:20',
+            'departement_id' => 'nullable|exists:departements,id',
+            'perusahaan_id' => 'nullable|exists:perusahaans,id',
+
+            'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        ]);
+
+        /* ==========================
+       UPDATE USER (nama, email, password)
+    ========================== */
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->password);
+        }
+
+        $user->update([
+            'name'  => $request->name,
+            'email' => $request->email,
+            'password' => $user->password,
+        ]);
+
+        /* ==========================
+       UPDATE PEGAWAI
+    ========================== */
+        $dataPegawai = [
+            'no_hp'          => $request->no_hp,
+            'departement_id' => $request->departement_id,
+            'perusahaan_id'  => $request->perusahaan_id,
+        ];
+
+        /* ==========================
+       UPDATE FOTO
+    ========================== */
+        if ($request->hasFile('foto')) {
+
+            // hapus foto lama
+            if ($pegawai->foto && Storage::disk('public')->exists($pegawai->foto)) {
+                Storage::disk('public')->delete($pegawai->foto);
+            }
+
+            // upload foto baru
+            $dataPegawai['foto'] = $request->file('foto')->store('pegawai_foto', 'public');
+        }
+
+        // Simpan data pegawai
+        $pegawai->update($dataPegawai);
+
+        return redirect()->route('staff.profile.index')
+            ->with('success', 'Profil pegawai berhasil diperbarui!');
     }
 }
