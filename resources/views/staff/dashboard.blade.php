@@ -11,7 +11,7 @@
                         <div>
                             <p class="text-sm mb-1 text-uppercase font-weight-bold">Total Absen</p>
                             <h4 class="font-weight-bolder mb-1">{{ $totalAbsen ?? 0 }}</h4>
-                            <a href="{{ route('admin.absen.index') }}" class="text-primary small">Lihat Absen</a>
+                            <a href="" class="text-primary small">Lihat Absen</a>
                         </div>
 
                         <!-- Icon -->
@@ -29,7 +29,7 @@
                         <div>
                             <p class="text-sm mb-1 text-uppercase font-weight-bold">Total Izin</p>
                             <h4 class="font-weight-bolder mb-1">{{ $totalIzin ?? 0 }}</h4>
-                            <a href="{{ route('admin.izin.index') }}" class="text-danger small">Lihat Izin</a>
+                            <a href="{{ route('staff.izin.index') }}" class="text-danger small">Lihat Izin</a>
                         </div>
 
                         <!-- Icon -->
