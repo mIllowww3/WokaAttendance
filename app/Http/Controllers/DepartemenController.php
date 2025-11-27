@@ -61,7 +61,7 @@ public function create()
             'deskripsi' => $request->deskripsi,
         ]);
 
-        return redirect()->route('departemen.index')->with('success', 'Departemen berhasil diperbarui!');
+        return redirect()->route('admin.departemen.index')->with('success', 'Departemen berhasil diperbarui!');
     }
 
     public function destroy($id)

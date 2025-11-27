@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\Auth as FacadesAuth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class PegawaiController extends Controller
 {

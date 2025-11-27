@@ -41,8 +41,8 @@
         <div class="sidenav-header">
             <i class="fas fa-times p-3 cursor-pointer text-secondary opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
             <a class="navbar-brand m-0" href=" https://demos.creative-tim.com/argon-dashboard/pages/dashboard.html " target="_blank">
-                <img src="{{ asset('assets/img/logo-ct-dark.png') }}" width="26px" height="26px" class="navbar-brand-img h-100" alt="main_logo">
-                <span class="ms-1 font-weight-bold">Creative Tim</span>
+                <img src="{{ asset('assets/img/logo-woka.png') }}" width="45px" height="10px" class="navbar-brand-img h-100" alt="woka_logo">
+                <span class="ms-1 font-weight-bold">Woka Attendence</span>
             </a>
         </div>
         <hr class="horizontal dark mt-0">
@@ -52,7 +52,7 @@
                 @if(auth()->user()->role == 'admin')
 
                 <li class="nav-item">
-                    <a class="nav-link active" href="{{ route('admin.dashboard') }}">
+                    <a class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : ' text-dark' }}" href="{{ route('admin.dashboard') }}">
                         <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="ni ni-tv-2 text-dark text-sm opacity-10"></i>
                         </div>
@@ -60,50 +60,50 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('admin.departemen.index') }}">
+                    <a class="nav-link {{ request()->routeIs('admin.departemen.*') ? 'active' : ' text-dark' }}" href="{{ route('admin.departemen.index') }}">
                         <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="ni ni-calendar-grid-58 text-dark text-sm opacity-10"></i>
+                            <i class="ni ni-building text-dark text-sm opacity-10"></i>
                         </div>
                         <span class="nav-link-text ms-1">Departemen</span>
                     </a>
-
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('admin.perusahaan.index') }}">
+                    <a class="nav-link {{ request()->routeIs('admin.perusahaan.*') ? 'active' : ' text-dark' }}" href="{{ route('admin.perusahaan.index') }}">
                         <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="ni ni-credit-card text-dark text-sm opacity-10"></i>
+                            <i class="ni ni-briefcase-24 text-dark text-sm opacity-10"></i>
                         </div>
                         <span class="nav-link-text ms-1">Perusahaan</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('admin.pegawai.index') }}">
+                    <a class="nav-link {{ request()->routeIs('admin.pegawai.*') ? 'active' : ' text-dark' }}" href="{{ route('admin.pegawai.index') }}">
                         <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="ni ni-app text-dark text-sm opacity-10"></i>
+                            <i class="ni ni-single-02 text-dark text-sm opacity-10"></i>
                         </div>
                         <span class="nav-link-text ms-1">Pegawai</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('admin.jadwal.index') }}">
+                    <a class="nav-link {{ request()->routeIs('admin.jadwal.*') ? 'active' : ' text-dark' }}" href="{{ route('admin.jadwal.index') }}">
                         <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="ni ni-app text-dark text-sm opacity-10"></i>
+                            <i class="ni ni-calendar-grid-58 text-dark text-sm opacity-10"></i>
                         </div>
                         <span class="nav-link-text ms-1">Jadwal</span>
+
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('admin.izin.index') }}">
+                    <a class="nav-link {{ request()->routeIs('admin.izin.*') ? 'active' : ' text-dark' }}" href="{{ route('admin.izin.index') }}">
                         <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="ni ni-world-2 text-dark text-sm opacity-10"></i>
+                            <i class="ni ni-single-copy-04 text-dark text-sm opacity-10"></i>
                         </div>
                         <span class="nav-link-text ms-1">Izin</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('admin.absen.index') }}">
+                    <a class="nav-link {{ request()->routeIs('admin.absen.*') ? 'active' : ' text-dark' }}" href="{{ route('admin.absen.index') }}">
                         <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="ni ni-world-2 text-dark text-sm opacity-10"></i>
+                            <i class="ni ni-check-bold text-dark text-sm opacity-10"></i>
                         </div>
                         <span class="nav-link-text ms-1">Absen</span>
                     </a>
