@@ -5,13 +5,18 @@
 
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h3 class="mt-4">Data Izin & Sakit</h3>
+
+        {{-- TOMBOL TAMBAH --}}
+        <a href="{{ route('staff.izin.create') }}" class="btn btn-primary">
+            + Tambah Data
+        </a>
     </div>
 
     <div class="card shadow-sm">
         <div class="card-body">
 
             @if (session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
+                <div class="alert alert-success">{{ session('success') }}</div>
             @endif
 
             <div class="table-responsive">
@@ -26,9 +31,10 @@
                             <th>Lampiran</th>
                             <th>Status</th>
                             <th>Approved By</th>
-                            <th width="140px">Aksi</th>
+                            <th width="150px">Aksi</th>
                         </tr>
                     </thead>
+
                     <tbody>
                         @foreach ($data as $izin)
                         <tr>
@@ -44,73 +50,64 @@
                             </td>
 
                             <td>
-                                {{ $izin->tanggal_mulai }} s/d <br>
-                                {{ $izin->tanggal_selesai }}
+                                {{ $izin->tanggal_mulai }} <br>
+                                s/d {{ $izin->tanggal_selesai }}
                             </td>
 
                             <td>{{ Str::limit($izin->alasan, 40) }}</td>
 
                             <td>
                                 @if ($izin->lampiran)
-                                <a href="{{ asset('storage/'.$izin->lampiran) }}"
-                                    class="btn btn-sm btn-secondary" target="_blank">
-                                    Lihat
-                                </a>
+                                    <a href="{{ asset('storage/'.$izin->lampiran) }}" 
+                                       class="btn btn-sm btn-secondary" target="_blank">
+                                        Lihat
+                                    </a>
                                 @else
-                                -
+                                    -
                                 @endif
                             </td>
 
                             <td>
-                                @if ($izin->status == 'pending')
-                                <span class="badge bg-secondary">Pending</span>
-
-                                @elseif ($izin->status == 'disetujui')
-                                <span class="badge bg-success">Disetujui</span>
-
-                                @else
-                                <span class="badge bg-danger">Ditolak</span>
-                                @endif
+                                <span class="badge 
+                                    @if ($izin->status == 'pending') bg-secondary
+                                    @elseif ($izin->status == 'disetujui') bg-success
+                                    @else bg-danger @endif">
+                                    {{ ucfirst($izin->status) }}
+                                </span>
                             </td>
 
                             <td>{{ $izin->approver->name ?? '-' }}</td>
 
                             <td>
-
-                                {{-- Hanya tampil jika status masih pending --}}
+                                {{-- EDIT — tampil hanya jika masih pending --}}
                                 @if ($izin->status == 'pending')
-
-                                {{-- SETUJUI --}}
-                                <form action="{{ route('admin.izin.approve', $izin->id) }}"
-                                    method="POST" class="d-inline">
-                                    @csrf
-                                    <button class="btn btn-sm btn-success mb-1">
-                                        Setujui
-                                    </button>
-                                </form>
-
-                                {{-- TOLAK --}}
-                                <form action="{{ route('admin.izin.reject', $izin->id) }}"
-                                    method="POST" class="d-inline">
-                                    @csrf
-                                    <button class="btn btn-sm btn-danger mb-1">
-                                        Tolak
-                                    </button>
-                                </form>
-
+                                <a href="{{ route('staff.izin.edit', $izin->id) }}" 
+                                   class="btn btn-sm btn-warning mb-1">
+                                   Edit
+                                </a>
                                 @endif
 
+                                {{-- HAPUS --}}
+                                <form action="{{ route('staff.izin.destroy', $izin->id) }}" 
+                                      method="POST" 
+                                      class="d-inline"
+                                      onsubmit="return confirm('Hapus data ini?')">
+                                    @csrf 
+                                    @method('DELETE')
+                                    <button class="btn btn-sm btn-danger">
+                                        Hapus
+                                    </button>
+                                </form>
                             </td>
-
 
                         </tr>
                         @endforeach
                     </tbody>
+
                 </table>
             </div>
 
         </div>
     </div>
-
 </div>
 @endsection
