@@ -14,12 +14,12 @@
 
         <div class="card-body">
 
-            {{-- SEARCH --}}
+            <!-- Search -->
             <form method="GET" class="mb-4">
-                <div class="input-group shadow-sm">
-                    <input type="text" name="cari" class="form-control" placeholder="Cari nama pegawai..."
+                <div class="d-flex">
+                    <input type="text" name="cari" class="form-control me-3" placeholder="Cari departemen..."
                         value="{{ request('cari') }}">
-                    <button class="btn btn-primary px-4">Cari</button>
+                    <button class="btn btn-primary" type="submit">Cari</button>
                 </div>
             </form>
 

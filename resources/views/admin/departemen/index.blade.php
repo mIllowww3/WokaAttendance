@@ -1,11 +1,25 @@
 @extends('layout.app')
 
-
 @section('content')
 
 <body class="bg-light">
 
     <div class="container mt-5">
+
+        {{-- NOTIFIKASI BERHASIL / ERROR --}}
+        @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert" id="alert-message">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        @endif
+
+        @if (session('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert" id="alert-message">
+            {{ session('error') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        @endif
 
         <div class="card shadow border-0">
             <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
@@ -18,13 +32,14 @@
             <div class="card-body">
 
                 <!-- Search -->
-                <form method="GET" class="mb-3">
-                    <div class="input-group">
-                        <input type="text" name="cari" class="form-control" placeholder="Cari departemen..."
+                <form method="GET" class="mb-4">
+                    <div class="d-flex">
+                        <input type="text" name="cari" class="form-control me-3" placeholder="Cari departemen..."
                             value="{{ request('cari') }}">
-                        <button class="btn btn-primary">Cari</button>
+                        <button class="btn btn-primary" type="submit">Cari</button>
                     </div>
                 </form>
+
 
                 <!-- Table -->
                 <div class="table-responsive">
@@ -46,21 +61,25 @@
                                 <td>{{ $item->deskripsi ?? '-' }}</td>
 
                                 <td class="text-center">
-                                    <a href="{{ route('admin.departemen.edit', $item->id) }}"
-                                        class="btn btn-warning btn-sm text-white">
-                                        Edit
-                                    </a>
+                                    <div class="d-flex justify-content-center align-items-center gap-2">
+                                        <a href="{{ route('admin.departemen.edit', $item->id) }}"
+                                            class="btn btn-warning btn-sm text-white">
+                                            Edit
+                                        </a>
 
-                                    <form action="{{ route('admin.departemen.destroy', $item->id) }}"
-                                        method="POST" class="d-inline"
-                                        onsubmit="return confirm('Yakin ingin menghapus?')">
-                                        @csrf
-                                        @method('DELETE')
+                                        <form action="{{ route('admin.departemen.destroy', $item->id) }}"
+                                            method="POST"
+                                            style="display: inline;"
+                                            class="m-0 p-0"
+                                            onsubmit="return confirm('Yakin ingin menghapus?')">
+                                            @csrf
+                                            @method('DELETE')
 
-                                        <button class="btn btn-danger btn-sm">
-                                            Hapus
-                                        </button>
-                                    </form>
+                                            <button class="btn btn-danger btn-sm">
+                                                Hapus
+                                            </button>
+                                        </form>
+                                    </div>
                                 </td>
                             </tr>
                             @empty
@@ -80,6 +99,20 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- SCRIPT UNTUK ALERT OTOMATIS HILANG DENGAN FADE OUT -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const alert = document.getElementById('alert-message');
+            if (alert) {
+                setTimeout(() => {
+                    alert.style.transition = 'opacity 0.5s ease';
+                    alert.style.opacity = '0';
+                    setTimeout(() => alert.remove(), 500); // Hapus elemen setelah fade
+                }, 5000); // 5 detik tampil
+            }
+        });
+    </script>
 
 </body>
 @endsection
