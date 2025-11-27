@@ -3,7 +3,7 @@
 @section('content')
 <div class="container mt-4">
     <div class="card shadow">
-        <div class="card-header bg-warning text-white fw-bold">
+        <div class="card-header bg-primary text-white fw-bold">
             Edit Pegawai
         </div>
 

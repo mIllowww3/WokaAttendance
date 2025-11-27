@@ -8,7 +8,7 @@
             <div class="col-md-12">
 
                 <div class="card shadow-lg border-0">
-                    <div class="card-header text-white bg-warning">
+                    <div class="card-header text-white bg-primary">
                         <h4 class="mb-0">Edit Departemen</h4>
                     </div>
 

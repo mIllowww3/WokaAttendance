@@ -94,7 +94,7 @@
                             </td>
 
                             <td class="text-center">
-                                <a href="{{ route('absen.show', $a->id) }}" class="btn btn-info btn-sm text-white">
+                                <a href="{{ route('admin.absen.show', $a->id) }}" class="btn btn-info btn-sm text-white">
                                     Detail
                                 </a>
                             </td>

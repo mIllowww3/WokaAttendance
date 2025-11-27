@@ -54,7 +54,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::post('/pegawai/store', [PegawaiController::class, 'store'])->name('pegawai.store');
     Route::get('/pegawai/edit/{id}', [PegawaiController::class, 'edit'])->name('pegawai.edit');
     Route::put('/pegawai/update/{id}', [PegawaiController::class, 'update'])->name('pegawai.update');
-    Route::delete('/pegawai/delete/{id}', [PegawaiController::class, 'destroy'])->name('pegawai.destroy');
+    Route::delete('/pegawai/delete/{id}', [PegawaiController::class, 'delete'])->name('pegawai.delete');
 
 
     /*
@@ -75,5 +75,12 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 
 Route::middleware(['auth','role:staff'])->prefix('staff')->name('staff.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'staff'])->name('dashboard');
+
+    Route::get('/absen', [AbsenController::class, 'staffIndex'])->name('absen.index');
+    Route::post('/absen/store', [AbsenController::class, 'staffStore'])->name('absen.store');
+    Route::get('/absen/scan', [AbsenController::class, 'scan'])->name('absen.scan');
+    Route::post('/absen/scan/process', [AbsenController::class, 'scanProcess'])->name('absen.scan.process');
+    Route::post('/absen/masuk', [AbsenController::class, 'absenMasuk'])->name('absen.masuk');
+    Route::post('/absen/pulang', [AbsenController::class, 'absenPulang'])->name('absen.pulang');
     
 });

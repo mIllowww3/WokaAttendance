@@ -6,7 +6,7 @@ use App\Models\Pegawai;
 use App\Models\User;
 use App\Models\Departemen;
 use App\Models\Perusahaan;
-use Endroid\QrCode\Builder\Builder;
+use Endroid\QrCode\QrCode;
 use Endroid\QrCode\Writer\PngWriter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -73,13 +73,12 @@ class PegawaiController extends Controller
         // File name QR
         $qrFileName = $uid . '.png';
 
-        // Generate QR binary
-        $qrImage = Builder::create()
-            ->writer(new PngWriter()) // <- pakai GD, aman
-            ->data($uid)
-            ->size(300)
-            ->build()
-            ->getString(); // hasil binary PNG
+        $qrCode = new QrCode($uid);
+
+        $writer = new PngWriter();
+
+        // Hasil binary PNG
+        $qrImage = $writer->write($qrCode)->getString();
 
         // Simpan QR ke storage
         Storage::disk('public')->put('qrcodes/' . $qrFileName, $qrImage);
