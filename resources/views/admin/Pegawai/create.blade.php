@@ -40,9 +40,9 @@
                     @endforeach
                 </select>
 
-                <label class="mt-3">Kantor</label>
+                <label class="mt-3">Perusahaan</label>
                 <select name="kantor_id" class="form-control" required>
-                    <option value="">-- Pilih Kantor --</option>
+                    <option value="">-- Perusahaan --</option>
                     @foreach ($kantor as $k)
                     <option value="{{ $k->id }}">{{ $k->nama_kantor }}</option>
                     @endforeach

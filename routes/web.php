@@ -56,24 +56,33 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::put('/pegawai/update/{id}', [PegawaiController::class, 'update'])->name('pegawai.update');
     Route::delete('/pegawai/delete/{id}', [PegawaiController::class, 'destroy'])->name('pegawai.destroy');
 
-
-    /*
-    |--------------------------------------------------------------------------
-    | Absen
-    |--------------------------------------------------------------------------
-    */
     Route::get('/absen', [AbsenController::class, 'absen'])->name('absen.index');
     Route::get('/absen/{id}', [AbsenController::class, 'show'])->name('absen.show');
     Route::delete('/pegawai/delete/{id}', [PegawaiController::class, 'delete'])->name('pegawai.delete');
+
     Route::resource('jadwal', JadwalKerjaController::class);
+
     Route::resource('izin', IzinSakitController::class);
     Route::post('izin/{id}/approve', [IzinSakitController::class, 'approve'])->name('izin.approve');
-
     Route::post('izin/{id}/reject', [IzinSakitController::class, 'reject'])->name('izin.reject');
 
 });
 
 Route::middleware(['auth','role:staff'])->prefix('staff')->name('staff.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'staff'])->name('dashboard');
-    
+
+    Route::get('/profile', [PegawaiController::class, 'profile'])->name('profile.index');
+    Route::put('/profile/update/{id}', [PegawaiController::class, 'profileUpdate'])->name('profile.update');
+
+    Route::get('/staff/izin', [IzinSakitController::class, 'staffIndex'])->name('izin.index');
+    Route::get('/staff/izin/create', [IzinSakitController::class, 'staffCreate'])->name('izin.create');
+    Route::post('/staff/izin/store', [IzinSakitController::class, 'staffStore'])->name('izin.store');
+    Route::get('/izin/show/{id}', [IzinSakitController::class, 'staffShow'])->name('izin.show');
+    Route::get('/izin/edit/{id}', [IzinSakitController::class, 'staffEdit'])->name('izin.edit');
+    Route::delete('/izin/delete/{id}', [IzinSakitController::class, 'destroy'])->name('izin.destroy');
+
+
+
 });
+
+    
