@@ -5,12 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Pegawai;
 use App\Models\User;
 use App\Models\Departemen;
-use App\Models\Izinsakit;
 use App\Models\Perusahaan;
-use Endroid\QrCode\Builder\Builder;
+use Endroid\QrCode\QrCode;
 use Endroid\QrCode\Writer\PngWriter;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth as FacadesAuth;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -45,40 +44,64 @@ class PegawaiController extends Controller
     }
 
     // STORE
-  public function store(Request $request)
-{
-    $request->validate([
-        'pegawai_id' => 'required|exists:pegawai,id',
-        'jenis' => 'required|in:izin,sakit',
-        'tanggal_mulai' => 'required|date',
-        'tanggal_selesai' => 'required|date|after_or_equal:tanggal_mulai',
-        'alasan' => 'required|string',
-        'lampiran' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
-    ]);
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|string|min:6',
+            'departemen_id' => 'required',
+            'kantor_id' => 'required',
+            'no_hp' => 'nullable|string',
+            'status' => 'required',
+            'foto' => 'required|image|max:2048',
+        ]);
 
-    // Upload lampiran jika ada
-    $lampiran = null;
-    if ($request->hasFile('lampiran')) {
-        $lampiran = $request->file('lampiran')->store('lampiran_izin', 'public');
+        // Simpan foto staff
+        $gambar = $request->file('foto')->store('staff', 'public');
+
+        // Buat user login
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => 'staff',
+        ]);
+
+        // Generate UID untuk QR
+        $uid = Str::uuid();
+
+        // File name QR
+        $qrFileName = $uid . '.png';
+
+        $qrCode = new QrCode($uid);
+
+        $writer = new PngWriter();
+
+        // Hasil binary PNG
+        $qrImage = $writer->write($qrCode)->getString();
+
+        // Simpan QR ke storage
+        Storage::disk('public')->put('qrcodes/' . $qrFileName, $qrImage);
+
+        // Simpan data pegawai
+        Pegawai::create([
+            'user_id' => $user->id,
+            'departemen_id' => $request->departemen_id,
+            'kantor_id' => $request->kantor_id,
+            'uid_qr' => $uid,
+            'qr_image' => 'qrcodes/' . $qrFileName,
+            'qr_generated_at' => now(), // <-- WAKTU QR DIBUAT
+            'foto' => $gambar,
+            'no_hp' => $request->no_hp,
+            'alamat' => $request->alamat,
+            'status' => $request->status,
+        ]);
+
+        return redirect()
+            ->route('admin.pegawai.index')
+            ->with('success', 'Pegawai berhasil ditambahkan');
     }
-
-    // Simpan izin/sakit
-    Izinsakit::create([
-        'pegawai_id' => $request->pegawai_id,
-        'jenis' => $request->jenis,
-        'tanggal_mulai' => $request->tanggal_mulai,
-        'tanggal_selesai' => $request->tanggal_selesai,
-        'alasan' => $request->alasan,
-        'lampiran' => $lampiran,
-        'status' => 'pending',
-        'approved_by' => null,
-    ]);
-
-    return redirect()
-        ->route('staff.izin.index')
-        ->with('success', 'Pengajuan izin/sakit berhasil diajukan.');
-}
-
 
     // EDIT
     public function edit($id)
@@ -143,72 +166,71 @@ class PegawaiController extends Controller
     }
     public function profile()
     {
-        $user = FacadesAuth::user();
+        $user = Auth::user();
         $pegawai = Pegawai::with(['departemen', 'kantor'])->where('user_id', $user->id)->first();
 
         return view('staff.profile.index', compact('pegawai'));
     }
 
     public function profileUpdate(Request $request, $id)
-{
-    // Ambil data pegawai berdasarkan id
-    $pegawai = Pegawai::findOrFail($id);
-    $user = $pegawai->user;
+    {
+        // Ambil data pegawai berdasarkan id
+        $pegawai = Pegawai::findOrFail($id);
+        $user = $pegawai->user;
 
-    // Validasi input
-    $request->validate([
-        'name' => 'required',
-        'email' => 'required|email|unique:users,email,' . $user->id,
-        'password' => 'nullable|min:8',
+        // Validasi input
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'password' => 'nullable|min:8',
 
-        'no_hp' => 'nullable|string|max:20',
-        'departement_id' => 'nullable|exists:departements,id',
-        'perusahaan_id' => 'nullable|exists:perusahaans,id',
+            'no_hp' => 'nullable|string|max:20',
+            'departement_id' => 'nullable|exists:departements,id',
+            'perusahaan_id' => 'nullable|exists:perusahaans,id',
 
-        'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-    ]);
+            'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        ]);
 
-    /* ==========================
+        /* ==========================
        UPDATE USER (nama, email, password)
     ========================== */
-    if ($request->filled('password')) {
-        $user->password = Hash::make($request->password);
-    }
-
-    $user->update([
-        'name'  => $request->name,
-        'email' => $request->email,
-        'password' => $user->password,
-    ]);
-
-    /* ==========================
-       UPDATE PEGAWAI
-    ========================== */
-    $dataPegawai = [
-        'no_hp'          => $request->no_hp,
-        'departement_id' => $request->departement_id,
-        'perusahaan_id'  => $request->perusahaan_id,
-    ];
-
-    /* ==========================
-       UPDATE FOTO
-    ========================== */
-    if ($request->hasFile('foto')) {
-
-        // hapus foto lama
-        if ($pegawai->foto && Storage::disk('public')->exists($pegawai->foto)) {
-            Storage::disk('public')->delete($pegawai->foto);
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->password);
         }
 
-        // upload foto baru
-        $dataPegawai['foto'] = $request->file('foto')->store('pegawai_foto', 'public');
+        $user->update([
+            'name'  => $request->name,
+            'email' => $request->email,
+            'password' => $user->password,
+        ]);
+
+        /* ==========================
+       UPDATE PEGAWAI
+    ========================== */
+        $dataPegawai = [
+            'no_hp'          => $request->no_hp,
+            'departement_id' => $request->departement_id,
+            'perusahaan_id'  => $request->perusahaan_id,
+        ];
+
+        /* ==========================
+       UPDATE FOTO
+    ========================== */
+        if ($request->hasFile('foto')) {
+
+            // hapus foto lama
+            if ($pegawai->foto && Storage::disk('public')->exists($pegawai->foto)) {
+                Storage::disk('public')->delete($pegawai->foto);
+            }
+
+            // upload foto baru
+            $dataPegawai['foto'] = $request->file('foto')->store('pegawai_foto', 'public');
+        }
+
+        // Simpan data pegawai
+        $pegawai->update($dataPegawai);
+
+        return redirect()->route('staff.profile.index')
+            ->with('success', 'Profil pegawai berhasil diperbarui!');
     }
-
-    // Simpan data pegawai
-    $pegawai->update($dataPegawai);
-
-    return redirect()->route('staff.profile.index')
-        ->with('success', 'Profil pegawai berhasil diperbarui!');
-}
-
 }

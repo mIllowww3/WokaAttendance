@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Absen;
 use App\Models\Departemen;
+use App\Models\Izinsakit;
 use App\Models\Jadwal_kerja;
 use App\Models\Pegawai;
 use App\Models\Perusahaan;
@@ -21,14 +22,18 @@ class DashboardController extends Controller
 
         $jadwal = Jadwal_kerja::orderBy('id')->get();
 
-        return view("admin.dashboard", compact("totalPegawai","totalDepartemen","totalPerusahaan","totalAbsen","jadwal"));
+        return view("admin.dashboard", compact("totalPegawai","totalDepartemen","totalPerusahaan","totalAbsen","totalIzin","jadwal",));
     }
 
     public function staff()
 {
+    $totalAbsen = Absen::count();
+    $totalIzin = Izinsakit::count();
     $jadwal = Jadwal_kerja::orderBy('id')->get();
 
-    return view('staff.dashboard', compact('jadwal'));
+    
+
+    return view('staff.dashboard', compact("totalAbsen","totalIzin","jadwal"));
 }
 
 }

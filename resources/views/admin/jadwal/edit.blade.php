@@ -4,7 +4,7 @@
 
 <div class="container mt-5">
     <div class="card shadow border-0">
-        <div class="card-header bg-warning text-white fw-bold">
+        <div class="card-header bg-primary text-white fw-bold">
             Edit Jadwal Kerja
         </div>
 
