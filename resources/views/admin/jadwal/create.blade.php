@@ -10,7 +10,7 @@
 
         <div class="card-body">
 
-            <form action="{{ route('jadwal.store') }}" method="POST">
+            <form action="{{ route('admin.jadwal.store') }}" method="POST">
                 @csrf
 
                 <div class="mb-3">
@@ -34,7 +34,7 @@
                 </div>
 
                 <button class="btn btn-primary">Simpan</button>
-                <a href="{{ route('jadwal.index') }}" class="btn btn-secondary">Kembali</a>
+                <a href="{{ route('admin.jadwal.index') }}" class="btn btn-secondary">Kembali</a>
 
             </form>
 

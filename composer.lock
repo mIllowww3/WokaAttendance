@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7a0f5cfc987570a3f812d3e9251accbe",
+    "content-hash": "57b9a85ff079c244a2a91ddd689204bb",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -614,16 +614,16 @@
         },
         {
             "name": "endroid/qr-code",
-            "version": "5.0.7",
+            "version": "5.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/endroid/qr-code.git",
-                "reference": "0cc00f0626b73bc71a1ea17af01387d0ac75e046"
+                "reference": "1f65da38fc54483690bd20908aadcbdcf66c482e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/endroid/qr-code/zipball/0cc00f0626b73bc71a1ea17af01387d0ac75e046",
-                "reference": "0cc00f0626b73bc71a1ea17af01387d0ac75e046",
+                "url": "https://api.github.com/repos/endroid/qr-code/zipball/1f65da38fc54483690bd20908aadcbdcf66c482e",
+                "reference": "1f65da38fc54483690bd20908aadcbdcf66c482e",
                 "shasum": ""
             },
             "require": {
@@ -634,7 +634,7 @@
                 "khanamiryan/qrcode-detector-decoder": "^1.0.6"
             },
             "require-dev": {
-                "endroid/quality": "dev-main",
+                "endroid/quality": "dev-master",
                 "ext-gd": "*",
                 "khanamiryan/qrcode-detector-decoder": "^1.0.4||^2.0.2",
                 "setasign/fpdf": "^1.8.2"
@@ -648,7 +648,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-main": "5.x-dev"
+                    "dev-master": "5.x-dev"
                 }
             },
             "autoload": {
@@ -677,7 +677,7 @@
             ],
             "support": {
                 "issues": "https://github.com/endroid/qr-code/issues",
-                "source": "https://github.com/endroid/qr-code/tree/5.0.7"
+                "source": "https://github.com/endroid/qr-code/tree/5.0.0"
             },
             "funding": [
                 {
@@ -685,7 +685,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-03-08T11:24:40+00:00"
+            "time": "2023-10-02T22:25:20+00:00"
         },
         {
             "name": "fruitcake/php-cors",
@@ -8602,12 +8602,12 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {},
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": "^8.2"
     },
-    "platform-dev": {},
-    "plugin-api-version": "2.6.0"
+    "platform-dev": [],
+    "plugin-api-version": "2.3.0"
 }
