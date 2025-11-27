@@ -19,6 +19,7 @@ class DashboardController extends Controller
         $totalDepartemen = Departemen::count();
         $totalPerusahaan = Perusahaan::count();
         $totalAbsen = Absen::count();
+        $totalIzin = Izinsakit::count();
 
         $jadwal = Jadwal_kerja::orderBy('id')->get();
 
