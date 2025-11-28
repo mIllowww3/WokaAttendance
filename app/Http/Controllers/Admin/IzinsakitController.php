@@ -126,83 +126,115 @@ class IzinsakitController extends Controller
     /* ============================================================
        STAFF: SIMPAN PENGAJUAN IZIN
     ============================================================ */
-    public function staffStore(Request $request)
-    {
-        $user = Auth::user();
-        $pegawai = $user->pegawai;
 
-        $request->validate([
-            'jenis' => 'required|in:izin,sakit',
-            'tanggal_mulai' => 'required|date',
-            'tanggal_selesai' => 'required|date|after_or_equal:tanggal_mulai',
-            'alasan' => 'required|max:255',
-            'lampiran' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
-        ]);
+public function staffStore(Request $request)
+{
+    $user = Auth::user();
+    $pegawai = $user->pegawai;
 
-        $data = [
-            'pegawai_id' => $pegawai->id,
-            'jenis' => $request->jenis,
-            'tanggal_mulai' => $request->tanggal_mulai,
-            'tanggal_selesai' => $request->tanggal_selesai,
-            'alasan' => $request->alasan,
-            'status' => 'pending',
-        ];
+    $request->validate([
+        'jenis' => 'required|in:izin,sakit',
+        'tanggal_mulai' => 'required|date',
+        'tanggal_selesai' => 'required|date|after_or_equal:tanggal_mulai',
+        'alasan' => 'required|max:255',
+        'lampiran' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
+    ]);
 
-        if ($request->hasFile('lampiran')) {
-            $data['lampiran'] = $request->file('lampiran')
-                ->store('lampiran_izin', 'public');
-        }
+    $mulai = $request->tanggal_mulai;
+    $selesai = $request->tanggal_selesai;
 
-        IzinSakit::create($data);
+    // CEK BENTROK TANPA ID (karena STORE)
+    $cekBentrok = IzinSakit::where('pegawai_id', $pegawai->id)
+        ->where(function ($q) use ($mulai, $selesai) {
+            $q->where('tanggal_mulai', '<=', $selesai)
+              ->where('tanggal_selesai', '>=', $mulai);
+        })
+        ->exists();
 
-        return redirect()->route('staff.izin.index')
-            ->with('success', 'Pengajuan izin berhasil dikirim dan menunggu persetujuan.');
+    if ($cekBentrok) {
+        return back()
+            ->withErrors(['tanggal_mulai' => 'Tanggal izin tersebut sudah digunakan sebelumnya.'])
+            ->withInput();
     }
+
+    $data = [
+        'pegawai_id' => $pegawai->id,
+        'jenis' => $request->jenis,
+        'tanggal_mulai' => $request->tanggal_mulai,
+        'tanggal_selesai' => $request->tanggal_selesai,
+        'alasan' => $request->alasan,
+        'status' => 'pending',
+    ];
+
+    if ($request->hasFile('lampiran')) {
+        $data['lampiran'] = $request->file('lampiran')
+            ->store('lampiran_izin', 'public');
+    }
+
+    IzinSakit::create($data);
+
+    return redirect()->route('staff.izin.index')
+        ->with('success', 'Pengajuan izin berhasil dikirim dan menunggu persetujuan.');
+}
+
+
     public function staffEdit($id)
     {
         $izin = IzinSakit::findOrFail($id);
         return view('staff.izin.create', compact('izin'));
     }
 
-    public function staffUpdate(Request $request, $id)
-    {
-        // VALIDASI
-        $request->validate([
-            'jenis'             => 'required|in:izin,sakit',
-            'tanggal_mulai'     => 'required|date',
-            'tanggal_selesai'   => 'required|date|after_or_equal:tanggal_mulai',
-            'alasan'            => 'required|string|max:255',
-            'lampiran'          => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
-        ]);
 
-        // AMBIL DATA
-        $izin = IzinSakit::findOrFail($id);
+ public function staffUpdate(Request $request, $id)
+{
+    $request->validate([
+        'jenis'             => 'required|in:izin,sakit',
+        'tanggal_mulai'     => 'required|date',
+        'tanggal_selesai'   => 'required|date|after_or_equal:tanggal_mulai',
+        'alasan'            => 'required|string|max:255',
+        'lampiran'          => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
+    ]);
 
-        // UPDATE DATA UTAMA
-        $izin->jenis            = $request->jenis;
-        $izin->tanggal_mulai    = $request->tanggal_mulai;
-        $izin->tanggal_selesai  = $request->tanggal_selesai;
-        $izin->alasan           = $request->alasan;
+    $pegawaiId = auth()->user()->pegawai->id;
+    $mulai = $request->tanggal_mulai;
+    $selesai = $request->tanggal_selesai;
 
-        // JIKA ADA LAMPIRAN BARU
-        if ($request->hasFile('lampiran')) {
+    // CEK BENTROK, tetapi abaikan dirinya sendiri
+    $cekBentrok = IzinSakit::where('pegawai_id', $pegawaiId)
+        ->where('id', '!=', $id)
+        ->where(function ($q) use ($mulai, $selesai) {
+            $q->where('tanggal_mulai', '<=', $selesai)
+              ->where('tanggal_selesai', '>=', $mulai);
+        })
+        ->exists();
 
-            // HAPUS FILE LAMA JIKA ADA
-            if ($izin->lampiran && file_exists(storage_path('app/public/' . $izin->lampiran))) {
-                unlink(storage_path('app/public/' . $izin->lampiran));
-            }
+    if ($cekBentrok) {
+        return back()
+            ->withErrors(['tanggal_mulai' => 'Tanggal izin sudah digunakan, tidak boleh overlap.'])
+            ->withInput();
+    }
 
-            // SIMPAN FILE BARU
-            $file = $request->file('lampiran');
-            $path = $file->store('lampiran_izin', 'public');
-            $izin->lampiran = $path;
+    $izin = IzinSakit::findOrFail($id);
+
+    $izin->jenis            = $request->jenis;
+    $izin->tanggal_mulai    = $request->tanggal_mulai;
+    $izin->tanggal_selesai  = $request->tanggal_selesai;
+    $izin->alasan           = $request->alasan;
+
+    if ($request->hasFile('lampiran')) {
+
+        if ($izin->lampiran && file_exists(storage_path('app/public/' . $izin->lampiran))) {
+            unlink(storage_path('app/public/' . $izin->lampiran));
         }
 
-        // SIMPAN KE DATABASE
-        $izin->save();
-
-        return redirect()
-            ->route('staff.izin.index')
-            ->with('success', 'Data izin berhasil diperbarui.');
+        $izin->lampiran = $request->file('lampiran')
+            ->store('lampiran_izin', 'public');
     }
+
+    $izin->save();
+
+    return redirect()
+        ->route('staff.izin.index')
+        ->with('success', 'Data izin berhasil diperbarui.');
+}
 }
