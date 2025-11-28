@@ -68,7 +68,6 @@ class IzinsakitController extends Controller
         return redirect()->route('staff.izin.index')->with('success', 'Data izin berhasil diperbarui!');
     }
 
-
     public function destroy(string $id)
     {
         $izin = IzinSakit::findOrFail($id);
