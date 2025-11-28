@@ -33,35 +33,62 @@
                 </select>
 
                 <label class="mt-3">Departemen</label>
-                <select name="departemen_id" class="form-control" required>
+                <select name="departemen_id" class="form-control">
                     <option value="">-- Pilih Departemen --</option>
                     @foreach ($departemen as $d)
                     <option value="{{ $d->id }}">{{ $d->nama_departemen }}</option>
                     @endforeach
                 </select>
+                @error('departemen_id')
+                <div class="text-danger">{{ $message }}</div>
+                @enderror
 
                 <label class="mt-3">Perusahaan</label>
-                <select name="kantor_id" class="form-control" required>
+                <select name="kantor_id" class="form-control">
                     <option value="">-- Perusahaan --</option>
                     @foreach ($kantor as $k)
                     <option value="{{ $k->id }}">{{ $k->nama_kantor }}</option>
                     @endforeach
                 </select>
+                @error('kantor_id')
+                <div class="text-danger">{{ $message }}</div>
+                @enderror
 
-                <label class="mt-3">No HP</label>
-                <input type="text" name="no_hp" class="form-control">
+                <div class="mt-3">
+                    <label>No HP</label>
+                    <input type="text" name="no_hp" class="form-control" value="{{ old('no_hp') }}">
+                    @error('no_hp')
+                    <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
 
-                <label class="mt-3">Alamat</label>
-                <textarea name="alamat" class="form-control" rows="3"></textarea>
+                <div class="mt-3">
+                    <label>Alamat</label>
+                    <input type="text" name="alamat" class="form-control" value="{{ old('alamat') }}">
+                    @error('alamat')
+                    <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
 
-                <label class="mt-3">Status</label>
-                <select name="status" class="form-control">
-                    <option value="aktif">Aktif</option>
-                    <option value="nonaktif">Nonaktif</option>
-                </select>
+<label class="mt-3">Status</label>
+<select name="status" class="form-control">
+    <option value="">-- Pilih Status --</option>
+    @foreach ($status as $s)
+        <option value="{{ $s }}">{{ ucfirst($s) }}</option>
+    @endforeach
+</select>
+
+@error('status')
+<div class="text-danger">{{ $message }}</div>
+@enderror
+
 
                 <label class="mt-3">Foto Pegawai</label>
                 <input type="file" name="foto" class="form-control">
+
+                @error('foto')
+                <div class="text-danger">{{ $message }}</div>
+                @enderror
 
                 <button class="btn btn-success mt-4">Simpan</button>
                 <a href="{{ route('admin.pegawai.index') }}" class="btn btn-secondary mt-4">Kembali</a>

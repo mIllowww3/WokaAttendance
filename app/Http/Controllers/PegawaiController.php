@@ -17,21 +17,20 @@ use Illuminate\Support\Str;
 class PegawaiController extends Controller
 {
     // INDEX + SEARCH
-    public function index(Request $request)
-    {
-        $cari = $request->cari;
+ public function index(Request $request)
+{
+    $cari = $request->cari;
 
-        $pegawai = Pegawai::with(['departemen', 'kantor', 'user'])
-            ->when($cari, function ($query) use ($cari) {
-                $query->whereHas('user', function ($q) use ($cari) {
-                    $q->where('name', 'like', "%$cari%");
-                });
-            })
-            ->paginate(10);
+    $pegawai = Pegawai::with(['departemen', 'kantor', 'user'])
+        ->when($cari, function ($query) use ($cari) {
+            $query->whereHas('user', function ($q) use ($cari) {
+                $q->where('name', 'like', "%$cari%");
+            });
+        })
+        ->paginate(10);
 
-        return view('admin.pegawai.index', compact('pegawai'));
-    }
-
+    return view('admin.pegawai.index', compact('pegawai', 'cari'));
+}
 
     // CREATE
     public function create()
@@ -39,8 +38,10 @@ class PegawaiController extends Controller
         $users = User::orderBy('name')->get();
         $departemen = Departemen::orderBy('nama_departemen')->get();
         $kantor = Perusahaan::orderBy('nama_kantor')->get();
+        $status = ['aktif', 'nonaktif'];
 
-        return view('admin.pegawai.create', compact('users', 'departemen', 'kantor'));
+        return view('admin.pegawai.create', compact('users', 'departemen', 'kantor', 'status'));
+
     }
 
     // STORE
@@ -52,9 +53,10 @@ class PegawaiController extends Controller
             'password' => 'required|string|min:6',
             'departemen_id' => 'required',
             'kantor_id' => 'required',
-            'no_hp' => 'nullable|string',
+            'no_hp' => 'required|string',
+            'alamat' => 'required|string',
             'status' => 'required',
-            'foto' => 'required|image|max:2048',
+            'foto' => 'nullable|image|max:2048',
         ]);
 
         // Simpan foto staff
@@ -118,14 +120,24 @@ class PegawaiController extends Controller
     public function update(Request $request, $id)
     {
         $pegawai = Pegawai::findOrFail($id);
+        $user = $pegawai->user;
 
-        $request->validate([
-            'user_id' => 'required',
-            'departemen_id' => 'required',
-            'kantor_id' => 'required',
-            'status' => 'required',
-            'foto' => 'nullable|image|max:2048'
-        ]);
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|unique:users,email,'.$user->id,
+        'departemen_id' => 'required|exists:departemens,id',
+        'kantor_id' => 'required|exists:perusahaans,id',
+        'no_hp' => 'required|string|max:20',
+        'alamat' => 'required|string',
+        'status' => 'required',
+        'foto' => 'nullable|image|max:2048',
+    ]);
+
+        // Update tabel users
+    $user->update([
+        'name' => $request->name,
+        'email' => $request->email,
+    ]);
 
         // FOTO
         if ($request->hasFile('foto')) {
@@ -140,7 +152,6 @@ class PegawaiController extends Controller
         }
 
         $pegawai->update([
-            'user_id' => $request->user_id,
             'departemen_id' => $request->departemen_id,
             'kantor_id' => $request->kantor_id,
             'no_hp' => $request->no_hp,
@@ -232,5 +243,16 @@ class PegawaiController extends Controller
 
         return redirect()->route('staff.profile.index')
             ->with('success', 'Profil pegawai berhasil diperbarui!');
+    }
+        public function delete($id)
+    {
+        // Find the Pegawai by ID or fail
+        $pegawai = Pegawai::findOrFail($id);
+
+        // Delete the record
+        $pegawai->delete();
+
+        // Redirect back with a success message
+        return redirect()->route('admin.pegawai.index')->with('success', 'Pegawai deleted successfully.');
     }
 }

@@ -25,6 +25,7 @@ class PerusahaanController extends Controller
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
             'radius' => 'required|numeric',
+            'no_hp' => 'nullable|string',
             'alamat' => 'nullable|string',
             'status' => 'required'
         ]);
@@ -47,6 +48,7 @@ class PerusahaanController extends Controller
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
             'radius' => 'required|numeric',
+            'no_hp' => 'nullable',
             'alamat' => 'nullable',
             'status' => 'required',
         ]);
