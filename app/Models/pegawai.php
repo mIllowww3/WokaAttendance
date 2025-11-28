@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Pegawai extends Model
 {
-    //
     protected $fillable = [
         'user_id',
         'departemen_id',
@@ -20,7 +19,6 @@ class Pegawai extends Model
         'status',
     ];
 
-
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -28,20 +26,21 @@ class Pegawai extends Model
 
     public function departemen()
     {
-        return $this->belongsTo(departemen::class);
+        return $this->belongsTo(Departemen::class);
     }
 
     public function kantor()
     {
-        return $this->belongsTo(perusahaan::class);
+        return $this->belongsTo(Perusahaan::class);
     }
 
-    public function absen()
+    // Perbaikan nama relasi
+    public function absens()
     {
-        return $this->hasMany(absen::class);
+        return $this->hasMany(Absen::class);
     }
 
-    public function izinSakit()
+    public function izins()
     {
         return $this->hasMany(Izinsakit::class);
     }
