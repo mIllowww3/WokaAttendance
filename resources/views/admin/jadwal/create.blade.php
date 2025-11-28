@@ -21,16 +21,25 @@
                         <option value="{{ $h }}">{{ $h }}</option>
                         @endforeach
                     </select>
+                    @error('hari')
+                    <div class="text-danger">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label fw-bold">Jam Masuk</label>
                     <input type="time" name="jam_masuk" class="form-control">
+                                    @error('jam_masuk')
+                <div class="text-danger">{{ $message }}</div>
+                @enderror
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label fw-bold">Jam Pulang</label>
                     <input type="time" name="jam_pulang" class="form-control">
+                                    @error('jam_pulang')
+                <div class="text-danger">{{ $message }}</div>
+                @enderror
                 </div>
 
                 <button class="btn btn-primary">Simpan</button>

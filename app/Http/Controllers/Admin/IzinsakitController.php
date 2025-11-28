@@ -180,7 +180,7 @@ public function staffStore(Request $request)
     public function staffEdit($id)
     {
         $izin = IzinSakit::findOrFail($id);
-        return view('staff.izin.create', compact('izin'));
+        return view('staff.izin.edit', compact('izin'));
     }
 
 

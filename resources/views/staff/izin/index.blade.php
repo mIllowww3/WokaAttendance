@@ -23,7 +23,7 @@
                 <table class="table table-bordered table-striped align-middle">
                     <thead class="table-dark">
                         <tr>
-                            <th>#</th>
+                            <th>No</th>
                             <th>Pegawai</th>
                             <th>Jenis</th>
                             <th>Tanggal</th>

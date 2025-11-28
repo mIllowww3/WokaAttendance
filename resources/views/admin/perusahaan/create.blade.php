@@ -13,25 +13,43 @@
                 @csrf
 
                 <label>Nama Kantor</label>
-                <input type="text" name="nama_kantor" class="form-control" required>
+                <input type="text" name="nama_kantor" class="form-control">
+                @error('nama_kantor')
+                <div class="text-danger">{{ $message }}</div>
+                @enderror
 
                 <label>Latitude</label>
-                <input type="text" id="lat" name="latitude" class="form-control" required>
+                <input type="text" id="lat" name="latitude" class="form-control">
+                @error('latitude')
+                <div class="text-danger">{{ $message }}</div>
+                @enderror
 
                 <label>Longitude</label>
-                <input type="text" id="lng" name="longitude" class="form-control" required>
+                <input type="text" id="lng" name="longitude" class="form-control">
+                @error('longitude')
+                <div class="text-danger">{{ $message }}</div>
+                @enderror
 
                 <label>Radius (meter)</label>
-                <input type="number" name="radius" class="form-control" required>
+                <input type="number" name="radius" class="form-control">
+                @error('radius')
+                <div class="text-danger">{{ $message }}</div>
+                @enderror
 
                 <label>Alamat</label>
                 <textarea name="alamat" rows="3" class="form-control"></textarea>
+                @error('alamat')
+                <div class="text-danger">{{ $message }}</div>
+                @enderror
 
                 <label>Status</label>
                 <select name="status" class="form-select">
                     <option value="aktif">Aktif</option>
                     <option value="nonaktif">Nonaktif</option>
                 </select>
+                @error('status')
+                <div class="text-danger">{{ $message }}</div>
+                @enderror
 
                 <h4 class="mt-3">Preview Lokasi</h4>
                 <div id="map"></div>
@@ -55,19 +73,31 @@
         maxZoom: 19,
     }).addTo(map);
 
-    var marker = L.marker(defaultLocation, { draggable: true }).addTo(map);
+    var marker = L.marker(defaultLocation, {
+        draggable: true
+    }).addTo(map);
 
-    marker.on('dragend', function (e) {
+    marker.on('dragend', function(e) {
         var latlng = e.target.getLatLng();
         document.getElementById('lat').value = latlng.lat;
         document.getElementById('lng').value = latlng.lng;
     });
 
-    map.on('click', function (e) {
+    map.on('click', function(e) {
         marker.setLatLng(e.latlng);
         document.getElementById('lat').value = e.latlng.lat;
         document.getElementById('lng').value = e.latlng.lng;
     });
+        L.Control.geocoder({
+        defaultMarkGeocode: false
+    })
+    .on('markgeocode', function(e) {
+        var latlng = e.geocode.center;
+        marker.setLatLng(latlng);
+        map.setView(latlng, 15);
+        document.getElementById('lat').value = latlng.lat;
+        document.getElementById('lng').value = latlng.lng;
+    })
+    .addTo(map);
 </script>
 @endsection
-

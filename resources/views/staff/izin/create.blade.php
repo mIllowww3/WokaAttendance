@@ -16,7 +16,7 @@
 
     <div class="card shadow">
         <div class="card-header bg-primary text-white fw-bold">
-            Tambah Izin / Sakit
+            Surat Izin
         </div>
 
         <div class="card-body">
@@ -44,19 +44,28 @@
                     {{-- Tanggal Mulai --}}
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Tanggal Mulai</label>
-                        <input type="date" name="tanggal_mulai" value="{{ old('tanggal_mulai') }}" class="form-control" required>
+                        <input type="date" name="tanggal_mulai" value="{{ old('tanggal_mulai') }}" class="form-control">
+                                        @error('tanggal_mulai')
+                <div class="text-danger">{{ $message }}</div>
+                @enderror
                     </div>
 
                     {{-- Tanggal Selesai --}}
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Tanggal Selesai</label>
-                        <input type="date" name="tanggal_selesai" value="{{ old('tanggal_selesai') }}" class="form-control" required>
+                        <input type="date" name="tanggal_selesai" value="{{ old('tanggal_selesai') }}" class="form-control">
+                                        @error('tanggal_selesai')
+                <div class="text-danger">{{ $message }}</div>
+                @enderror
                     </div>
 
                     {{-- Alasan --}}
                     <div class="col-md-12 mb-3">
                         <label class="form-label">Alasan</label>
-                        <textarea name="alasan" class="form-control" rows="3" required>{{ old('alasan') }}</textarea>
+                        <textarea name="alasan" class="form-control" rows="3" >{{ old('alasan') }}</textarea>
+                                        @error('alasan')
+                <div class="text-danger">{{ $message }}</div>
+                @enderror
                     </div>
 
                     {{-- Lampiran --}}
