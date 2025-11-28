@@ -3,6 +3,17 @@
 @section('content')
 
 <div class="container mt-4">
+ @if ($errors->has('tanggal_mulai'))
+<div class="alert alert-danger d-flex align-items-center alert-dismissible fade show" role="alert">
+    <i class="ni ni-fat-remove me-2"></i>
+    <div>
+        <strong>Gagal!</strong> {{ $errors->first('tanggal_mulai') }}
+    </div>
+    <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+@endif
+
+
     <div class="card shadow">
         <div class="card-header bg-primary text-white fw-bold">
             Tambah Izin / Sakit

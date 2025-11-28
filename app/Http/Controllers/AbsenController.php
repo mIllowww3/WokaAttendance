@@ -111,15 +111,13 @@ class AbsenController extends Controller
             'qr' => 'required|string'
         ]);
 
-        // Pegawai yang login
-        $loggedPegawai = Pegawai::where('user_id', Auth::id())->first();
+        $qr = trim($request->qr);
 
-        if (!$loggedPegawai) {
-            return back()->with('error', 'Akun ini tidak terdaftar sebagai pegawai!');
-        }
+        $pegawai = Pegawai::where('user_id', Auth::id())
+            ->where('uid_qr', $qr)
+            ->first();
 
-        // Cek apakah QR sesuai dengan pegawai yang login
-        if ($loggedPegawai->uid_qr !== $request->qr) {
+        if (!$pegawai) {
             return back()->with('error', 'QR Code tidak sesuai dengan akun Anda!');
         }
 
@@ -134,7 +132,7 @@ class AbsenController extends Controller
 
 
         // Cek absen hari ini
-        $absen = Absen::where('pegawai_id', $loggedPegawai->id)
+        $absen = Absen::where('pegawai_id', $pegawai->id)
             ->whereDate('tanggal', now()->toDateString())
             ->first();
 
@@ -143,7 +141,7 @@ class AbsenController extends Controller
             $status = ($jamMasuk > $jamBatas) ? "Telat" : "Hadir";
 
             Absen::create([
-                'pegawai_id' => $loggedPegawai->id,
+                'pegawai_id' => $pegawai->id,
                 'tanggal'    => now()->format('Y-m-d'),
                 'jam_masuk'  => $jamMasuk,
                 'status'     => $status,
@@ -161,8 +159,9 @@ class AbsenController extends Controller
             return back()->with('success', 'Absen pulang berhasil!');
         }
 
-        return back()->with('info', 'Anda sudah absen masuk & pulang hari ini.');
+        return back()->with('info', 'Anda sudah absen hari ini.');
     }
+
 
     // Halaman scan QR (kamera)
     public function scanForm()
