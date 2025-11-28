@@ -17,20 +17,20 @@ use Illuminate\Support\Str;
 class PegawaiController extends Controller
 {
     // INDEX + SEARCH
- public function index(Request $request)
-{
-    $cari = $request->cari;
+    public function index(Request $request)
+    {
+        $cari = $request->cari;
 
-    $pegawai = Pegawai::with(['departemen', 'kantor', 'user'])
-        ->when($cari, function ($query) use ($cari) {
-            $query->whereHas('user', function ($q) use ($cari) {
-                $q->where('name', 'like', "%$cari%");
-            });
-        })
-        ->paginate(10);
+        $pegawai = Pegawai::with(['departemen', 'kantor', 'user'])
+            ->when($cari, function ($query) use ($cari) {
+                $query->whereHas('user', function ($q) use ($cari) {
+                    $q->where('name', 'like', "%$cari%");
+                });
+            })
+            ->paginate(10);
 
-    return view('admin.pegawai.index', compact('pegawai', 'cari'));
-}
+        return view('admin.pegawai.index', compact('pegawai', 'cari'));
+    }
 
     // CREATE
     public function create()
@@ -41,7 +41,6 @@ class PegawaiController extends Controller
         $status = ['aktif', 'nonaktif'];
 
         return view('admin.pegawai.create', compact('users', 'departemen', 'kantor', 'status'));
-
     }
 
     // STORE
@@ -60,7 +59,11 @@ class PegawaiController extends Controller
         ]);
 
         // Simpan foto staff
-        $gambar = $request->file('foto')->store('staff', 'public');
+        $gambar = null;
+        if ($request->hasFile('foto')) {
+            $gambar = $request->file('foto')->store('staff', 'public');
+        }
+
 
         // Buat user login
         $user = User::create([
@@ -122,22 +125,22 @@ class PegawaiController extends Controller
         $pegawai = Pegawai::findOrFail($id);
         $user = $pegawai->user;
 
-    $request->validate([
-        'name' => 'required|string|max:255',
-        'email' => 'required|email|unique:users,email,'.$user->id,
-        'departemen_id' => 'required|exists:departemens,id',
-        'kantor_id' => 'required|exists:perusahaans,id',
-        'no_hp' => 'required|string|max:20',
-        'alamat' => 'required|string',
-        'status' => 'required',
-        'foto' => 'nullable|image|max:2048',
-    ]);
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'departemen_id' => 'required|exists:departemens,id',
+            'kantor_id' => 'required|exists:perusahaans,id',
+            'no_hp' => 'required|string|max:20',
+            'alamat' => 'required|string',
+            'status' => 'required',
+            'foto' => 'nullable|image|max:2048',
+        ]);
 
         // Update tabel users
-    $user->update([
-        'name' => $request->name,
-        'email' => $request->email,
-    ]);
+        $user->update([
+            'name' => $request->name,
+            'email' => $request->email,
+        ]);
 
         // FOTO
         if ($request->hasFile('foto')) {
@@ -244,7 +247,7 @@ class PegawaiController extends Controller
         return redirect()->route('staff.profile.index')
             ->with('success', 'Profil pegawai berhasil diperbarui!');
     }
-        public function delete($id)
+    public function delete($id)
     {
         // Find the Pegawai by ID or fail
         $pegawai = Pegawai::findOrFail($id);

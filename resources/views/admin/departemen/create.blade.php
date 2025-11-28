@@ -10,7 +10,7 @@
             </div>
 
             <div class="card-body">
-                <form action="{{ route('admin.departemen.store') }}" method="POST">
+                <form action="{{ route('admin.departemen.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
 
                     <!-- Nama Departemen -->
