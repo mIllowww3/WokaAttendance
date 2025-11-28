@@ -84,13 +84,14 @@
                                 @php
                                 $warna = [
                                 'hadir' => 'success',
+                                'telat' => 'danger',
                                 'izin' => 'warning',
                                 'sakit' => 'info',
                                 'alpha' => 'danger',
                                 ];
                                 @endphp
 
-                                <span class="badge bg-{{ $warna[$a->status] }} px-3 py-2">
+                                <span class="badge bg-{{ $warna[$a->status] ?? 'secondary' }} px-3 py-2">
                                     {{ ucfirst($a->status) }}
                                 </span>
                             </td>

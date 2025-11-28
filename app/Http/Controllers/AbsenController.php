@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Absen;
+use App\Models\Jadwal_kerja;
 use App\Models\Pegawai;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,7 +13,7 @@ class AbsenController extends Controller
     // ============================ ADMIN ============================
     public function absen()
     {
-        $absens = Absen::with(['pegawai'])->orderBy('tanggal','desc')->get();
+        $absens = Absen::with(['pegawai'])->orderBy('tanggal', 'desc')->get();
         return view('admin.absen.index', compact('absens'));
     }
 
@@ -98,8 +99,8 @@ class AbsenController extends Controller
         $pegawai = Pegawai::where('user_id', Auth::id())->first();
 
         $absens = Absen::where('pegawai_id', $pegawai->id)
-                        ->orderBy('tanggal', 'desc')
-                        ->get();
+            ->orderBy('tanggal', 'desc')
+            ->get();
 
         return view('staff.absen.index', compact('absens'));
     }
@@ -122,21 +123,35 @@ class AbsenController extends Controller
             return back()->with('error', 'QR Code tidak sesuai dengan akun Anda!');
         }
 
+        // ======================
+        // Ambil jadwal hari ini
+        // ======================
+        $hariIni = now()->format('l'); // Senin, Selasa, ...
+        $jadwal = Jadwal_kerja::where('hari', $hariIni)->first();
+
+        // Jika admin tidak membuat jadwal, pakai default jam 08:00
+        $jamBatas = $jadwal->jam_masuk ?? "08:00:00";
+
+
         // Cek absen hari ini
         $absen = Absen::where('pegawai_id', $loggedPegawai->id)
             ->whereDate('tanggal', now()->toDateString())
             ->first();
 
         if (!$absen) {
+            $jamMasuk = now()->format('H:i:s');
+            $status = ($jamMasuk > $jamBatas) ? "Telat" : "Hadir";
+
             Absen::create([
                 'pegawai_id' => $loggedPegawai->id,
                 'tanggal'    => now()->format('Y-m-d'),
-                'jam_masuk'  => now()->format('H:i:s'),
-                'status'     => 'Hadir',
+                'jam_masuk'  => $jamMasuk,
+                'status'     => $status,
             ]);
 
-            return back()->with('success', 'Absen masuk berhasil!');
+            return back()->with('success', $status == "Telat" ? 'Anda Telat!' : 'Absen masuk berhasil!');
         }
+
 
         if (!$absen->jam_pulang) {
             $absen->update([
@@ -177,8 +192,8 @@ class AbsenController extends Controller
         $today = date('Y-m-d');
 
         $absen = Absen::where('pegawai_id', $loggedPegawai->id)
-                      ->where('tanggal', $today)
-                      ->first();
+            ->where('tanggal', $today)
+            ->first();
 
         if (!$absen) {
             Absen::create([
