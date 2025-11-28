@@ -31,7 +31,6 @@ class JadwalKerjaController extends Controller
             'hari'        => 'required|in:Senin,Selasa,Rabu,Kamis,Jumat,Sabtu,Minggu',
             'jam_masuk'   => 'required',
             'jam_pulang'  => 'required',
-            'jadwal'      => 'required',
         ]);
 
         Jadwal_kerja::create($request->all());
@@ -65,7 +64,7 @@ class JadwalKerjaController extends Controller
     {
         Jadwal_kerja::destroy($id);
 
-        return redirect()->route('jadwal.index')
+        return redirect()->route('admin.jadwal.index')
             ->with('success', 'Jadwal kerja berhasil dihapus.');
     }
 }
