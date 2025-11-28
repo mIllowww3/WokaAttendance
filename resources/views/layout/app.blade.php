@@ -157,7 +157,8 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('staff.izin.index') }}">
+                    <a class="nav-link {{ request()->routeIs('staff.izin.*') ? 'active' : 'text-dark' }}" 
+                        href="{{ route('staff.izin.index') }}">
                         <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="ni ni-credit-card text-dark text-sm opacity-10"></i>
                         </div>
@@ -166,7 +167,8 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('staff.profile.index') }}">
+                    <a class="nav-link {{ request()->routeIs('staff.profile.*') ? 'active' : 'text-dark' }}" 
+                        href="{{ route('staff.profile.index') }}">
                         <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="ni ni-app text-dark text-sm opacity-10"></i>
                         </div>
