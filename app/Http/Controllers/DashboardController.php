@@ -23,18 +23,28 @@ class DashboardController extends Controller
 
         $jadwal = Jadwal_kerja::orderBy('id')->get();
 
-        return view("admin.dashboard", compact("totalPegawai","totalDepartemen","totalPerusahaan","totalAbsen","totalIzin","jadwal",));
+        return view("admin.dashboard", compact("totalPegawai", "totalDepartemen", "totalPerusahaan", "totalAbsen", "totalIzin", "jadwal",));
     }
 
     public function staff()
-{
-    $totalAbsen = Absen::count();
-    $totalIzin = Izinsakit::count();
-    $jadwal = Jadwal_kerja::orderBy('id')->get();
+    {
+        // Ambil pegawai yang login
+        $pegawai = auth()->user()->pegawai;
 
-    
+        // Jika user belum punya data pegawai
+        if (!$pegawai) {
+            return back()->with('error', 'Data pegawai tidak ditemukan.');
+        }
 
-    return view('staff.dashboard', compact("totalAbsen","totalIzin","jadwal"));
-}
+        // Total absen khusus pegawai yang login
+        $totalAbsen = $pegawai->absens()->count();
 
+        // Total izin khusus pegawai yang login
+        $totalIzin = $pegawai->izins()->count();
+
+        // Jadwal kerja ambil semua (atau khusus pegawai jika ada relasi)
+        $jadwal = Jadwal_kerja::orderBy('id')->get();
+
+        return view('staff.dashboard', compact("totalAbsen", "totalIzin", "jadwal"));
+    }
 }

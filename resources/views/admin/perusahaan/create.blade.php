@@ -33,7 +33,7 @@
                     <option value="nonaktif">Nonaktif</option>
                 </select>
 
-                <h4>Preview Lokasi</h4>
+                <h4 class="mt-3">Preview Lokasi</h4>
                 <div id="map"></div>
 
                 <br>
@@ -41,4 +41,33 @@
                 <a href="{{ route('admin.perusahaan.index') }}" class="btn btn-secondary">Kembali</a>
             </form>
         </div>
-        @endsection
+    </div>
+</div>
+@endsection
+
+@section('scripts')
+<script>
+    var defaultLocation = [-6.2, 106.8];
+
+    var map = L.map('map').setView(defaultLocation, 15);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+    }).addTo(map);
+
+    var marker = L.marker(defaultLocation, { draggable: true }).addTo(map);
+
+    marker.on('dragend', function (e) {
+        var latlng = e.target.getLatLng();
+        document.getElementById('lat').value = latlng.lat;
+        document.getElementById('lng').value = latlng.lng;
+    });
+
+    map.on('click', function (e) {
+        marker.setLatLng(e.latlng);
+        document.getElementById('lat').value = e.latlng.lat;
+        document.getElementById('lng').value = e.latlng.lng;
+    });
+</script>
+@endsection
+
