@@ -43,7 +43,7 @@ class PegawaiController extends Controller
         return view('admin.pegawai.create', compact('users', 'departemen', 'kantor', 'status'));
     }
 
-    // STORE
+    // STORE DATA PEGAWAI + USER LOGIN + QR
     public function store(Request $request)
     {
         $request->validate([
@@ -64,7 +64,6 @@ class PegawaiController extends Controller
             $gambar = $request->file('foto')->store('staff', 'public');
         }
 
-
         // Buat user login
         $user = User::create([
             'name' => $request->name,
@@ -80,7 +79,6 @@ class PegawaiController extends Controller
         $qrFileName = $uid . '.png';
 
         $qrCode = new QrCode($uid);
-
         $writer = new PngWriter();
 
         // Hasil binary PNG
@@ -96,7 +94,7 @@ class PegawaiController extends Controller
             'kantor_id' => $request->kantor_id,
             'uid_qr' => $uid,
             'qr_image' => 'qrcodes/' . $qrFileName,
-            'qr_generated_at' => now(), // <-- WAKTU QR DIBUAT
+            'qr_generated_at' => now(),
             'foto' => $gambar,
             'no_hp' => $request->no_hp,
             'alamat' => $request->alamat,
@@ -165,19 +163,34 @@ class PegawaiController extends Controller
         return redirect()->route('admin.pegawai.index')->with('success', 'Data pegawai berhasil diperbarui');
     }
 
-    // DELETE
-    public function destroy($id)
+    // DELETE (Hapus foto, QR, user login dan data pegawai)
+    public function delete($id)
     {
         $pegawai = Pegawai::findOrFail($id);
 
+        // HAPUS FOTO PEGAWAI
         if ($pegawai->foto && file_exists('uploads/pegawai/' . $pegawai->foto)) {
             unlink('uploads/pegawai/' . $pegawai->foto);
         }
 
+        // HAPUS QR CODE
+        if ($pegawai->qr_image && Storage::disk('public')->exists($pegawai->qr_image)) {
+            Storage::disk('public')->delete($pegawai->qr_image);
+        }
+
+        // HAPUS USER LOGIN
+        if ($pegawai->user) {
+            $pegawai->user->delete();
+        }
+
+        // HAPUS DATA PEGAWAI
         $pegawai->delete();
 
-        return redirect()->route('admin.pegawai.index')->with('success', 'Pegawai berhasil dihapus');
+        return redirect()->route('admin.pegawai.index')
+            ->with('success', 'Pegawai dan QR berhasil dihapus.');
     }
+
+    // PROFILE
     public function profile()
     {
         $user = Auth::user();
@@ -188,26 +201,20 @@ class PegawaiController extends Controller
 
     public function profileUpdate(Request $request, $id)
     {
-        // Ambil data pegawai berdasarkan id
         $pegawai = Pegawai::findOrFail($id);
         $user = $pegawai->user;
 
-        // Validasi input
         $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users,email,' . $user->id,
             'password' => 'nullable|min:8',
-
             'no_hp' => 'nullable|string|max:20',
             'departement_id' => 'nullable|exists:departements,id',
             'perusahaan_id' => 'nullable|exists:perusahaans,id',
-
             'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        /* ==========================
-       UPDATE USER (nama, email, password)
-    ========================== */
+        // Update password jika ada
         if ($request->filled('password')) {
             $user->password = Hash::make($request->password);
         }
@@ -215,47 +222,27 @@ class PegawaiController extends Controller
         $user->update([
             'name'  => $request->name,
             'email' => $request->email,
-            'password' => $user->password,
         ]);
 
-        /* ==========================
-       UPDATE PEGAWAI
-    ========================== */
+        // Data Pegawai
         $dataPegawai = [
             'no_hp'          => $request->no_hp,
             'departement_id' => $request->departement_id,
             'perusahaan_id'  => $request->perusahaan_id,
         ];
 
-        /* ==========================
-       UPDATE FOTO
-    ========================== */
+        // Update FOTO
         if ($request->hasFile('foto')) {
-
-            // hapus foto lama
             if ($pegawai->foto && Storage::disk('public')->exists($pegawai->foto)) {
                 Storage::disk('public')->delete($pegawai->foto);
             }
 
-            // upload foto baru
             $dataPegawai['foto'] = $request->file('foto')->store('pegawai_foto', 'public');
         }
 
-        // Simpan data pegawai
         $pegawai->update($dataPegawai);
 
         return redirect()->route('staff.profile.index')
             ->with('success', 'Profil pegawai berhasil diperbarui!');
-    }
-    public function delete($id)
-    {
-        // Find the Pegawai by ID or fail
-        $pegawai = Pegawai::findOrFail($id);
-
-        // Delete the record
-        $pegawai->delete();
-
-        // Redirect back with a success message
-        return redirect()->route('admin.pegawai.index')->with('success', 'Pegawai deleted successfully.');
     }
 }
