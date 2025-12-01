@@ -16,23 +16,23 @@
                 <label class="mt-3">Nama Pegawai</label>
                 <input type="text" name="name" class="form-control" value="{{ $pegawai->user->name }}" required>
                 @error('name')
-                    <div class="text-danger">{{ $message }}</div>
+                <div class="text-danger">{{ $message }}</div>
                 @enderror
 
                 <!-- Email Pegawai -->
                 <label class="mt-3">Email</label>
                 <input type="email" name="email" class="form-control" value="{{ $pegawai->user->email }}" required>
                 @error('email')
-                    <div class="text-danger">{{ $message }}</div>
+                <div class="text-danger">{{ $message }}</div>
                 @enderror
 
                 <!-- Departemen -->
                 <label class="mt-3">Departemen</label>
                 <select name="departemen_id" class="form-control" required>
                     @foreach ($departemen as $d)
-                        <option value="{{ $d->id }}" {{ $pegawai->departemen_id == $d->id ? 'selected' : '' }}>
-                            {{ $d->nama_departemen }}
-                        </option>
+                    <option value="{{ $d->id }}" {{ $pegawai->departemen_id == $d->id ? 'selected' : '' }}>
+                        {{ $d->nama_departemen }}
+                    </option>
                     @endforeach
                 </select>
 
@@ -40,9 +40,9 @@
                 <label class="mt-3">Kantor</label>
                 <select name="kantor_id" class="form-control" required>
                     @foreach ($kantor as $k)
-                        <option value="{{ $k->id }}" {{ $pegawai->kantor_id == $k->id ? 'selected' : '' }}>
-                            {{ $k->nama_kantor }}
-                        </option>
+                    <option value="{{ $k->id }}" {{ $pegawai->kantor_id == $k->id ? 'selected' : '' }}>
+                        {{ $k->nama_kantor }}
+                    </option>
                     @endforeach
                 </select>
 
@@ -65,7 +65,7 @@
                 <label class="mt-3">Foto Pegawai</label>
                 <input type="file" name="foto" class="form-control">
                 @if($pegawai->foto)
-                    <img src="{{ asset('storage/'.$pegawai->foto) }}" class="mt-2 rounded" width="90">
+                <img src="{{ asset('storage/'.$pegawai->foto) }}" class="mt-2 rounded" width="90">
                 @endif
 
                 <button type="submit" class="btn btn-warning mt-4">Update</button>

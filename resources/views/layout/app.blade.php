@@ -50,7 +50,7 @@
         <hr class="horizontal dark mt-0">
 
         <!-- <div class="collapse navbar-collapse w-auto" id="sidenav-collapse-main"> -->
-            <div>
+        <div>
             <ul class="navbar-nav">
 
                 <!-- ===================================================================== -->
@@ -215,10 +215,10 @@
                         </div>
                     </div>
                     <ul class="navbar-nav  justify-content-end">
-                        <li class="nav-item d-flex align-items-center">
-                            <a href="javascript:;" class="nav-link text-white font-weight-bold px-0">
+                        <li class="nav-item {{ request()->routeIs('staff.profile.*') ? 'active' : 'text-dark' }} d-flex align-items-center">
+                            <a href="{{ route('staff.profile.index') }}" class="nav-link text-white font-weight-bold px-0">
                                 <i class="fa fa-user me-sm-1"></i>
-                                <span class="d-sm-inline d-none">Sign In</span>
+                                <span class="d-sm-inline d-none">Profile</span>
                             </a>
                         </li>
                         <li class="nav-item d-xl-none ps-3 d-flex align-items-center">

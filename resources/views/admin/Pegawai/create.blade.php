@@ -70,17 +70,17 @@
                     @enderror
                 </div>
 
-<label class="mt-3">Status</label>
-<select name="status" class="form-control">
-    <option value="">-- Pilih Status --</option>
-    @foreach ($status as $s)
-        <option value="{{ $s }}">{{ ucfirst($s) }}</option>
-    @endforeach
-</select>
+                <label class="mt-3">Status</label>
+                <select name="status" class="form-control">
+                    <option value="">-- Pilih Status --</option>
+                    @foreach ($status as $s)
+                    <option value="{{ $s }}">{{ ucfirst($s) }}</option>
+                    @endforeach
+                </select>
 
-@error('status')
-<div class="text-danger">{{ $message }}</div>
-@enderror
+                @error('status')
+                <div class="text-danger">{{ $message }}</div>
+                @enderror
 
 
                 <label class="mt-3">Foto Pegawai</label>
@@ -93,7 +93,6 @@
                 <button class="btn btn-success mt-4">Simpan</button>
                 <a href="{{ route('admin.pegawai.index') }}" class="btn btn-secondary mt-4">Kembali</a>
             </form>
-
         </div>
     </div>
 </div>

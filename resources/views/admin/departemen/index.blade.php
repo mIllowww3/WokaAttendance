@@ -102,16 +102,13 @@
 
     <!-- SCRIPT UNTUK ALERT OTOMATIS HILANG DENGAN FADE OUT -->
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const alert = document.getElementById('alert-message');
+        setTimeout(() => {
+            let alert = document.querySelector('.alert');
             if (alert) {
-                setTimeout(() => {
-                    alert.style.transition = 'opacity 0.5s ease';
-                    alert.style.opacity = '0';
-                    setTimeout(() => alert.remove(), 500); // Hapus elemen setelah fade
-                }, 5000); // 5 detik tampil
+                alert.classList.remove('show');
+                alert.classList.add('fade');
             }
-        });
+        }, 3000);
     </script>
 
 </body>

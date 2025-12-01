@@ -4,6 +4,20 @@
 
 <div class="container mt-5">
 
+    {{-- NOTIFIKASI --}}
+    @if (session('success'))
+    <div class="alert alert-success alert-dismissible fade show" id="alert-message">
+        {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    @endif
+
+    @if (session('error'))
+    <div class="alert alert-danger alert-dismissible fade show" id="alert-message">
+        {{ session('error') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    @endif
     <div class="card shadow border-0">
         <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
             <h4 class="mb-0 fw-bold">Data Pegawai</h4>
@@ -96,6 +110,15 @@
                         @endforelse
                     </tbody>
                 </table>
+                <script>
+                    setTimeout(() => {
+                        let alert = document.querySelector('.alert');
+                        if (alert) {
+                            alert.classList.remove('show');
+                            alert.classList.add('fade');
+                        }
+                    }, 3000);
+                </script>
             </div>
 
             {{-- PAGINATION --}}

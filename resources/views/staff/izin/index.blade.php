@@ -2,6 +2,20 @@
 
 @section('content')
 <div class="container-fluid px-4">
+    {{-- NOTIFIKASI --}}
+    @if (session('success'))
+    <div class="alert alert-success alert-dismissible fade show" id="alert-message">
+        {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    @endif
+
+    @if (session('error'))
+    <div class="alert alert-danger alert-dismissible fade show" id="alert-message">
+        {{ session('error') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    @endif
 
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h3 class="mt-4">Data Izin & Sakit</h3>
@@ -16,7 +30,7 @@
         <div class="card-body">
 
             @if (session('success'))
-                <div class="alert alert-success">{{ session('success') }}</div>
+            <div class="alert alert-success">{{ session('success') }}</div>
             @endif
 
             <div class="table-responsive">
@@ -58,12 +72,12 @@
 
                             <td>
                                 @if ($izin->lampiran)
-                                    <a href="{{ asset('storage/'.$izin->lampiran) }}" 
-                                       class="btn btn-sm btn-secondary" target="_blank">
-                                        Lihat
-                                    </a>
+                                <a href="{{ asset('storage/'.$izin->lampiran) }}"
+                                    class="btn btn-sm btn-secondary" target="_blank">
+                                    Lihat
+                                </a>
                                 @else
-                                    -
+                                -
                                 @endif
                             </td>
 
@@ -80,42 +94,46 @@
 
                             <td>
 
-    {{-- Jika pending → tampilkan Edit + Hapus --}}
-    @if ($izin->status == 'pending')
+                                {{-- Jika pending → tampilkan Edit + Hapus --}}
+                                @if ($izin->status == 'pending')
 
-        <a href="{{ route('staff.izin.edit', $izin->id) }}" 
-           class="btn btn-sm btn-warning mb-1">
-            Edit
-        </a>
+                                <a href="{{ route('staff.izin.edit', $izin->id) }}"
+                                    class="btn btn-sm btn-warning mb-1">
+                                    Edit
+                                </a>
 
-        <form action="{{ route('staff.izin.destroy', $izin->id) }}" 
-              method="POST" 
-              class="d-inline"
-              onsubmit="return confirm('Hapus data ini?')">
-            @csrf 
-            @method('DELETE')
-            <button class="btn btn-sm btn-danger">
-                Hapus
-            </button>
-        </form>
+                                <form action="{{ route('staff.izin.destroy', $izin->id) }}"
+                                    method="POST"
+                                    class="d-inline"
+                                    onsubmit="return confirm('Hapus data ini?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn btn-sm btn-danger">
+                                        Hapus
+                                    </button>
+                                </form>
 
-    @else
-        {{-- Jika disetujui atau ditolak → tombol jadi Selesai / disabled --}}
-        <button class="btn btn-sm btn-secondary" disabled>
-            Selesai
-        </button>
-    @endif
-
-</td>
-
-
+                                @else
+                                {{-- Jika disetujui atau ditolak → tombol jadi Selesai / disabled --}}
+                                <button class="btn btn-sm btn-secondary" disabled>
+                                    Selesai
+                                </button>
+                                @endif
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>
-
                 </table>
+                <script>
+                    setTimeout(() => {
+                        let alert = document.querySelector('.alert');
+                        if (alert) {
+                            alert.classList.remove('show');
+                            alert.classList.add('fade');
+                        }
+                    }, 3000);
+                </script>
             </div>
-
         </div>
     </div>
 </div>
