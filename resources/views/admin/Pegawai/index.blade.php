@@ -82,6 +82,10 @@
 
                             <td class="text-center">
 
+                                <a href="{{ route('admin.pegawai.detail', $p->id) }}" class="btn btn-info btn-sm">
+                                    Detail & QR
+                                </a>
+
                                 <a href="{{ route('admin.pegawai.edit', $p->id) }}"
                                     class="btn btn-warning btn-sm text-white me-1 shadow-sm">
                                     Edit
