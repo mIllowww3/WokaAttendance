@@ -37,7 +37,7 @@ class Pegawai extends Model
     // Perbaikan nama relasi
     public function absens()
     {
-        return $this->hasMany(Absen::class);
+        return $this->hasMany(Absen::class, 'pegawai_id');
     }
 
     public function izins()

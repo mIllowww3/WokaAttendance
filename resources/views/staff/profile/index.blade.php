@@ -161,47 +161,50 @@
 </div>
 <!-- Modal Edit Profil -->
 <div class="modal fade" id="editProfileModal{{ $pegawai->id }}" tabindex="-1" aria-labelledby="editProfileModalLabel{{ $pegawai->id }}" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="editProfileModalLabel{{ $pegawai->id }}">Edit Profil Siswa</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
-      </div>
-      <form action="{{ route('staff.profile.update', $pegawai->id) }}" method="POST" enctype="multipart/form-data">
-
-        @csrf
-        @method('PUT')
-        <div class="modal-body">
-          <div class="row g-3">
-            <div class="col-md-4 text-center">
-              <img src="{{ $pegawai->foto ? asset('storage/' . $pegawai->foto) : asset('images/default-profile.png') }}" class="img-fluid rounded-circle mb-2">
-              <label for="foto" class="form-label mt-2">Ganti Foto</label>
-              <input type="file" name="foto" id="foto" class="form-control">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editProfileModalLabel{{ $pegawai->id }}">Edit Profil Siswa</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
             </div>
+            <form action="{{ route('staff.profile.update', $pegawai->id) }}" method="POST" enctype="multipart/form-data">
 
-            <div class="col-md-8">
-              <div class="mb-3">
-                <label for="name" class="form-label">Nama Lengkap</label>
-                <input type="text" name="name" id="name" class="form-control" value="{{ $pegawai->user->name }}">
-              </div>
-              <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
-                <input type="email" name="email" id="email" class="form-control" value="{{ $pegawai->user->email }}">
-              </div>
-              <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" name="password" id="password" class="form-control">
-              </div>
+                @csrf
+                @method('PUT')
+                <div class="modal-body">
+                    <div class="row g-3">
+                        <div class="col-md-4 text-center">
+                            <img src="{{ $pegawai->foto ? asset('storage/' . $pegawai->foto) : asset('images/default-profile.png') }}" class="img-fluid rounded-circle mb-2">
+                            <label for="foto" class="form-label mt-2">Ganti Foto</label>
+                            <input type="file" name="foto" id="foto" class="form-control">
+                        </div>
 
-            </div>
-          </div>
+                        <div class="col-md-8">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Nama Lengkap</label>
+                                <input type="text" name="name" id="name" class="form-control" value="{{ $pegawai->user->name }}">
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" name="email" id="email" class="form-control" value="{{ $pegawai->user->email }}">
+                            </div>
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Password</label>
+                                <input type="password" name="password" id="password" class="form-control">
+                            </div>
+                            <div class="mb-3">
+                                <label for="no_hp" class="form-label">No HP</label>
+                                <input type="text" name="no_hp" id="no_hp" class="form-control" value="{{ $pegawai->no_hp }}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                </div>
+            </form>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-          <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
-        </div>
-      </form>
     </div>
-  </div>
 </div>
 @endsection

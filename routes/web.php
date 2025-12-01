@@ -8,7 +8,7 @@ use App\Http\Controllers\AuthController;
 // DASHBOARD
 use App\Http\Controllers\DashboardController;
 
-// MASTER DATA
+// MASTER DATA 
 use App\Http\Controllers\DepartemenController;
 use App\Http\Controllers\PerusahaanController;
 use App\Http\Controllers\PegawaiController;
