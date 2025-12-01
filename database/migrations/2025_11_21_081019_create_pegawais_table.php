@@ -13,6 +13,8 @@ public function up()
 
         $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
         $table->foreignId('departemen_id')->constrained('departemens')->cascadeOnDelete();
+        $table->unsignedBigInteger('kantor_id');
+
         $table->foreign('kantor_id')->references('id')->on('perusahaans')->onDelete('cascade');
         $table->string('uid_qr')->unique();
         $table->string('foto')->nullable();
