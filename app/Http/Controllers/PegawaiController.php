@@ -61,7 +61,7 @@ class PegawaiController extends Controller
         // Simpan foto
         $gambar = null;
         if ($request->hasFile('foto')) {
-            $gambar = $request->file('foto')->store('pegawai_foto', 'public');
+            $gambar = $request->file('foto')->store('foto_user', 'public');
         }
 
         // Buat user login
@@ -141,7 +141,7 @@ class PegawaiController extends Controller
                 Storage::disk('public')->delete($pegawai->foto);
             }
 
-            $path = $request->file('foto')->store('pegawai_foto', 'public');
+            $path = $request->file('foto')->store('foto_user', 'public');
             $pegawai->foto = $path;
         }
 
@@ -243,7 +243,7 @@ class PegawaiController extends Controller
                 Storage::disk('public')->delete($pegawai->foto);
             }
 
-            $dataPegawai['foto'] = $request->file('foto')->store('pegawai_foto', 'public');
+            $dataPegawai['foto'] = $request->file('foto')->store('foto_user', 'public');
         }
 
         $pegawai->update($dataPegawai);
