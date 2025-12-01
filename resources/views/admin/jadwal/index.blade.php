@@ -13,10 +13,12 @@
         </div>
 
         <div class="card-body">
+
             <form method="GET" class="mb-4">
-                <div class="input-group shadow-sm">
-                    <input type="text" name="cari" class="form-control" placeholder="Cari hari..." value="{{ request('cari') }}">
-                    <button class="btn btn-primary px-4">Cari</button>
+                <div class="d-flex">
+                    <input type="text" name="cari" class="form-control me-3" placeholder="Cari departemen..."
+                        value="{{ request('cari') }}">
+                    <button class="btn btn-primary" type="submit">Cari</button>
                 </div>
             </form>
 
@@ -43,14 +45,14 @@
                             <td class="text-center">
 
                                 <a href="{{ route('admin.jadwal.edit', $j->id) }}"
-                                   class="btn btn-warning btn-sm text-white me-1 shadow-sm">
+                                    class="btn btn-warning btn-sm text-white me-1 shadow-sm">
                                     Edit
                                 </a>
 
                                 <form action="{{ route('admin.jadwal.destroy', $j->id) }}"
-                                      method="POST"
-                                      class="d-inline"
-                                      onsubmit="return confirm('Yakin ingin menghapus jadwal ini?')">
+                                    method="POST"
+                                    class="d-inline"
+                                    onsubmit="return confirm('Yakin ingin menghapus jadwal ini?')">
                                     @csrf
                                     @method('DELETE')
 
