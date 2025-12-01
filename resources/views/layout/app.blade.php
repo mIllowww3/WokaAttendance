@@ -218,7 +218,7 @@
                         <li class="nav-item {{ request()->routeIs('staff.profile.*') ? 'active' : 'text-dark' }} d-flex align-items-center">
                             <a href="{{ route('staff.profile.index') }}" class="nav-link text-white font-weight-bold px-0">
                                 <i class="fa fa-user me-sm-1"></i>
-                                <span class="d-sm-inline d-none">Profile</span>
+                                <span class="d-sm-inline d-none">{{ Auth::user()->name }}</span>
                             </a>
                         </li>
                         <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
