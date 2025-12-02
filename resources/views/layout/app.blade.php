@@ -29,7 +29,49 @@
             border-radius: 8px;
             margin-top: 15px;
         }
+        /* --- Sidebar Layout Fix --- */
+        .sidenav .navbar-nav .nav-link {
+            display: flex !important;
+            align-items: center !important;
+            gap: 12px !important;
+            padding: 10px 18px !important;
+            border-radius: 10px !important;
+            margin: 4px 0 !important;
+            transition: 0.25s ease-in-out !important;
+        }
+
+        /* --- Icon Fix --- */
+        .sidenav .nav-link i,
+        .sidenav .nav-link .fa,
+        .sidenav .nav-link .ni {
+            font-size: 18px !important;
+            width: 20px !important;
+            text-align: center !important;
+        }
+
+        /* --- Hover Effect --- */
+        .sidenav .nav-link:hover {
+            background: rgba(255, 255, 255, 0.12) !important;
+            transform: translateX(4px);
+        }
+
+        /* --- Active Menu --- */
+        .sidenav .nav-link.active {
+            background: linear-gradient(135deg, #5e72e4, #825ee4) !important;
+            color: white !important;
+            box-shadow: 0 4px 10px rgba(94, 114, 228, 0.4);
+        }
+
+        .sidenav .nav-link.active i {
+            color: white !important;
+        }
+
+        /* Optional: Smooth font for sidebar */
+        .sidenav {
+            font-size: 14px;
+        }
     </style>
+
 </head>
 
 <body class="g-sidenav-show bg-gray-100">
@@ -234,12 +276,14 @@
                         </div>
                     </div>
                     <ul class="navbar-nav  justify-content-end">
-                        <li class="nav-item {{ request()->routeIs('staff.profile.*') ? 'active' : 'text-dark' }} d-flex align-items-center">
-                            <a href="{{ route('staff.profile.index') }}" class="nav-link text-white font-weight-bold px-0">
+                        <li class="nav-item d-flex align-items-center">
+                            <a href="{{ auth()->user()->role == 'admin' ? route('admin.profile.index') : route('staff.profile.index') }}"
+                                class="nav-link text-white font-weight-bold px-0">
                                 <i class="ni ni-single-02 me-sm-1"></i>
                                 <span class="d-sm-inline d-none">{{ Auth::user()->name }}</span>
                             </a>
                         </li>
+
                         <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
                             <a href="javascript:;" class="nav-link text-white p-0" id="iconNavbarSidenav">
                                 <div class="sidenav-toggler-inner">
