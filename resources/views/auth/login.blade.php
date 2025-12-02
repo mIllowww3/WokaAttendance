@@ -41,34 +41,32 @@
             <div class="col-xl-4 col-lg-5 col-md-7 flex-column mx-lg-0 mx-auto">
               <div class="card card-plain">
 
-                <div class="card-header pb-0 text-start">
-                  <h4 class="font-weight-bolder">Sign In</h4>
-                  <p class="mb-0">Enter your email and password to sign in</p>
-                </div>
+                <div class="card">
+                  <div class="card-header pb-0 text-start">
+                    <h4 class="font-weight-bolder">Sign In</h4>
+                    <p class="mb-0">Enter your email and password to sign in</p>
+                  </div>
 
-                <div class="card-body">
-                  <form method="POST" action="{{ route('login.post') }}" role="form" class="text-start">
-                    @csrf
-                    <div class="input-group input-group-outline my-3">
-                      <input type="email" name="email" value="{{ old('email') }}" placeholder="masukkan email" class="form-control form-control-lg">
-                    </div>
-                    @error('email')
-                    <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                    <div class="input-group input-group-outline mb-3">
-                      <input type="password" name="password" placeholder="masukkan password" class="form-control form-control-lg">
-                    </div>
-                    @error('password')
-                    <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                    <div class="text-center">
-                      <button type="submit" class="btn bg-gradient-dark w-100 my-4 mb-2">Sign in</button>
-                    </div>
-                    <p class="mt-4 text-sm text-center">
-                      Don't have an account?
-                      <a href="" class="text-primary text-gradient font-weight-bold">Sign up</a>
-                    </p>
-                  </form>
+                  <div class="card-body">
+                    <form method="POST" action="{{ route('login.post') }}" role="form" class="text-start">
+                      @csrf
+                      <div class="input-group input-group-outline mb-3">
+                        <input type="email" name="email" value="{{ old('email') }}" placeholder="masukkan email" class="form-control form-control-lg">
+                      </div>
+                      @error('email')
+                      <div class="text-danger">{{ $message }}</div>
+                      @enderror
+                      <div class="input-group input-group-outline mb-3">
+                        <input type="password" name="password" placeholder="masukkan password" class="form-control form-control-lg">
+                      </div>
+                      @error('password')
+                      <div class="text-danger">{{ $message }}</div>
+                      @enderror
+                      <div class="text-center">
+                        <button type="submit" class="btn bg-gradient-dark w-100 my-4 mb-2">Sign in</button>
+                      </div>
+                    </form>
+                  </div>
                 </div>
 
               </div>
