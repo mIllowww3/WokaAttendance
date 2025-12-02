@@ -34,7 +34,7 @@
             @endif
 
             <div class="table-responsive">
-                <table class="table table-bordered table-striped align-middle">
+                <table class="table table-bordered table-hover align-middle">
                     <thead class="table-dark">
                         <tr>
                             <th>No</th>
