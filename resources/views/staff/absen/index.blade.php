@@ -5,21 +5,21 @@
 
     {{-- NOTIFIKASI DARI BACKEND --}}
     @if(session('success'))
-        <div class="alert alert-success text-center" id="alertMessage">
-            {{ session('success') }}
-        </div>
+    <div class="alert alert-success text-center" id="alertMessage">
+        {{ session('success') }}
+    </div>
     @endif
 
     @if(session('error'))
-        <div class="alert alert-danger text-center" id="alertMessage">
-            {{ session('error') }}
-        </div>
+    <div class="alert alert-danger text-center" id="alertMessage">
+        {{ session('error') }}
+    </div>
     @endif
 
     @if(session('info'))
-        <div class="alert alert-info text-center" id="alertMessage">
-            {{ session('info') }}
-        </div>
+    <div class="alert alert-info text-center" id="alertMessage">
+        {{ session('info') }}
+    </div>
     @endif
 
     <div class="row">
@@ -33,13 +33,13 @@
 
                     <div class="text-center mb-3">
                         <p class="text-sm text-muted">
-                            Tekan tombol di bawah ini untuk mengaktifkan kamera.
+                            Anda bisa scan menggunakan kamera atau memilih gambar QR dari file.
                         </p>
                     </div>
 
-                    <!-- Tombol aktifkan kamera -->
+                    <!-- Tombol kamera -->
                     <div class="text-center mb-3">
-                        <button id="startCameraBtn" class="btn btn-primary">
+                        <button id="startCameraBtn" class="btn btn-primary me-2">
                             Aktifkan Kamera
                         </button>
                         <button id="stopCameraBtn" class="btn btn-danger d-none">
@@ -47,10 +47,18 @@
                         </button>
                     </div>
 
-                    <!-- Kamera -->
+                    <!-- Tombol pilih file QR -->
+                    <div class="text-center mb-3">
+                        <button id="chooseFileBtn" class="btn btn-secondary">
+                            Pilih QR dari File
+                        </button>
+                        <input type="file" id="qrFileInput" accept="image/*" class="d-none">
+                    </div>
+
+                    <!-- Kamera / reader -->
                     <div id="reader" style="width:100%; display:none;"></div>
 
-                    <!-- Notifikasi hasil scan -->
+                    <!-- Hasil scan -->
                     <div id="scanResult" class="alert alert-info mt-3 d-none text-center"></div>
 
                     <!-- Form Auto Submit -->
@@ -81,6 +89,9 @@
     let scanner = null;
     let isCameraRunning = false;
 
+    // ==========================================================
+    // KAMERA
+    // ==========================================================
     document.getElementById('startCameraBtn').addEventListener('click', function() {
         if (isCameraRunning) return;
 
@@ -90,11 +101,14 @@
 
         scanner = new Html5Qrcode("reader");
 
-        scanner.start(
-            { facingMode: "environment" },
-            {
+        scanner.start({
+                facingMode: "environment"
+            }, {
                 fps: 10,
-                qrbox: { width: 280, height: 280 }
+                qrbox: {
+                    width: 280,
+                    height: 280
+                }
             },
             onScanSuccess,
             onScanError
@@ -113,19 +127,48 @@
         if (!scanner || !isCameraRunning) return;
 
         scanner.stop().then(() => {
-            scanner.clear();
-            document.getElementById('reader').style.display = "none";
+                scanner.clear();
+                document.getElementById('reader').style.display = "none";
 
-            document.getElementById('startCameraBtn').classList.remove('d-none');
-            document.getElementById('stopCameraBtn').classList.add('d-none');
+                document.getElementById('startCameraBtn').classList.remove('d-none');
+                document.getElementById('stopCameraBtn').classList.add('d-none');
 
-            isCameraRunning = false;
-        })
-        .catch(err => {
-            console.log("Error menghentikan kamera:", err);
-        });
+                isCameraRunning = false;
+            })
+            .catch(err => {
+                console.log("Error menghentikan kamera:", err);
+            });
     }
 
+    // ==========================================================
+    // UPLOAD FILE QR
+    // ==========================================================
+    document.getElementById('chooseFileBtn').addEventListener('click', function() {
+        document.getElementById('qrFileInput').click();
+    });
+
+    document.getElementById('qrFileInput').addEventListener('change', function(event) {
+        let file = event.target.files[0];
+        if (!file) return;
+
+        stopCamera();
+
+        document.getElementById('reader').style.display = "block";
+
+        const html5Qr = new Html5Qrcode("reader");
+
+        html5Qr.scanFile(file, true)
+            .then(decodedText => {
+                onScanSuccess(decodedText);
+            })
+            .catch(err => {
+                alert("Gagal membaca QR dari file: " + err);
+            });
+    });
+
+    // ==========================================================
+    // SUKSES SCAN
+    // ==========================================================
     function onScanSuccess(decodedText) {
         let resultBox = document.getElementById('scanResult');
         resultBox.classList.remove('d-none');
