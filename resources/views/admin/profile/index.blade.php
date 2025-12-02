@@ -1,6 +1,10 @@
 @extends('layout.app')
 
 @section('content')
+
+@section('title', 'profil')
+
+
 <div class="container-fluid py-4">
 
     {{-- ALERT SUCCESS --}}

@@ -2,6 +2,9 @@
 
 @section('content')
 
+@section('title', 'Absen')
+
+
 <div class="container mt-5">
 
     {{-- NOTIFIKASI --}}

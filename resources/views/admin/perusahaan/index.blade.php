@@ -2,6 +2,8 @@
 
 @section('content')
 
+@section('title', 'Perusahaan')
+
 <div class="container mt-5">
 
     {{-- NOTIFIKASI BERHASIL / ERROR --}}

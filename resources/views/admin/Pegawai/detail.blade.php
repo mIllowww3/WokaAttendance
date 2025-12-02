@@ -1,6 +1,9 @@
 @extends('layout.app')
 
 @section('content')
+
+@section('title', 'Detail Pegawai')
+
 <div class="container-fluid py-4">
 
     <div class="row">

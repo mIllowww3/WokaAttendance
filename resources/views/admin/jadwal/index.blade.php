@@ -2,6 +2,9 @@
 
 @section('content')
 
+@section('title', 'Jadwal')
+
+
 <div class="container mt-5">
     {{-- NOTIFIKASI --}}
     @if (session('success'))

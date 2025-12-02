@@ -2,6 +2,9 @@
 
 @section('content')
 
+@section('title', 'Tambah Jadwal')
+
+
 <div class="container mt-5">
     <div class="card shadow border-0">
         <div class="card-header bg-primary text-white fw-bold">
