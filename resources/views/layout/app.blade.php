@@ -128,6 +128,23 @@
                         <span class="nav-link-text ms-1">Absen</span>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('admin.profile.*') ? 'active' : 'text-dark' }}"
+                        href="{{ route('admin.profile.index') }}">
+                        <div class="icon icon-shape icon-sm border-radius-md text-center me-2">
+                            <i class="ni ni-single-02 me-sm-1 text-dark opacity-10"></i>
+                        </div>
+                        <span class="d-sm-inline d-none">Profile</span>
+                    </a>
+                </li>
+                <!-- <li class="nav-item d-flex align-items-center">
+                    <a href="{{ auth()->user()->role=='admin' ? route('admin.profile.index') : route('staff.profile.index') }}"
+                        class="nav-link text-white font-weight-bold px-0">
+                        <i class="ni ni-single-02 me-sm-1"></i>
+                        <span class="d-sm-inline d-none">{{ Auth::user()->name }}</span>
+                    </a>
+                </li> -->
+
 
                 @endif
 
