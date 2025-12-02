@@ -156,6 +156,18 @@ class PegawaiController extends Controller
         return redirect()->route('admin.pegawai.index')->with('success', 'Data pegawai berhasil diperbarui!');
     }
 
+
+    public function detail($id)
+    {
+        $pegawai = Pegawai::findOrFail($id);
+
+        // Jika QR tersimpan di database
+        $qrPath = $pegawai->qr_code ?? null;
+
+        return view('admin.pegawai.detail', compact('pegawai', 'qrPath'));
+    }
+
+
     // DELETE
     public function delete($id)
     {
