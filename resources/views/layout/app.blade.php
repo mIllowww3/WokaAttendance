@@ -183,10 +183,12 @@
                 <li class="nav-item mt-3">
                     <form action="{{ route('logout') }}" method="POST">
                         @csrf
-                        <button type="submit"
-                            class="btn w-100 px-3 py-2 bg-gradient-danger text-white border-0">
-                            <i class="ni ni-button-power me-3"></i> Logout
-                        </button>
+                        <div class="row justify-content-center">
+                            <button type="submit"
+                                class="btn w-80 px-3 py-2 bg-gradient-danger text-white border-0">
+                                <i class="ni ni-button-power me-3"></i> Logout
+                            </button>
+                        </div>
                     </form>
                 </li>
 
