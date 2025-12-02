@@ -1,6 +1,9 @@
 @extends('layout.app')
 
 @section('content')
+
+@section('title', 'Absen')
+
 <div class="container-fluid py-4">
 
     {{-- NOTIFIKASI DARI BACKEND --}}
