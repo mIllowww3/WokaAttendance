@@ -14,7 +14,7 @@ class IzinsakitController extends Controller
         $data = IzinSakit::with(['pegawai.user', 'approver'])->latest()->get();
         return view('admin.izin.index', compact('data'));
     }
-
+ 
     public function create()
     {
         abort(404, 'Admin tidak membuat izin.');

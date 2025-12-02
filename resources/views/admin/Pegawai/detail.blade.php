@@ -4,7 +4,7 @@
 <div class="container-fluid py-4">
 
     <div class="row">
-        <div class="col-lg-6 mx-auto">
+        <div class="col-lg-12 mx-auto">
             <div class="card shadow-lg border-0">
 
                 <div class="card-header bg-gradient-primary text-white text-center py-3">
