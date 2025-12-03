@@ -7,6 +7,9 @@
 
     <title>Woka Attendance - @yield('title')</title>
 
+    <link rel="icon" type="image/png" href="{{ asset('assets/img/logo-woka.png') }}">
+
+
     <!-- Fonts and icon -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
 
@@ -21,7 +24,6 @@
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
     <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
-
     <style>
         /* --- MAP --- */
         #map {
@@ -32,12 +34,13 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
         }
 
-        /* --- SIDEBAR BASE STYLE --- */
+        /* --- SIDEBAR --- */
         .sidenav {
             font-size: 14px;
             padding-top: 10px;
         }
 
+        /* --- NORMAL STATE (PUTIH) --- */
         .sidenav .navbar-nav .nav-link {
             display: flex !important;
             align-items: center !important;
@@ -48,9 +51,15 @@
             transition: all 0.25s ease-in-out !important;
             font-weight: 600 !important;
             color: #444 !important;
+            background: #ffffff;
+            /* default tetap putih */
+            backdrop-filter: blur(4px);
+            box-shadow:
+                inset 1px 1px 2px rgba(255, 255, 255, 0.6),
+                0 1px 3px rgba(0, 0, 0, 0.04);
         }
 
-        /* --- ICON BOX STYLE --- */
+        /* --- ICON NORMAL --- */
         .sidenav .nav-link .icon {
             width: 42px;
             height: 42px;
@@ -58,45 +67,44 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #f3f4f7;
+            background: linear-gradient(145deg, #f5f5f5, #dedede);
             border-radius: 12px;
             font-size: 22px;
             transition: 0.3s ease;
-            color: #5e72e4;
+            color: #ffffff;
+            box-shadow:
+                inset 1px 1px 3px rgba(255, 255, 255, 0.7),
+                inset -2px -2px 6px rgba(0, 0, 0, 0.05);
         }
 
-        /* --- TEXT STYLE --- */
-        .sidenav .nav-link .nav-link-text {
-            font-size: 15px;
-            font-weight: 600;
-            letter-spacing: 0.3px;
-        }
-
-        /* --- HOVER EFFECT --- */
+        /* --- HOVER --- */
         .sidenav .navbar-nav .nav-link:hover {
-            background: #eef0ff !important;
+            background: #f7f7f7 !important;
             transform: translateX(4px);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
         }
 
-        .sidenav .navbar-nav .nav-link:hover .icon {
-            background: #e4e6ff;
-            color: #4c5fe4;
-        }
-
-        /* --- ACTIVE MENU STYLE --- */
+        /* --- ACTIVE: lebih gelap lagi --- */
         .sidenav .nav-link.active {
-            background: linear-gradient(135deg, #5e72e4, #825ee4) !important;
-            color: white !important;
-            box-shadow: 0 4px 12px rgba(94, 114, 228, 0.35) !important;
+            background: linear-gradient(135deg, #acacac, #c8c8c8) !important;
+            /* lebih gelap */
+            color: #1f1f1f !important;
             transform: translateX(4px);
+            box-shadow:
+                0 4px 14px rgba(0, 0, 0, 0.22),
+                inset 1px 1px 6px rgba(255, 255, 255, 0.62),
+                inset -2px -2px 9px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.5);
         }
 
         .sidenav .nav-link.active .icon {
-            background: rgba(255, 255, 255, 0.25);
-            color: white !important;
+            background: linear-gradient(135deg, #ffffff, #f7f7f7);
+            color: #333 !important;
+            box-shadow:
+                inset 1px 1px 4px rgba(255, 255, 255, 0.85),
+                inset -2px -2px 6px rgba(0, 0, 0, 0.04);
         }
     </style>
-
 
 </head>
 
@@ -296,10 +304,6 @@
                 </nav>
                 <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
                     <div class="ms-md-auto pe-md-3 d-flex align-items-center">
-                        <div class="input-group">
-                            <span class="input-group-text text-body"><i class="fas fa-search" aria-hidden="true"></i></span>
-                            <input type="text" class="form-control" placeholder="Type here...">
-                        </div>
                     </div>
                     <ul class="navbar-nav  justify-content-end">
                         <li class="nav-item d-flex align-items-center">
