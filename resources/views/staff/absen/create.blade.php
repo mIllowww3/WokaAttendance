@@ -1,6 +1,9 @@
 @extends('layouts.admin')
 
 @section('content')
+
+@section('title', 'Tambah Absen')
+
 <div class="container mt-4">
     <div class="card shadow">
         <div class="card-header">

@@ -1,6 +1,9 @@
 @extends('layout.app')
 
 @section('content')
+
+@section('title', 'Profil')
+
 <style>
     .profile-container {
         max-width: 1200px;

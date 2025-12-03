@@ -5,9 +5,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>Woka Attendance</title>
+    <title>Woka Attendance - @yield('title')</title>
 
-    <!-- Fonts and icons -->
+    <!-- Fonts and icon -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
 
     <!-- CSS -->
@@ -23,13 +23,50 @@
     <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
 
     <style>
-        #map {
-            width: 100%;
-            height: 300px;
-            border-radius: 8px;
-            margin-top: 15px;
+        .sidenav .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 14px 18px;
+            font-size: 17px;
+        }
+
+
+        .sidenav .nav-link .icon {
+            width: 45px;
+            height: 42px;
+            min-width: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f5f5f5;
+            border-radius: 10px;
+            font-size: 25px;
+        }
+
+
+        .sidenav .nav-link .nav-link-text {
+            font-size: 15px;
+            font-weight: 600;
+            margin-left: 14px;
+        }
+
+        /* --- Active Menu --- */
+        .sidenav .nav-link.active {
+            background: linear-gradient(135deg, #5e72e4, #825ee4) !important;
+            color: white !important;
+            box-shadow: 0 4px 10px rgba(250, 250, 253, 1);
+        }
+
+        .sidenav .nav-link.active i {
+            color: white !important;
+        }
+
+        /* Optional: Smooth font for sidebar */
+        .sidenav {
+            font-size: 14px;
         }
     </style>
+
 </head>
 
 <body class="g-sidenav-show bg-gray-100">
@@ -128,6 +165,23 @@
                         <span class="nav-link-text ms-1">Absen</span>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->routeIs('admin.profile.*') ? 'active' : 'text-dark' }}"
+                        href="{{ route('admin.profile.index') }}">
+                        <div class="icon icon-shape icon-sm border-radius-md text-center me-2">
+                            <i class="ni ni-single-02 me-sm-1 text-dark opacity-10"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">Profile</span>
+                    </a>
+                </li>
+                <!-- <li class="nav-item d-flex align-items-center">
+                    <a href="{{ auth()->user()->role=='admin' ? route('admin.profile.index') : route('staff.profile.index') }}"
+                        class="nav-link text-white font-weight-bold px-0">
+                        <i class="ni ni-single-02 me-sm-1"></i>
+                        <span class="d-sm-inline d-none">{{ Auth::user()->name }}</span>
+                    </a>
+                </li> -->
+
 
                 @endif
 
@@ -205,9 +259,9 @@
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
                         <li class="breadcrumb-item text-sm"><a class="opacity-5 text-white" href="javascript:;">Pages</a></li>
-                        <li class="breadcrumb-item text-sm text-white active" aria-current="page">Dashboard</li>
+                        <li class="breadcrumb-item text-sm text-white active" aria-current="page">@yield('title')</li>
                     </ol>
-                    <h6 class="font-weight-bolder text-white mb-0">Dashboard</h6>
+                    <h6 class="font-weight-bolder text-white mb-0">@yield('title')</h6>
                 </nav>
                 <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
                     <div class="ms-md-auto pe-md-3 d-flex align-items-center">
@@ -217,12 +271,14 @@
                         </div>
                     </div>
                     <ul class="navbar-nav  justify-content-end">
-                        <li class="nav-item {{ request()->routeIs('staff.profile.*') ? 'active' : 'text-dark' }} d-flex align-items-center">
-                            <a href="{{ route('staff.profile.index') }}" class="nav-link text-white font-weight-bold px-0">
+                        <li class="nav-item d-flex align-items-center">
+                            <a href="{{ auth()->user()->role == 'admin' ? route('admin.profile.index') : route('staff.profile.index') }}"
+                                class="nav-link text-white font-weight-bold px-0">
                                 <i class="ni ni-single-02 me-sm-1"></i>
                                 <span class="d-sm-inline d-none">{{ Auth::user()->name }}</span>
                             </a>
                         </li>
+
                         <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
                             <a href="javascript:;" class="nav-link text-white p-0" id="iconNavbarSidenav">
                                 <div class="sidenav-toggler-inner">

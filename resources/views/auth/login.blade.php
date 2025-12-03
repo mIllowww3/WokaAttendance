@@ -48,6 +48,10 @@
                   </div>
 
                   <div class="card-body">
+                    @if($errors->any())
+                    <div class="alert alert-danger small">{{ $errors->first() }}</div>
+                    @endif
+                    
                     <form method="POST" action="{{ route('login.post') }}" role="form" class="text-start">
                       @csrf
                       <div class="input-group input-group-outline mb-3">

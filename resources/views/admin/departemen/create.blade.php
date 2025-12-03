@@ -2,6 +2,9 @@
 
 @section('content')
 
+@section('title', 'Tambah Departemen')
+
+
 <div class="container mt-4">
     <div class="container mt-4">
         <div class="card shadow">

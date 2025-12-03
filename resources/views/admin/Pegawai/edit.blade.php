@@ -1,6 +1,9 @@
 @extends('layout.app')
 
 @section('content')
+
+@section('title', 'Edit Pegawai')
+
 <div class="container mt-4">
     <div class="card shadow">
         <div class="card-header bg-primary text-white fw-bold">

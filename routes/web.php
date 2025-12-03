@@ -18,6 +18,7 @@ use App\Http\Controllers\AbsenController;
 
 // IZIN SAKIT (ADMIN)
 use App\Http\Controllers\Admin\IzinSakitController;
+use App\Http\Controllers\AdminProfileController;
 use App\Http\Controllers\JadwalKerjaController;
 
 Route::get('/', function () {
@@ -25,10 +26,8 @@ Route::get('/', function () {
 });
 
 Route::middleware('guest')->group(function () {
-
     Route::get('/login', [AuthController::class, 'login'])->name('login');
     Route::post('/login/post', [AuthController::class, 'authenticate'])->name('login.post');
-
 });
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
 
@@ -66,10 +65,9 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::resource('izin', IzinSakitController::class);
     Route::post('izin/{id}/approve', [IzinSakitController::class, 'approve'])->name('izin.approve');
     Route::post('izin/{id}/reject', [IzinSakitController::class, 'reject'])->name('izin.reject');
-
 });
 
-Route::middleware(['auth','role:staff'])->prefix('staff')->name('staff.')->group(function () {
+Route::middleware(['auth', 'role:staff'])->prefix('staff')->name('staff.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'staff'])->name('dashboard');
 
     Route::get('/absen', [AbsenController::class, 'staffIndex'])->name('absen.index');
@@ -78,7 +76,7 @@ Route::middleware(['auth','role:staff'])->prefix('staff')->name('staff.')->group
     Route::post('/absen/scan/process', [AbsenController::class, 'scanProcess'])->name('absen.scan.process');
     Route::post('/absen/masuk', [AbsenController::class, 'absenMasuk'])->name('absen.masuk');
     Route::post('/absen/pulang', [AbsenController::class, 'absenPulang'])->name('absen.pulang');
-    
+
     Route::get('/profile', [PegawaiController::class, 'profile'])->name('profile.index');
     Route::put('/profile/update/{id}', [PegawaiController::class, 'profileUpdate'])->name('profile.update');
 
@@ -89,7 +87,9 @@ Route::middleware(['auth','role:staff'])->prefix('staff')->name('staff.')->group
     Route::get('izin/edit/{id}', [IzinSakitController::class, 'staffEdit'])->name('izin.edit');
     Route::delete('/delete/{id}', [IzinSakitController::class, 'destroy'])->name('izin.destroy');
     Route::put('izin/update/{id}', [IzinSakitController::class, 'staffUpdate'])->name('izin.update');
-
 });
 
-    
+Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
+    Route::get('/profile', [AdminProfileController::class, 'index'])->name('admin.profile.index');
+    Route::put('/profile', [AdminProfileController::class, 'update'])->name('admin.profile.update');
+});

@@ -1,6 +1,10 @@
 @extends('layout.app')
 
 @section('content')
+
+@section('title', 'Data Izin')
+
+
 <div class="container mt-5">
 
     <div class="card shadow border-0">

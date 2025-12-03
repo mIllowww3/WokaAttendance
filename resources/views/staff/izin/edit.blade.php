@@ -2,6 +2,8 @@
 
 @section('content')
 
+@section('title', 'Edit Izin')
+
 <div class="container mt-4">
     @if ($errors->any())
         <div class="alert alert-danger d-flex align-items-center alert-dismissible fade show" role="alert">

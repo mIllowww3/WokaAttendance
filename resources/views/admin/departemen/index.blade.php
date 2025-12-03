@@ -2,6 +2,8 @@
 
 @section('content')
 
+@section('title', 'Data Departemen')
+
 <body class="bg-light">
 
     <div class="container mt-5">
