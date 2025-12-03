@@ -7,7 +7,7 @@
 
     <title>Woka Attendance - @yield('title')</title>
 
-    <!-- Fonts and icons -->
+    <!-- Fonts and icon -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
 
     <!-- CSS -->
@@ -23,11 +23,29 @@
     <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
 
     <style>
+<<<<<<< HEAD
+        #map {
+            width: 100%;
+            height: 300px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+        /* --- Sidebar Layout Fix --- */
+        .sidenav .navbar-nav .nav-link {
+            display: flex !important;
+            align-items: center !important;
+            gap: 12px !important;
+            padding: 10px 18px !important;
+            border-radius: 10px !important;
+            margin: 4px 0 !important;
+            transition: 0.25s ease-in-out !important;
+=======
         .sidenav .nav-link {
             display: flex;
             align-items: center;
             padding: 14px 18px;
             font-size: 17px;
+>>>>>>> 5de1f576461aaf584ac43a90a9d7d2859c2e7c54
         }
 
 
@@ -50,15 +68,20 @@
             margin-left: 14px;
         }
 
-
+        /* --- Active Menu --- */
         .sidenav .nav-link.active {
-            background: #f0f2f5;
-            border-radius: 12px;
+            background: linear-gradient(135deg, #5e72e4, #825ee4) !important;
+            color: white !important;
+            box-shadow: 0 4px 10px rgba(250, 250, 253, 1);
         }
 
+        .sidenav .nav-link.active i {
+            color: white !important;
+        }
 
-        .sidenav .nav-link.active .icon i {
-            color: #344767 !important;
+        /* Optional: Smooth font for sidebar */
+        .sidenav {
+            font-size: 14px;
         }
     </style>
 
