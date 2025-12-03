@@ -7,7 +7,7 @@
 
     <title>Woka Attendance - @yield('title')</title>
 
-    <!-- Fonts and icons -->
+    <!-- Fonts and icon -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
 
     <!-- CSS -->
@@ -68,7 +68,7 @@
         .sidenav .nav-link.active {
             background: linear-gradient(135deg, #5e72e4, #825ee4) !important;
             color: white !important;
-            box-shadow: 0 4px 10px rgba(250, 250, 250, 1);
+            box-shadow: 0 4px 10px rgba(250, 250, 253, 1);
         }
 
         .sidenav .nav-link.active i {
