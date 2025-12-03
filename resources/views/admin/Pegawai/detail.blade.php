@@ -16,16 +16,16 @@
 
                 <div class="card-body">
 
-                    <h5 class="text-center mb-3">{{ $pegawai->nama }}</h5>
+                    <h5 class="text-center mb-3">{{ $pegawai->user->name }}</h5>
 
                     <table class="table table-bordered">
                         <tr>
                             <th>Departemen</th>
-                            <td>{{ $pegawai->departemen->nama ?? '-' }}</td>
+                            <td>{{ $pegawai->departemen->nama_departemen ?? '-' }}</td>
                         </tr>
                         <tr>
                             <th>UID</th>
-                            <td>{{ $pegawai->uid }}</td>
+                            <td>{{ $pegawai->uid_qr }}</td>
                         </tr>
                     </table>
 
@@ -34,8 +34,8 @@
                     <h5 class="text-center mt-3">QR Code Absen</h5>
 
                     <div class="text-center mt-3">
-                        @if(isset($qrBase64))
-                            <img src="data:image/png;base64,{{ $qrBase64 }}" width="250">
+                        @if(isset($pegawai->qr_image))
+                            <img src="{{ asset('storage/' . $pegawai->qr_image) }}" width="250">
                         @else
                             <p class="text-danger">QR Code tidak tersedia.</p>
                         @endif
