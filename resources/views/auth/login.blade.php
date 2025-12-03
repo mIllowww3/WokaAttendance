@@ -55,13 +55,13 @@
                     <form method="POST" action="{{ route('login.post') }}" role="form" class="text-start">
                       @csrf
                       <div class="input-group input-group-outline mb-3">
-                        <input type="email" name="email" value="{{ old('email') }}" placeholder="masukkan email" class="form-control form-control-lg">
+                        <input type="email" name="email" value="{{ old('email') }}" placeholder="Masukkan Email" class="form-control form-control-lg">
                       </div>
                       @error('email')
                       <div class="text-danger">{{ $message }}</div>
                       @enderror
                       <div class="input-group input-group-outline mb-3">
-                        <input type="password" name="password" placeholder="masukkan password" class="form-control form-control-lg">
+                        <input type="password" name="password" placeholder="Masukkan Password" class="form-control form-control-lg">
                       </div>
                       @error('password')
                       <div class="text-danger">{{ $message }}</div>
