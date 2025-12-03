@@ -1,6 +1,9 @@
 @extends('layout.app')
 
 @section('content')
+
+@section('title', 'Data Izin')
+
 <div class="container-fluid px-4">
     {{-- NOTIFIKASI --}}
     @if (session('success'))

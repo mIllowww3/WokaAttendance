@@ -2,7 +2,7 @@
 
 @section('content')
 
-@section('title', 'Departemen')
+@section('title', 'Data Departemen')
 
 <body class="bg-light">
 

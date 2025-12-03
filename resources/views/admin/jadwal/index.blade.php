@@ -2,7 +2,7 @@
 
 @section('content')
 
-@section('title', 'Jadwal')
+@section('title', 'Jadwal Pegawai')
 
 
 <div class="container mt-5">

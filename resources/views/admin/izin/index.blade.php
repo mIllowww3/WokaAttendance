@@ -2,7 +2,7 @@
 
 @section('content')
 
-@section('title', 'Izin')
+@section('title', 'Data Izin')
 
 
 <div class="container mt-5">
