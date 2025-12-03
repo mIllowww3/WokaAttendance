@@ -13,6 +13,17 @@
         {{ session('success') }}
     </div>
     @endif
+    {{-- ALERT ERROR --}}
+    @if ($errors->any())
+    <div class="alert alert-danger text-white text-center" id="alertMessage">
+        <ul class="mb-0">
+            @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
+
 
     <div class="row">
         <div class="col-md-4">
@@ -45,12 +56,20 @@
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Nama Lengkap</label>
                             <input type="text" name="name" class="form-control" value="{{ Auth::user()->name }}">
+                            @error('name')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
+ 
                         </div>
 
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Email</label>
                             <input type="email" name="email" class="form-control" value="{{ Auth::user()->email }}">
+                            @error('email')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
+
 
                         <div class="col-md-6 mb-3">
                             <label class="form-label">Password Baru</label>
@@ -61,6 +80,7 @@
                             <label class="form-label">Konfirmasi Password</label>
                             <input type="password" name="password_confirmation" class="form-control" placeholder="Ulangi password">
                         </div>
+
 
                     </div>
 

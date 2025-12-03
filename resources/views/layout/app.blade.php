@@ -278,7 +278,8 @@
                         @csrf
                         <div class="row justify-content-center">
                             <button type="submit"
-                                class="btn w-80 px-3 py-2 bg-gradient-danger text-white border-0">
+                                class="btn w-80 px-3 py-2 bg-gradient-danger text-white border-0" 
+                                onclick="return confirm('apakah anda ingin logout?')">
                                 <i class="ni ni-button-power me-3"></i> Logout
                             </button>
                         </div>
