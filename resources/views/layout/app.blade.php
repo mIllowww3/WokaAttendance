@@ -23,49 +23,52 @@
     <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
 
     <style>
-        /* Menyamakan alignment icon di sidebar */
-        .sidenav .nav-link {
-            display: flex;
-            align-items: center;
-            padding: 14px 18px;
-            /* lebih besar */
-            font-size: 17px;
-            /* ukuran teks lebih besar */
+        #map {
+            width: 100%;
+            height: 300px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+        /* --- Sidebar Layout Fix --- */
+        .sidenav .navbar-nav .nav-link {
+            display: flex !important;
+            align-items: center !important;
+            gap: 12px !important;
+            padding: 10px 18px !important;
+            border-radius: 10px !important;
+            margin: 4px 0 !important;
+            transition: 0.25s ease-in-out !important;
         }
 
-
-        .sidenav .nav-link .icon {
-            width: 42px;
-            /* ikon lebih besar */
-            height: 42px;
-            min-width: 42px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #f5f5f5;
-            border-radius: 10px;
-            /* lebih rounded */
-            font-size: 20px;
-            /* ukuran ikon */
+        /* --- Icon Fix --- */
+        .sidenav .nav-link i,
+        .sidenav .nav-link .fa,
+        .sidenav .nav-link .ni {
+            font-size: 18px !important;
+            width: 20px !important;
+            text-align: center !important;
         }
 
-
-        .sidenav .nav-link .nav-link-text {
-            font-size: 17px;
-            /* teks lebih besar */
-            font-weight: 600;
-            margin-left: 14px;
+        /* --- Hover Effect --- */
+        .sidenav .nav-link:hover {
+            background: rgba(255, 255, 255, 0.12) !important;
+            transform: translateX(4px);
         }
 
-
+        /* --- Active Menu --- */
         .sidenav .nav-link.active {
-            background: #f0f2f5;
-            border-radius: 12px;
+            background: linear-gradient(135deg, #5e72e4, #825ee4) !important;
+            color: white !important;
+            box-shadow: 0 4px 10px rgba(94, 114, 228, 0.4);
         }
 
+        .sidenav .nav-link.active i {
+            color: white !important;
+        }
 
-        .sidenav .nav-link.active .icon i {
-            color: #344767 !important;
+        /* Optional: Smooth font for sidebar */
+        .sidenav {
+            font-size: 14px;
         }
     </style>
 
