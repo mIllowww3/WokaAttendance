@@ -7,7 +7,8 @@
 
     <title>Woka Attendance - @yield('title')</title>
 
-    <link rel="shortcut icon" href="" type="image/x-icon">
+    <link rel="icon" type="image/png" href="{{ asset('assets/img/logo-woka.png') }}">
+
 
     <!-- Fonts and icon -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
