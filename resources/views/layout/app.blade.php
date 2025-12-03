@@ -7,6 +7,8 @@
 
     <title>Woka Attendance - @yield('title')</title>
 
+    <link rel="shortcut icon" href="" type="image/x-icon">
+
     <!-- Fonts and icon -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
 
@@ -23,49 +25,39 @@
     <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
 
     <style>
-        .sidenav .nav-link {
-            display: flex;
-            align-items: center;
-            padding: 14px 18px;
-            font-size: 17px;
-        }
+    /* Menyamakan alignment icon di sidebar */
+    .sidenav .nav-link {
+        display: flex;
+        align-items: center;
+    }
 
+    .sidenav .nav-link .icon {
+        width: 36px;
+        height: 36px;
+        min-width: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #f5f5f5;
+        border-radius: 8px;
+    }
 
-        .sidenav .nav-link .icon {
-            width: 45px;
-            height: 42px;
-            min-width: 42px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #f5f5f5;
-            border-radius: 10px;
-            font-size: 25px;
-        }
+    .sidenav .nav-link .nav-link-text {
+        font-size: 15px;
+        font-weight: 600;
+        margin-left: 10px;
+    }
 
+    .sidenav .nav-link.active {
+        background: #f0f2f5;
+        border-radius: 10px;
+    }
 
-        .sidenav .nav-link .nav-link-text {
-            font-size: 15px;
-            font-weight: 600;
-            margin-left: 14px;
-        }
+    .sidenav .nav-link.active .icon i {
+        color: #344767 !important;
+    }
+</style>
 
-        /* --- Active Menu --- */
-        .sidenav .nav-link.active {
-            background: linear-gradient(135deg, #5e72e4, #825ee4) !important;
-            color: white !important;
-            box-shadow: 0 4px 10px rgba(250, 250, 253, 1);
-        }
-
-        .sidenav .nav-link.active i {
-            color: white !important;
-        }
-
-        /* Optional: Smooth font for sidebar */
-        .sidenav {
-            font-size: 14px;
-        }
-    </style>
 
 </head>
 
