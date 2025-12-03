@@ -23,20 +23,16 @@
     <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
 
     <style>
-        /* Menyamakan alignment icon di sidebar */
         .sidenav .nav-link {
             display: flex;
             align-items: center;
             padding: 14px 18px;
-            /* lebih besar */
             font-size: 17px;
-            /* ukuran teks lebih besar */
         }
 
 
         .sidenav .nav-link .icon {
             width: 45px;
-            /* ikon lebih besar */
             height: 42px;
             min-width: 42px;
             display: flex;
@@ -44,15 +40,12 @@
             justify-content: center;
             background: #f5f5f5;
             border-radius: 10px;
-            /* lebih rounded */
             font-size: 25px;
-            /* ukuran ikon */
         }
 
 
         .sidenav .nav-link .nav-link-text {
             font-size: 15px;
-            /* teks lebih besar */
             font-weight: 600;
             margin-left: 14px;
         }
