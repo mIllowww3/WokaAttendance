@@ -23,29 +23,11 @@
     <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
 
     <style>
-<<<<<<< HEAD
-        #map {
-            width: 100%;
-            height: 300px;
-            border-radius: 8px;
-            margin-top: 15px;
-        }
-        /* --- Sidebar Layout Fix --- */
-        .sidenav .navbar-nav .nav-link {
-            display: flex !important;
-            align-items: center !important;
-            gap: 12px !important;
-            padding: 10px 18px !important;
-            border-radius: 10px !important;
-            margin: 4px 0 !important;
-            transition: 0.25s ease-in-out !important;
-=======
         .sidenav .nav-link {
             display: flex;
             align-items: center;
             padding: 14px 18px;
             font-size: 17px;
->>>>>>> 5de1f576461aaf584ac43a90a9d7d2859c2e7c54
         }
 
 
