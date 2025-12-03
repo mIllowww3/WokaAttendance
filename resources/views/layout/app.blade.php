@@ -23,6 +23,7 @@
     <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
 
     <style>
+<<<<<<< HEAD
         #map {
             width: 100%;
             height: 300px;
@@ -38,12 +39,18 @@
             border-radius: 10px !important;
             margin: 4px 0 !important;
             transition: 0.25s ease-in-out !important;
+=======
+        .sidenav .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 14px 18px;
+            font-size: 17px;
+>>>>>>> 5de1f576461aaf584ac43a90a9d7d2859c2e7c54
         }
 
 
         .sidenav .nav-link .icon {
             width: 45px;
-            /* ikon lebih besar */
             height: 42px;
             min-width: 42px;
             display: flex;
@@ -51,15 +58,12 @@
             justify-content: center;
             background: #f5f5f5;
             border-radius: 10px;
-            /* lebih rounded */
             font-size: 25px;
-            /* ukuran ikon */
         }
 
 
         .sidenav .nav-link .nav-link-text {
             font-size: 15px;
-            /* teks lebih besar */
             font-weight: 600;
             margin-left: 14px;
         }

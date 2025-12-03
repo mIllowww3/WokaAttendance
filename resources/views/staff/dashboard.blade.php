@@ -1,6 +1,9 @@
 @extends('layout.app')
 
 @section('content')
+
+@section('title', 'Dashboard')
+
 <div class="container-fluid py-4">
     <div class="row">
         <div class="row g-3 mt-4">
@@ -11,7 +14,7 @@
                         <div>
                             <p class="text-sm mb-1 text-uppercase font-weight-bold">Total Absen</p>
                             <h4 class="font-weight-bolder mb-1">{{ $totalAbsen ?? 0 }}</h4>
-                            <a href="" class="text-primary small">Lihat Absen</a>
+                            <a href="{{ route('staff.absen.index') }}" class="text-primary small">Lihat Absen</a>
                         </div>
 
                         <!-- Icon -->
