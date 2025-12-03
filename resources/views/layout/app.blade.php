@@ -23,67 +23,80 @@
     <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
 
     <style>
-<<<<<<< HEAD
+        /* --- MAP --- */
         #map {
             width: 100%;
             height: 300px;
-            border-radius: 8px;
+            border-radius: 12px;
             margin-top: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
         }
-        /* --- Sidebar Layout Fix --- */
+
+        /* --- SIDEBAR BASE STYLE --- */
+        .sidenav {
+            font-size: 14px;
+            padding-top: 10px;
+        }
+
         .sidenav .navbar-nav .nav-link {
             display: flex !important;
             align-items: center !important;
-            gap: 12px !important;
-            padding: 10px 18px !important;
-            border-radius: 10px !important;
-            margin: 4px 0 !important;
-            transition: 0.25s ease-in-out !important;
-=======
-        .sidenav .nav-link {
-            display: flex;
-            align-items: center;
-            padding: 14px 18px;
-            font-size: 17px;
->>>>>>> 5de1f576461aaf584ac43a90a9d7d2859c2e7c54
+            gap: 14px !important;
+            padding: 12px 18px !important;
+            margin: 5px 0 !important;
+            border-radius: 12px !important;
+            transition: all 0.25s ease-in-out !important;
+            font-weight: 600 !important;
+            color: #444 !important;
         }
 
-
+        /* --- ICON BOX STYLE --- */
         .sidenav .nav-link .icon {
-            width: 45px;
+            width: 42px;
             height: 42px;
             min-width: 42px;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #f5f5f5;
-            border-radius: 10px;
-            font-size: 25px;
+            background: #f3f4f7;
+            border-radius: 12px;
+            font-size: 22px;
+            transition: 0.3s ease;
+            color: #5e72e4;
         }
 
-
+        /* --- TEXT STYLE --- */
         .sidenav .nav-link .nav-link-text {
             font-size: 15px;
             font-weight: 600;
-            margin-left: 14px;
+            letter-spacing: 0.3px;
         }
 
-        /* --- Active Menu --- */
+        /* --- HOVER EFFECT --- */
+        .sidenav .navbar-nav .nav-link:hover {
+            background: #eef0ff !important;
+            transform: translateX(4px);
+        }
+
+        .sidenav .navbar-nav .nav-link:hover .icon {
+            background: #e4e6ff;
+            color: #4c5fe4;
+        }
+
+        /* --- ACTIVE MENU STYLE --- */
         .sidenav .nav-link.active {
             background: linear-gradient(135deg, #5e72e4, #825ee4) !important;
             color: white !important;
-            box-shadow: 0 4px 10px rgba(250, 250, 253, 1);
+            box-shadow: 0 4px 12px rgba(94, 114, 228, 0.35) !important;
+            transform: translateX(4px);
         }
 
-        .sidenav .nav-link.active i {
+        .sidenav .nav-link.active .icon {
+            background: rgba(255, 255, 255, 0.25);
             color: white !important;
         }
-
-        /* Optional: Smooth font for sidebar */
-        .sidenav {
-            font-size: 14px;
-        }
     </style>
+
 
 </head>
 
