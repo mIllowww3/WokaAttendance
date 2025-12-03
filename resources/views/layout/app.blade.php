@@ -40,26 +40,35 @@
             transition: 0.25s ease-in-out !important;
         }
 
-        /* --- Icon Fix --- */
-        .sidenav .nav-link i,
-        .sidenav .nav-link .fa,
-        .sidenav .nav-link .ni {
-            font-size: 18px !important;
-            width: 20px !important;
-            text-align: center !important;
+
+        .sidenav .nav-link .icon {
+            width: 45px;
+            /* ikon lebih besar */
+            height: 42px;
+            min-width: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f5f5f5;
+            border-radius: 10px;
+            /* lebih rounded */
+            font-size: 25px;
+            /* ukuran ikon */
         }
 
-        /* --- Hover Effect --- */
-        .sidenav .nav-link:hover {
-            background: rgba(255, 255, 255, 0.12) !important;
-            transform: translateX(4px);
+
+        .sidenav .nav-link .nav-link-text {
+            font-size: 15px;
+            /* teks lebih besar */
+            font-weight: 600;
+            margin-left: 14px;
         }
 
         /* --- Active Menu --- */
         .sidenav .nav-link.active {
             background: linear-gradient(135deg, #5e72e4, #825ee4) !important;
             color: white !important;
-            box-shadow: 0 4px 10px rgba(94, 114, 228, 0.4);
+            box-shadow: 0 4px 10px rgba(250, 250, 250, 1);
         }
 
         .sidenav .nav-link.active i {
@@ -176,7 +185,7 @@
                         <div class="icon icon-shape icon-sm border-radius-md text-center me-2">
                             <i class="ni ni-single-02 me-sm-1 text-dark opacity-10"></i>
                         </div>
-                        <span class="d-sm-inline d-none">Profile</span>
+                        <span class="nav-link-text ms-1">Profile</span>
                     </a>
                 </li>
                 <!-- <li class="nav-item d-flex align-items-center">
