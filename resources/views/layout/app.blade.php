@@ -35,7 +35,7 @@
 
 
         .sidenav .nav-link .icon {
-            width: 42px;
+            width: 45px;
             /* ikon lebih besar */
             height: 42px;
             min-width: 42px;
@@ -45,13 +45,13 @@
             background: #f5f5f5;
             border-radius: 10px;
             /* lebih rounded */
-            font-size: 20px;
+            font-size: 25px;
             /* ukuran ikon */
         }
 
 
         .sidenav .nav-link .nav-link-text {
-            font-size: 17px;
+            font-size: 15px;
             /* teks lebih besar */
             font-weight: 600;
             margin-left: 14px;
@@ -173,7 +173,7 @@
                         <div class="icon icon-shape icon-sm border-radius-md text-center me-2">
                             <i class="ni ni-single-02 me-sm-1 text-dark opacity-10"></i>
                         </div>
-                        <span class="d-sm-inline d-none">Profile</span>
+                        <span class="nav-link-text ms-1">Profile</span>
                     </a>
                 </li>
                 <!-- <li class="nav-item d-flex align-items-center">
