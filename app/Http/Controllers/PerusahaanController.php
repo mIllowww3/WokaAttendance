@@ -21,7 +21,7 @@ class PerusahaanController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama_kantor' => 'required',
+            'nama_kantor' => 'required|unique:perusahaans,nama_kantor',
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
             'radius' => 'required|numeric',
@@ -44,7 +44,7 @@ class PerusahaanController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'nama_kantor' => 'required',
+            'nama_kantor' => 'required|unique:perusahaans,nama_kantor,' . $id,
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
             'radius' => 'required|numeric',

@@ -30,7 +30,7 @@ public function create()
     public function store(Request $request)
     {
         $request->validate([
-            'nama_departemen' => 'required|max:255',
+            'nama_departemen' => 'required|unique:departemens,nama_departemen|max:255',
             'deskripsi' => 'nullable',
         ]);
 
@@ -51,7 +51,7 @@ public function create()
     public function update(Request $request, $id)
     {
         $request->validate([
-            'nama_departemen' => 'required|max:255',
+            'nama_departemen' => 'required|unique:departemens,nama_departemen,' . $id . '|max:255',
             'deskripsi' => 'nullable',
         ]);
 

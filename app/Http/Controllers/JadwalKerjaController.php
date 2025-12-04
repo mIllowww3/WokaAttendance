@@ -28,7 +28,7 @@ class JadwalKerjaController extends Controller
     public function store(Request $request)
     {
          $request->validate([
-        'hari'        => 'required|in:Senin,Selasa,Rabu,Kamis,Jumat,Sabtu,Minggu',
+        'hari'        => 'required|in:Senin,Selasa,Rabu,Kamis,Jumat,Sabtu,Minggu|unique:jadwal_kerjas,hari',
         'jam_masuk'   => 'required',
         'jam_pulang'  => 'required|after:jam_masuk', // ⬅ VALIDASI BARU
     ], [
@@ -50,7 +50,7 @@ class JadwalKerjaController extends Controller
     public function update(Request $request, $id)
     {
     $request->validate([
-        'hari'        => 'required|in:Senin,Selasa,Rabu,Kamis,Jumat,Sabtu,Minggu',
+        'hari'        => 'required|in:Senin,Selasa,Rabu,Kamis,Jumat,Sabtu,Minggu|unique:jadwal_kerjas,hari,' . $id  ,
         'jam_masuk'   => 'required',
         'jam_pulang'  => 'required|after:jam_masuk', // ⬅ VALIDASI BARU
     ], [
