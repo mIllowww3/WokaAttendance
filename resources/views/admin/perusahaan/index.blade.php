@@ -1,8 +1,14 @@
 @extends('layout.app')
 
+@section('title', ' Data Perusahaan')
+
 @section('content')
 
-@section('title', ' Data Perusahaan')
+<style>
+    .table-bordered> :not(caption)>*>* {
+        border-width: 1px !important;
+    }
+</style>
 
 <div class="container mt-5">
 
@@ -78,7 +84,7 @@
                                 <div class="d-flex justify-content-center align-items-center gap-2">
                                     <!-- Edit -->
                                     <a href="{{ route('admin.perusahaan.edit', $p->id) }}"
-                                        class="btn btn-warning btn-sm text-white fw-bold">
+                                        class="btn btn-warning btn-sm text-white fw-bold m-0">
                                         Edit
                                     </a>
 
@@ -91,7 +97,7 @@
                                         @csrf
                                         @method('DELETE')
 
-                                        <button class="btn btn-danger btn-sm">
+                                        <button class="btn btn-danger btn-sm m-0">
                                             Hapus
                                         </button>
                                     </form>

@@ -1,178 +1,192 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<style>
-  body {
-    background: linear-gradient(135deg, #353A5F 0%, #9EBAF3 100%);
-    min-height: 100vh;
-  }
-
-  .login-box {
-    margin-top: 120px;
-    background: rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(4px);
-    border-radius: 20px;
-    padding: 25px;
-  }
-
-  .custom-input input {
-    background: rgba(255,255,255,0.15);
-    border-radius: 30px;
-    color: white;
-  }
-
-  .custom-input input::placeholder {
-    color: #dcdcdc;
-  }
-
-  .icon-left, .icon-right {
-    color: white;
-  }
-
-  .btn-login {
-    background: white;
-    color: #2f2f2f;
-    border-radius: 30px;
-  }
-
-  .title-login h4,
-  .title-login p {
-    color: white !important;
-  }
-  /* Hapus pengaruh layout Argon */
-.main-content, 
-.page-header {
-  padding: 0 !important;
-  margin: 0 !important;
-  min-height: 0 !important;
-  background: none !important;
-}
-
-/* Wrapper baru untuk center login */
-.login-wrapper {
-  min-height: 100vh;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: linear-gradient(135deg, #353A5F 0%, #9EBAF3 100%);
-  padding: 0;
-  margin: 0;
-}
-
-/* Card login glass */
-.login-box {
-  width: 380px;
-  padding: 35px 30px;
-  border-radius: 28px;
-  background: linear-gradient(135deg,
-      rgba(255, 255, 255, 0.38) 0%,
-      rgba(255, 255, 255, 0.18) 100%);
-  backdrop-filter: blur(12px);
-  box-shadow: 0 18px 40px rgba(0,0,0,0.25);
-  color: white;
-}
-
-</style>
-
 <head>
-  
-  
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('assets/img/apple-icon.png') }}">
-  <link rel="icon" type="image/png" href="{{ asset('assets/img/favicon.png') }}">
-  <title>Woka Dashboard - Login</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Woka Login</title>
 
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
-  <link href="https://demos.creative-tim.com/argon-dashboard-pro/assets/css/nucleo-icons.css" rel="stylesheet" />
-  <link href="https://demos.creative-tim.com/argon-dashboard-pro/assets/css/nucleo-svg.css" rel="stylesheet" />
-  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
-  <link id="pagestyle" href="{{ asset('assets/css/argon-dashboard.css?v=2.1.0') }}" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600" rel="stylesheet" />
+    <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            font-family: "Poppins", sans-serif;
+
+            background: linear-gradient(
+                135deg,
+                #4338ca 0%,
+                #6366f1 35%,
+                #8b5cf6 70%,
+                #ec4899 100%
+            );
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-card {
+            width: 380px;
+            padding: 45px 35px;
+            border-radius: 28px;
+
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(16px);
+
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.35);
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            color: white;
+        }
+
+        .avatar {
+            width: 92px;
+            height: 92px;
+            border-radius: 50%;
+            margin-bottom: 25px;
+
+            background: rgba(255, 255, 255, 0.28);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .avatar i {
+            font-size: 45px;
+            opacity: 0.85;
+        }
+
+        h4 {
+            letter-spacing: 1px;
+            font-weight: 500;
+            margin-bottom: 35px;
+        }
+
+        .input-group {
+            width: 100%;
+            position: relative;
+            margin-bottom: 28px;
+        }
+
+        .input-group i {
+            position: absolute;
+            top: 11px;
+            left: 6px;
+            font-size: 15px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 10px 10px 10px 32px;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.55);
+            color: white;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .input-group input::placeholder {
+            color: rgba(255, 255, 255, 0.75);
+        }
+
+        .tools {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            margin-top: -8px;
+        }
+
+        .tools a {
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: none;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 13px;
+            border: none;
+            border-radius: 30px;
+            margin-top: 30px;
+
+            font-size: 14px;
+            font-weight: 600;
+
+            background: linear-gradient(
+                90deg,
+                #6d28d9,
+                #7c3aed,
+                #6366f1
+            );
+
+            color: white;
+            cursor: pointer;
+            transition: 0.3s ease-in-out;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-1px);
+            opacity: 0.92;
+        }
+
+        .alert-box {
+            width: 100%;
+            background: rgba(255, 80, 80, 0.75);
+            padding: 8px 10px;
+            border-radius: 6px;
+            font-size: 13px;
+            margin-bottom: 15px;
+        }
+    </style>
 </head>
 
-<body class="">
-  <div class="container position-sticky z-index-sticky top-0">
-    <div class="row">
-      <div class="col-12">
-        <!-- Navbar -->
-        <nav class="navbar navbar-expand-lg blur border-radius-lg top-0 z-index-3 shadow position-absolute mt-4 py-2 start-0 end-0 mx-4">
-          <div class="container-fluid">
-            <a class="navbar-brand font-weight-bolder ms-lg-0 ms-3 ">
-              Woka Attendance
-            </a>
-          </div>
-        </nav>
-        <!-- End Navbar -->
-      </div>
-    </div>
-  </div>
+<body>
 
-  <main class="main-content  mt-0">
-    <section>
-      <div class="page-header min-vh-100">
-        <div class="container">
-          <div class="row justify-content-center">
+    <div class="login-card">
 
-            <div class="col-xl-4 col-lg-5 col-md-7 flex-column mx-lg-0 mx-auto">
-              <div class="card card-plain">
-
-<div class="card login-box shadow-none border-0">
-
-  <div class="card-body text-center title-login">
-    <h4 class="font-weight-bolder mb-1">USER LOGIN</h4>
-  </div>
-
-  <div class="card-body mt-4">
-
-    @if($errors->any())
-      <div class="alert alert-danger small">{{ $errors->first() }}</div>
-    @endif
-
-    <form method="POST" action="{{ route('login.post') }}">
-      @csrf
-
-      <!-- Username / Email -->
-      <div class="custom-input mb-3">
-        <i class="fa fa-user icon-left"></i>
-        <input type="email" name="email" value="{{ old('email') }}"
-          placeholder="Username" class="form-control">
-      </div>
-      @error('email')
-      <div class="text-danger small">{{ $message }}</div>
-      @enderror
-
-      <!-- Password -->
-      <div class="custom-input mb-4">
-        <i class="fa fa-lock icon-left"></i>
-        <i class="fa fa-eye-slash icon-right"></i>
-        <input type="password" name="password"
-          placeholder="Password" class="form-control">
-      </div>
-      @error('password')
-      <div class="text-danger small">{{ $message }}</div>
-      @enderror
-
-      <button type="submit" class="btn btn-login w-100">LOGIN</button>
-    </form>
-
-  </div>
-</div>
-
-              </div>
-            </div>
-          </div>
+        <div class="avatar">
+            <i class="fa fa-user"></i>
         </div>
-      </div>
-    </section>
-  </main>
 
+        <h4>USER LOGIN</h4>
 
-  <!-- Core JS -->
-  <script src="{{ asset('assets/js/core/popper.min.js') }}"></script>
-  <script src="{{ asset('assets/js/core/bootstrap.min.js') }}"></script>
-  <script src="{{ asset('assets/js/plugins/perfect-scrollbar.min.js') }}"></script>
-  <script src="{{ asset('assets/js/plugins/smooth-scrollbar.min.js') }}"></script>
+        @if($errors->any())
+        <div class="alert-box">
+            {{ $errors->first() }}
+        </div>
+        @endif
+
+        <form method="POST" action="{{ route('login.post') }}">
+            @csrf
+
+            <div class="input-group">
+                <i class="fa fa-envelope"></i>
+                <input type="email" name="email" placeholder="Email ID" value="{{ old('email') }}" required>
+            </div>
+
+            <div class="input-group">
+                <i class="fa fa-lock"></i>
+                <input type="password" name="password" placeholder="Password" required>
+            </div>
+
+            <div class="tools">
+                <label><input type="checkbox" name="remember"> Remember me</label>
+                <a href="#">Forgot Password?</a>
+            </div>
+
+            <button class="login-btn">LOGIN</button>
+        </form>
+
+    </div>
 
 </body>
 

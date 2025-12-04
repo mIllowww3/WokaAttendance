@@ -1,8 +1,14 @@
 @extends('layout.app')
 
+@section('title', 'Data Izin')
+
 @section('content')
 
-@section('title', 'Data Izin')
+<style>
+    .table-bordered> :not(caption)>*>* {
+        border-width: 1px !important;
+    }
+</style>
 
 
 <div class="container mt-5">
@@ -91,7 +97,7 @@
                                 <form action="{{ route('admin.izin.approve', $izin->id) }}"
                                     method="POST" class="d-inline">
                                     @csrf
-                                    <button class="btn btn-sm btn-success shadow-sm mb-1">
+                                    <button class="btn btn-sm btn-success shadow-sm mb-1 m-0">
                                         Setujui
                                     </button>
                                 </form>
@@ -99,7 +105,7 @@
                                 <form action="{{ route('admin.izin.reject', $izin->id) }}"
                                     method="POST" class="d-inline">
                                     @csrf
-                                    <button class="btn btn-sm btn-danger shadow-sm mb-1">
+                                    <button class="btn btn-sm btn-danger shadow-sm mb-1 m-0">
                                         Tolak
                                     </button>
                                 </form>
