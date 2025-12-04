@@ -27,11 +27,13 @@ class JadwalKerjaController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'hari'        => 'required|in:Senin,Selasa,Rabu,Kamis,Jumat,Sabtu,Minggu',
-            'jam_masuk'   => 'required',
-            'jam_pulang'  => 'required',
-        ]);
+         $request->validate([
+        'hari'        => 'required|in:Senin,Selasa,Rabu,Kamis,Jumat,Sabtu,Minggu',
+        'jam_masuk'   => 'required',
+        'jam_pulang'  => 'required|after:jam_masuk', // ⬅ VALIDASI BARU
+    ], [
+        'jam_pulang.after' => 'Jam pulang tidak boleh kurang dari jam masuk.',
+    ]);
 
         Jadwal_kerja::create($request->all());
 
@@ -47,11 +49,13 @@ class JadwalKerjaController extends Controller
 
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'hari'        => 'required|in:Senin,Selasa,Rabu,Kamis,Jumat,Sabtu,Minggu',
-            'jam_masuk'   => 'required',
-            'jam_pulang'  => 'required',
-        ]);
+    $request->validate([
+        'hari'        => 'required|in:Senin,Selasa,Rabu,Kamis,Jumat,Sabtu,Minggu',
+        'jam_masuk'   => 'required',
+        'jam_pulang'  => 'required|after:jam_masuk', // ⬅ VALIDASI BARU
+    ], [
+        'jam_pulang.after' => 'Jam pulang tidak boleh kurang dari jam masuk.',
+    ]);
 
         $jadwal = Jadwal_kerja::findOrFail($id);
         $jadwal->update($request->all());
