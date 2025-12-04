@@ -24,41 +24,87 @@
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
     <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
-
     <style>
-    /* Menyamakan alignment icon di sidebar */
-    .sidenav .nav-link {
-        display: flex;
-        align-items: center;
-    }
+        /* --- MAP --- */
+        #map {
+            width: 100%;
+            height: 300px;
+            border-radius: 12px;
+            margin-top: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
 
-    .sidenav .nav-link .icon {
-        width: 36px;
-        height: 36px;
-        min-width: 36px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: #f5f5f5;
-        border-radius: 8px;
-    }
+        /* --- SIDEBAR --- */
+        .sidenav {
+            font-size: 14px;
+            padding-top: 10px;
+        }
 
-    .sidenav .nav-link .nav-link-text {
-        font-size: 15px;
-        font-weight: 600;
-        margin-left: 10px;
-    }
+        /* --- NORMAL STATE (PUTIH) --- */
+        .sidenav .navbar-nav .nav-link {
+            display: flex !important;
+            align-items: center !important;
+            gap: 14px !important;
+            padding: 12px 18px !important;
+            margin: 5px 0 !important;
+            border-radius: 12px !important;
+            transition: all 0.25s ease-in-out !important;
+            font-weight: 600 !important;
+            color: #444 !important;
+            background: #ffffff;
+            /* default tetap putih */
+            backdrop-filter: blur(4px);
+            box-shadow:
+                inset 1px 1px 2px rgba(255, 255, 255, 0.6),
+                0 1px 3px rgba(0, 0, 0, 0.04);
+        }
 
-    .sidenav .nav-link.active {
-        background: #f0f2f5;
-        border-radius: 10px;
-    }
+        /* --- ICON NORMAL --- */
+        .sidenav .nav-link .icon {
+            width: 42px;
+            height: 42px;
+            min-width: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(145deg, #f5f5f5, #dedede);
+            border-radius: 12px;
+            font-size: 22px;
+            transition: 0.3s ease;
+            color: #ffffff;
+            box-shadow:
+                inset 1px 1px 3px rgba(255, 255, 255, 0.7),
+                inset -2px -2px 6px rgba(0, 0, 0, 0.05);
+        }
 
-    .sidenav .nav-link.active .icon i {
-        color: #344767 !important;
-    }
-</style>
+        /* --- HOVER --- */
+        .sidenav .navbar-nav .nav-link:hover {
+            background: #f7f7f7 !important;
+            transform: translateX(4px);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+        }
 
+        /* --- ACTIVE: lebih gelap lagi --- */
+        .sidenav .nav-link.active {
+            background: linear-gradient(135deg, #acacac, #c8c8c8) !important;
+            /* lebih gelap */
+            color: #1f1f1f !important;
+            transform: translateX(4px);
+            box-shadow:
+                0 4px 14px rgba(0, 0, 0, 0.22),
+                inset 1px 1px 6px rgba(255, 255, 255, 0.62),
+                inset -2px -2px 9px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .sidenav .nav-link.active .icon {
+            background: linear-gradient(135deg, #ffffff, #f7f7f7);
+            color: #333 !important;
+            box-shadow:
+                inset 1px 1px 4px rgba(255, 255, 255, 0.85),
+                inset -2px -2px 6px rgba(0, 0, 0, 0.04);
+        }
+    </style>
 
 </head>
 
