@@ -5,6 +5,12 @@
 @section('title', 'Jadwal Pegawai')
 
 
+<style>
+    .table-bordered> :not(caption)>*>* {
+        border-width: 1px !important;
+    }
+</style>
+
 <div class="container mt-5">
     {{-- NOTIFIKASI --}}
     @if (session('success'))
@@ -62,7 +68,7 @@
                             <td class="text-center">
 
                                 <a href="{{ route('admin.jadwal.edit', $j->id) }}"
-                                    class="btn btn-warning btn-sm text-white me-1 shadow-sm">
+                                    class="btn btn-warning btn-sm text-white me-1 shadow-sm m-0">
                                     Edit
                                 </a>
 
@@ -73,7 +79,7 @@
                                     @csrf
                                     @method('DELETE')
 
-                                    <button class="btn btn-danger btn-sm shadow-sm">
+                                    <button class="btn btn-danger btn-sm shadow-sm m-0">
                                         Hapus
                                     </button>
                                 </form>

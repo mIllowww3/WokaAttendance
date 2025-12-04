@@ -1,9 +1,15 @@
 @extends('layout.app')
 
-@section('content')
 
 @section('title', 'Data Absen')
 
+@section('content')
+
+<style>
+    .table-bordered> :not(caption)>*>* {
+        border-width: 1px !important;
+    }
+</style>
 
 <div class="container mt-5">
 
@@ -102,7 +108,7 @@
 
                             <td class="text-center">
                                 {{-- BUKA MODAL --}}
-                                <button class="btn btn-info btn-sm text-white"
+                                <button class="btn btn-info btn-sm text-white m-0"
                                     data-bs-toggle="modal"
                                     data-bs-target="#detailModal{{ $a->id }}">
                                     Detail

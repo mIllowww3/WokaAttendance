@@ -1,8 +1,15 @@
 @extends('layout.app')
 
-@section('content')
 
 @section('title', 'Data Departemen')
+
+@section('content')
+
+<style>
+    .table-bordered> :not(caption)>*>* {
+        border-width: 1px !important;
+    }
+</style>
 
 <body class="bg-light">
 
@@ -65,7 +72,7 @@
                                 <td class="text-center">
                                     <div class="d-flex justify-content-center align-items-center gap-2">
                                         <a href="{{ route('admin.departemen.edit', $item->id) }}"
-                                            class="btn btn-warning btn-sm text-white">
+                                            class="btn btn-warning btn-sm text-white m-0">
                                             Edit
                                         </a>
 
@@ -77,7 +84,7 @@
                                             @csrf
                                             @method('DELETE')
 
-                                            <button class="btn btn-danger btn-sm">
+                                            <button class="btn btn-danger btn-sm m-0">
                                                 Hapus
                                             </button>
                                         </form>
@@ -86,12 +93,22 @@
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="4" class="text-center text-muted">Tidak ada data departemen.</td>
+                                <td colspan="4" class="text-center text-muted">
+                                    Tidak ada data departemen.</td>
                             </tr>
                             @endforelse
                         </tbody>
 
                     </table>
+                    <script>
+                        setTimeout(() => {
+                            let alert = document.querySelector('.alert');
+                            if (alert) {
+                                alert.classList.remove('show');
+                                alert.classList.add('fade');
+                            }
+                        }, 3000);
+                    </script>
                 </div>
 
             </div>
@@ -103,15 +120,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- SCRIPT UNTUK ALERT OTOMATIS HILANG DENGAN FADE OUT -->
-    <script>
-        setTimeout(() => {
-            let alert = document.querySelector('.alert');
-            if (alert) {
-                alert.classList.remove('show');
-                alert.classList.add('fade');
-            }
-        }, 3000);
-    </script>
+
 
 </body>
 @endsection
