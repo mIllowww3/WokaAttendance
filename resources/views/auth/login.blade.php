@@ -15,15 +15,7 @@
             padding: 0;
             min-height: 100vh;
             font-family: "Poppins", sans-serif;
-
-            background: linear-gradient(
-                135deg,
-                #4338ca 0%,
-                #6366f1 35%,
-                #8b5cf6 70%,
-                #ec4899 100%
-            );
-
+            background: linear-gradient(135deg, #4338ca, #6366f1, #8b5cf6, #ec4899);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -33,12 +25,9 @@
             width: 380px;
             padding: 45px 35px;
             border-radius: 28px;
-
             background: rgba(255, 255, 255, 0.12);
             backdrop-filter: blur(16px);
-
             box-shadow: 0 25px 45px rgba(0, 0, 0, 0.35);
-
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -51,7 +40,6 @@
             height: 92px;
             border-radius: 50%;
             margin-bottom: 25px;
-
             background: rgba(255, 255, 255, 0.28);
             display: flex;
             justify-content: center;
@@ -69,26 +57,37 @@
             margin-bottom: 35px;
         }
 
+        /* 🔥 FINAL — INPUT GROUP RATA TENGAH DAN SIMETRIS */
         .input-group {
             width: 100%;
             position: relative;
             margin-bottom: 28px;
+
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            border-radius: 10px;
+
+            padding: 12px 15px;
+            padding-left: 45px;
+            /* ruang icon agar pas */
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(8px);
+
+            box-sizing: border-box;
         }
 
         .input-group i {
             position: absolute;
-            top: 11px;
-            left: 6px;
-            font-size: 15px;
+            top: 50%;
+            left: 15px;
+            transform: translateY(-50%);
+            font-size: 16px;
             color: rgba(255, 255, 255, 0.9);
         }
 
         .input-group input {
             width: 100%;
-            padding: 10px 10px 10px 32px;
             background: transparent;
             border: none;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.55);
             color: white;
             font-size: 14px;
             outline: none;
@@ -117,17 +116,9 @@
             border: none;
             border-radius: 30px;
             margin-top: 30px;
-
             font-size: 14px;
             font-weight: 600;
-
-            background: linear-gradient(
-                90deg,
-                #6d28d9,
-                #7c3aed,
-                #6366f1
-            );
-
+            background: linear-gradient(90deg, #6d28d9, #7c3aed, #6366f1);
             color: white;
             cursor: pointer;
             transition: 0.3s ease-in-out;
@@ -170,19 +161,20 @@
 
             <div class="input-group">
                 <i class="fa fa-envelope"></i>
-                <input type="email" name="email" placeholder="Email ID" value="{{ old('email') }}" required>
+                <input type="email" name="email" placeholder="Masukan Email " value="{{ old('email') }}" required>
             </div>
+            @error('email')
+            <div class="alert-box">{{ $message }}</div>
+            @enderror
 
             <div class="input-group">
                 <i class="fa fa-lock"></i>
-                <input type="password" name="password" placeholder="Password" required>
+                <input type="password" name="password" placeholder="Masukan Password" required>
             </div>
-
-            <div class="tools">
-                <label><input type="checkbox" name="remember"> Remember me</label>
-                <a href="#">Forgot Password?</a>
-            </div>
-
+            @error('password')
+            <div class="alert-box">{{ $message }}</div>
+            @enderror
+            
             <button class="login-btn">LOGIN</button>
         </form>
 

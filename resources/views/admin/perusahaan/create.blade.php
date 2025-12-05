@@ -17,7 +17,7 @@
 
                 <label>Nama Kantor</label>
                 <input type="text" name="nama_kantor" class="form-control">
-                @error('nama_kantor')
+                @error('nama_kantor')       
                 <div class="text-danger">{{ $message }}</div>
                 @enderror
 
