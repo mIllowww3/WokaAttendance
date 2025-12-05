@@ -37,11 +37,13 @@
 
         <div class="card-body">
 
+            <!-- Search -->
             <form method="GET" class="mb-4">
                 <div class="d-flex">
-                    <input type="text" name="cari" class="form-control me-3" placeholder="Cari departemen..."
+                    <input type="text" name="cari" class="form-control me-3" placeholder="Cari Jadwal..."
                         value="{{ request('cari') }}">
-                    <button class="btn btn-primary" type="submit">Cari</button>
+                    <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
+                    <a href="{{ route('admin.jadwal.index') }}" class="btn btn-primary ms-2"><i class="fa fa-refresh"></i></a>
                 </div>
             </form>
 

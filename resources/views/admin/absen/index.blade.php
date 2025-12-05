@@ -48,7 +48,8 @@
                     </div>
 
                     <div class="col-md-2">
-                        <button class="btn btn-primary w-100">Filter</button>
+                        <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
+                        <a href="{{ route('admin.absen.index') }}" class="btn btn-primary ms-2"><i class="fa fa-refresh"></i></a>
                     </div>
                 </div>
             </form>

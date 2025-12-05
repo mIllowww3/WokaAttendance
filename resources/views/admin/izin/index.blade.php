@@ -28,6 +28,16 @@
             </div>
             @endif
 
+            <!-- Search -->
+            <form method="GET" class="mb-4">
+                <div class="d-flex">
+                    <input type="text" name="cari" class="form-control me-3" placeholder="Cari Data Izin..."
+                        value="{{ request('cari') }}">
+                    <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
+                    <a href="{{ route('admin.izin.index') }}" class="btn btn-primary ms-2"><i class="fa fa-refresh"></i></a>
+                </div>
+            </form>
+
             <div class="table-responsive">
                 <table class="table table-bordered table-hover align-middle">
                     <thead class="text-center" style="background: #f8f9fa; font-weight: bold;">
