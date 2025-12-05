@@ -80,18 +80,22 @@
         draggable: true
     }).addTo(map);
 
+    // --- UPDATE LAT/LNG Saat marker digeser ---
     marker.on('dragend', function(e) {
         var latlng = e.target.getLatLng();
         document.getElementById('lat').value = latlng.lat;
         document.getElementById('lng').value = latlng.lng;
     });
 
+    // --- UPDATE marker saat klik map ---
     map.on('click', function(e) {
         marker.setLatLng(e.latlng);
         document.getElementById('lat').value = e.latlng.lat;
         document.getElementById('lng').value = e.latlng.lng;
     });
-        L.Control.geocoder({
+
+    // --- GEOCODER ---
+    L.Control.geocoder({
         defaultMarkGeocode: false
     })
     .on('markgeocode', function(e) {
@@ -102,5 +106,27 @@
         document.getElementById('lng').value = latlng.lng;
     })
     .addTo(map);
+
+
+    // =======================================================
+    //  Fitur Baru: Update map & marker jika LAT/LNG diinput
+    // =======================================================
+
+    function updateMapFromInput() {
+        var lat = parseFloat(document.getElementById('lat').value);
+        var lng = parseFloat(document.getElementById('lng').value);
+
+        // validasi angka
+        if (!isNaN(lat) && !isNaN(lng)) {
+            var newLatLng = L.latLng(lat, lng);
+            marker.setLatLng(newLatLng);
+            map.setView(newLatLng, 15);
+        }
+    }
+
+    // Event ketika user mengetik latitude/longitude
+    document.getElementById('lat').addEventListener('input', updateMapFromInput);
+    document.getElementById('lng').addEventListener('input', updateMapFromInput);
 </script>
+
 @endsection
