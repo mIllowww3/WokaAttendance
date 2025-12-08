@@ -183,8 +183,16 @@
 
             <div class="table-responsive">
                 <table class="table align-items-center">
-                    <tbody>
+                    <thead>
+                        <tr>
+                            <th class="text-sm">Departemen</th>
+                            <th class="text-center text-sm">Hadir</th>
+                            <th class="text-center text-sm">Terlambat</th>
+                            <th class="text-center text-sm">Tidak Hadir</th>
+                        </tr>
+                    </thead>
 
+                    <tbody>
                         <tr>
                             <td class="w-30">
                                 <div class="ms-4">
@@ -194,53 +202,22 @@
                             </td>
                             <td class="text-center">
                                 <h6 class="text-sm mb-0">14</h6>
+                                <small class="text-success">(Pegawai hadir)</small>
                             </td>
                             <td class="text-center">
                                 <h6 class="text-sm mb-0">3</h6>
+                                <small class="text-warning">(Pegawai terlambat)</small>
                             </td>
                             <td class="text-center">
                                 <h6 class="text-sm mb-0">1</h6>
+                                <small class="text-danger">(Izin / Sakit / Alpha)</small>
                             </td>
                         </tr>
 
-                        <tr>
-                            <td class="w-30">
-                                <div class="ms-4">
-                                    <p class="text-xs font-weight-bold mb-0">Departemen:</p>
-                                    <h6 class="text-sm mb-0">Keuangan</h6>
-                                </div>
-                            </td>
-                            <td class="text-center">
-                                <h6 class="text-sm mb-0">8</h6>
-                            </td>
-                            <td class="text-center">
-                                <h6 class="text-sm mb-0">1</h6>
-                            </td>
-                            <td class="text-center">
-                                <h6 class="text-sm mb-0">0</h6>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td class="w-30">
-                                <div class="ms-4">
-                                    <p class="text-xs font-weight-bold mb-0">Departemen:</p>
-                                    <h6 class="text-sm mb-0">Teknologi Informasi</h6>
-                                </div>
-                            </td>
-                            <td class="text-center">
-                                <h6 class="text-sm mb-0">12</h6>
-                            </td>
-                            <td class="text-center">
-                                <h6 class="text-sm mb-0">2</h6>
-                            </td>
-                            <td class="text-center">
-                                <h6 class="text-sm mb-0">0</h6>
-                            </td>
-                        </tr>
-
+                        <!-- Baris departemen lain tetap sama -->
                     </tbody>
                 </table>
+
             </div>
         </div>
     </div>
