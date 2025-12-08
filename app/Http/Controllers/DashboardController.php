@@ -15,15 +15,49 @@ class DashboardController extends Controller
     //
     public function admin()
     {
-        $totalPegawai = Pegawai::count();
-        $totalDepartemen = Departemen::count();
-        $totalPerusahaan = Perusahaan::count();
-        $totalAbsen = Absen::count();
-        $totalIzin = Izinsakit::count();
+        // Total data
+        // $totalPegawai = Pegawai::count();
+        // $totalDepartemen = Departemen::count();
+        // $totalPerusahaan = Perusahaan::count();
+        // $totalAbsen = Absen::count();
+        // $totalIzin = Izinsakit::count();
 
-        $jadwal = Jadwal_kerja::orderBy('id')->get();
+        // $jadwal = Jadwal_kerja::orderBy('id')->get();
 
-        return view("admin.dashboard", compact("totalPegawai", "totalDepartemen", "totalPerusahaan", "totalAbsen", "totalIzin", "jadwal",));
+        $today = today()->toDateString();
+        // Dashboard Hari Ini
+        $hadir = Absen::whereDate('tanggal', $today)
+            ->whereIn('status', ['hadir', 'telat'])
+            ->count();
+
+        $terlambat = Absen::whereDate('tanggal', $today)
+            ->where('status', 'telat') // ← sesuai DB kamu
+            ->count();
+
+        // ===========================
+        // IZIN + SAKIT (disetujui)
+        // ===========================
+        $izinSakit = IzinSakit::where('status', 'disetujui')
+            ->whereDate('tanggal_mulai', '<=', $today)
+            ->whereDate('tanggal_selesai', '>=', $today)
+            ->count();
+
+        // Alpha (dari tabel absens)
+        $alpha = Absen::whereDate('tanggal', $today)
+            ->where('status', 'alpha')
+            ->count();
+
+        // Gabungan
+        $izinSakitAlpha = $izinSakit + $alpha;
+
+        $scan = Absen::whereDate('tanggal', today())->count();
+
+        return view("admin.dashboard", compact(
+            "hadir",
+            "terlambat",
+            "izinSakitAlpha",
+            "scan"
+        ));
     }
 
     public function staff()
