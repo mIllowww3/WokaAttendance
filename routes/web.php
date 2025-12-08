@@ -45,7 +45,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/perusahaan/create', [PerusahaanController::class, 'create'])->name('perusahaan.create');
     Route::post('/perusahaan/store', [PerusahaanController::class, 'store'])->name('perusahaan.store');
     Route::get('/perusahaan/edit/{id}', [PerusahaanController::class, 'edit'])->name('perusahaan.edit');
-    Route::post('/perusahaan/update/{id}', [PerusahaanController::class, 'update'])->name('perusahaan.update');
+    Route::put('/perusahaan/update/{id}', [PerusahaanController::class, 'update'])->name('perusahaan.update');
     Route::delete('/perusahaan/delete/{id}', [PerusahaanController::class, 'destroy'])->name('perusahaan.destroy');
 
     Route::get('/pegawai', [PegawaiController::class, 'index'])->name('pegawai.index');
