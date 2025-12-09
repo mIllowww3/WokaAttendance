@@ -138,11 +138,8 @@
                             </div>
                         </div>
 
-
                         <div class="carousel-item h-100"
-                            style="background-image: url('https://i.pinimg.com/736x/a4/21/50/a4215086ddb86c8975dfcbc61aaf8048.jpg'); 
-            background-size: cover; 
-            background-position: center;">
+                            style="background-image: url('https://i.pinimg.com/736x/a4/21/50/a4215086ddb86c8975dfcbc61aaf8048.jpg'); background-size: cover; background-position: center;">
                             <div class="carousel-caption d-none d-md-block bottom-0 text-start start-0 ms-5">
                                 <div class="icon icon-shape icon-sm bg-white text-center border-radius-md mb-3">
                                     <i class="ni ni-pin-3 text-dark opacity-10"></i>
@@ -152,7 +149,8 @@
                             </div>
                         </div>
 
-                        <div class="carousel-item h-100" style="background-image: url('../assets/img/grafik-kehadiran.png'); background-size: cover; background-position: center;">
+                        <div class="carousel-item h-100"
+                            style="background-image: url('https://i.pinimg.com/1200x/da/0b/7e/da0b7e3102fb0fcf1791b495c8834130.jpg'); background-size: cover; background-position: center;">
                             <div class="carousel-caption d-none d-md-block bottom-0 text-start start-0 ms-5">
                                 <div class="icon icon-shape icon-sm bg-white text-center border-radius-md mb-3">
                                     <i class="ni ni-chart-bar-32 text-dark opacity-10"></i>
@@ -289,9 +287,9 @@
                                     <span class="text-xs">Lihat atau unduh QR Card Pegawai</span>
                                 </div>
                             </div>
-                            <button class="btn btn-link btn-icon-only btn-rounded btn-sm text-dark">
+                            <a href="{{ route('admin.pegawai.index') }}" class="btn btn-link btn-icon-only btn-rounded btn-sm text-dark">
                                 <i class="ni ni-bold-right"></i>
-                            </button>
+                            </a>
                         </li>
 
                         <li class="list-group-item border-0 d-flex justify-content-between ps-0 mb-2 border-radius-lg">
@@ -304,9 +302,9 @@
                                     <span class="text-xs">Radius titik presensi</span>
                                 </div>
                             </div>
-                            <button class="btn btn-link btn-icon-only btn-rounded btn-sm text-dark">
+                            <a href="{{ route('admin.perusahaan.index') }}" class="btn btn-link btn-icon-only btn-rounded btn-sm text-dark">
                                 <i class="ni ni-bold-right"></i>
-                            </button>
+                            </a>
                         </li>
 
                         <li class="list-group-item border-0 d-flex justify-content-between ps-0 border-radius-lg">
@@ -319,9 +317,9 @@
                                     <span class="text-xs">Harian, mingguan, bulanan</span>
                                 </div>
                             </div>
-                            <button class="btn btn-link btn-icon-only btn-rounded btn-sm text-dark">
+                            <a href="{{ route('admin.absen.index') }}" class="btn btn-link btn-icon-only btn-rounded btn-sm text-dark">
                                 <i class="ni ni-bold-right"></i>
-                            </button>
+                            </a>
                         </li>
 
                     </ul>
