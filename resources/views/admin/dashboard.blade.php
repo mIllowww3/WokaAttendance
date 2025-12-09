@@ -115,7 +115,7 @@
                 </div>
                 <div class="card-body p-3">
                     <div class="chart">
-                        <canvas id="chart-line" class="chart-canvas" height="300"></canvas>
+                        <canvas id="chart-line" class="chart-canvas" height="200"></canvas>
                     </div>
                 </div>
             </div>
@@ -307,8 +307,7 @@
         </div>
     </div>
 
-
-    <!-- TAMBAHAN: TOP 5 -->
+    <!-- TOP 5 -->
     <div class="row mt-4">
         <!-- Pegawai Paling Rajin -->
         <div class="col-lg-6">
@@ -318,11 +317,15 @@
                 </div>
                 <div class="card-body p-3">
                     <ul class="list-group">
-                        <li class="list-group-item">1. Wahyu Pratama — 0x terlambat</li>
-                        <li class="list-group-item">2. Siti Aminah — 1x terlambat</li>
-                        <li class="list-group-item">3. Rudi Hartono — 1x terlambat</li>
-                        <li class="list-group-item">4. Budi Santoso — 2x terlambat</li>
-                        <li class="list-group-item">5. Lina Kartika — 2x terlambat</li>
+                        @forelse($topRajin as $i => $row)
+                        <li class="list-group-item">
+                            {{ $i+1 }}.
+                            {{ $row->user->name ?? 'Tidak diketahui' }}
+                            — {{ $row->total_telat }}x terlambat
+                        </li>
+                        @empty
+                        <li class="list-group-item">Belum ada data terlambat</li>
+                        @endforelse
                     </ul>
                 </div>
             </div>
@@ -336,17 +339,20 @@
                 </div>
                 <div class="card-body p-3">
                     <ul class="list-group">
-                        <li class="list-group-item">1. Doni Wibowo — 8x terlambat</li>
-                        <li class="list-group-item">2. Arif Saputra — 7x terlambat</li>
-                        <li class="list-group-item">3. Fajar Gunawan — 6x terlambat</li>
-                        <li class="list-group-item">4. Eka Permata — 6x terlambat</li>
-                        <li class="list-group-item">5. Sari Dewi — 5x terlambat</li>
+                        @forelse($topTerlambat as $i => $row)
+                        <li class="list-group-item">
+                            {{ $i+1 }}.
+                            {{ $row->user->name ?? 'Tidak diketahui' }}
+                            — {{ $row->total_telat }}x terlambat
+                        </li>
+                        @empty
+                        <li class="list-group-item">Belum ada data terlambat</li>
+                        @endforelse
                     </ul>
                 </div>
             </div>
         </div>
     </div>
-
 
     <!-- PROGRESS BULANAN -->
     <div class="row mt-4">
@@ -357,19 +363,19 @@
                 </div>
                 <div class="card-body p-4">
 
-                    <p class="text-sm mb-1">Hadir: 84%</p>
+                    <p class="text-sm mb-1">Hadir: {{ $persenHadirBulanan }}%</p>
                     <div class="progress mb-3">
-                        <div class="progress-bar bg-success" style="width: 84%"></div>
+                        <div class="progress-bar bg-success" style="width: {{ $persenHadirBulanan }}%"></div>
                     </div>
 
-                    <p class="text-sm mb-1">Terlambat: 12%</p>
+                    <p class="text-sm mb-1">Terlambat: {{ $persenTelatBulanan }}%</p>
                     <div class="progress mb-3">
-                        <div class="progress-bar bg-warning" style="width: 12%"></div>
+                        <div class="progress-bar bg-warning" style="width: {{ $persenTelatBulanan }}%"></div>
                     </div>
 
-                    <p class="text-sm mb-1">Tidak Hadir: 4%</p>
+                    <p class="text-sm mb-1">Tidak Hadir: {{ $persenTidakHadirBulanan }}%</p>
                     <div class="progress">
-                        <div class="progress-bar bg-danger" style="width: 4%"></div>
+                        <div class="progress-bar bg-danger" style="width: {{ $persenTidakHadirBulanan }}%"></div>
                     </div>
 
                 </div>
@@ -377,5 +383,44 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        const ctx = document.getElementById('chart-line').getContext('2d');
+
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: @json($dates), // tanggal 7 hari terakhir dari controller
+                datasets: [{
+                    label: 'Jumlah Hadir',
+                    data: @json($hadirMingguan), // data hadir + telat per hari
+                    borderWidth: 3,
+                    tension: 0.3,
+                    borderColor: '#3A416F',
+                    backgroundColor: 'rgba(58, 65, 111, 0.15)',
+                    fill: true,
+                    pointRadius: 5,
+                    pointBackgroundColor: '#3A416F',
+                    pointBorderColor: '#fff'
+                }]
+            },
+            options: {
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 1
+                        }
+                    }
+                }
+            }
+        });
+    </script>
 
     @endsection

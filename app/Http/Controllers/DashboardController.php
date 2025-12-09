@@ -56,42 +56,39 @@ class DashboardController extends Controller
             ->where('status', 'telat')
             ->count();
 
-        // Izin & Sakit KEMARIN SAJA (bukan rentang)
         $izinSakitYesterday = IzinSakit::where('status', 'disetujui')
             ->whereDate('tanggal_mulai', $yesterday)
             ->count();
 
-        // Alpha kemarin
         $alphaYesterday = Absen::whereDate('tanggal', $yesterday)
             ->where('status', 'alpha')
             ->count();
 
         $izinSakitAlphaYesterday = $izinSakitYesterday + $alphaYesterday;
 
-        // Total scan kemarin
         $scanYesterday = Absen::whereDate('tanggal', $yesterday)->count();
 
 
         // =====================================================
-        // FUNGSI HITUNG PERSEN (ANTI 100%)
+        // FUNGSI HITUNG PERSEN
         // =====================================================
         $persen = function ($today, $yesterday) {
             if ($today == 0 && $yesterday == 0) return 0;
-            if ($yesterday == 0) return 0; // agar tidak jadi 100%
+            if ($yesterday == 0) return 0;
             return round((($today - $yesterday) / $yesterday) * 100, 1);
         };
 
-
-        // =====================================================
-        // HITUNG PERSEN MASING-MASING CARD
-        // =====================================================
+        // Hitung persen
         $hadirPersen = $persen($hadir, $hadirYesterday);
         $terlambatPersen = $persen($terlambat, $terlambatYesterday);
         $izinSakitAlphaPersen = $persen($izinSakitAlpha, $izinSakitAlphaYesterday);
         $scanPersen = $persen($scan, $scanYesterday);
 
+
+        // =====================================================
+        // REKAP PER DEPARTEMEN
+        // =====================================================
         $rekapDepartemen = Departemen::withCount([
-            // H A D I R
             'pegawai as hadir' => function ($q) use ($today) {
                 $q->whereHas('absens', function ($absen) use ($today) {
                     $absen->whereDate('tanggal', $today)
@@ -99,7 +96,6 @@ class DashboardController extends Controller
                 });
             },
 
-            // T E R L A M B A T
             'pegawai as terlambat' => function ($q) use ($today) {
                 $q->whereHas('absens', function ($absen) use ($today) {
                     $absen->whereDate('tanggal', $today)
@@ -107,18 +103,13 @@ class DashboardController extends Controller
                 });
             },
 
-            // I Z I N + S A K I T + A L P H A
             'pegawai as izinAlpha' => function ($q) use ($today) {
                 $q->where(function ($sub) use ($today) {
-
-                    // Izin / sakit di tabel izin_sakit
                     $sub->whereHas('izins', function ($izin) use ($today) {
                         $izin->where('status', 'disetujui')
                             ->whereDate('tanggal_mulai', '<=', $today)
                             ->whereDate('tanggal_selesai', '>=', $today);
                     })
-
-                        // Alpha dari tabel absens
                         ->orWhereHas('absens', function ($absen) use ($today) {
                             $absen->whereDate('tanggal', $today)
                                 ->where('status', 'alpha');
@@ -129,29 +120,100 @@ class DashboardController extends Controller
         ])->get();
 
 
+        // =====================================================
+        // REKAP KEHADIRAN BULAN INI
+        // =====================================================
+        $bulan = today()->month;
+        $tahun = today()->year;
 
-        $topRajin = Pegawai::withCount([
-            'absens as total_telat' => function ($q) {
-                $q->where('status', 'telat');
-            }
-        ])
+        // Total hari kerja (1 bulan penuh) – jika ingin exclude sabtu/minggu bilang saja
+        $totalHari = now()->daysInMonth;
+
+        // Total pegawai
+        $totalPegawai = Pegawai::count();
+
+        // Total kesempatan hadir (pegawai × hari)
+        $totalKesempatan = $totalPegawai * $totalHari;
+
+
+        // --- Hitung jumlah hadir bulan ini ---
+        $hadirBulanan = Absen::whereMonth('tanggal', $bulan)
+            ->whereYear('tanggal', $tahun)
+            ->whereIn('status', ['hadir', 'telat'])
+            ->count();
+
+        // --- Hitung terlambat bulan ini ---
+        $telatBulanan = Absen::whereMonth('tanggal', $bulan)
+            ->whereYear('tanggal', $tahun)
+            ->where('status', 'telat')
+            ->count();
+
+        // --- Hitung tidak hadir (alpha + izin/sakit) ---
+        $alphaBulanan = Absen::whereMonth('tanggal', $bulan)
+            ->whereYear('tanggal', $tahun)
+            ->where('status', 'alpha')
+            ->count();
+
+        $izinSakitBulanan = IzinSakit::where('status', 'disetujui')
+            ->whereMonth('tanggal_mulai', $bulan)
+            ->whereYear('tanggal_mulai', $tahun)
+            ->count();
+
+        $tidakHadirBulanan = $alphaBulanan + $izinSakitBulanan;
+
+
+        // --- Hitung Persentase ---
+        $persenHadirBulanan = $totalKesempatan > 0
+            ? round(($hadirBulanan / $totalKesempatan) * 100)
+            : 0;
+
+        $persenTelatBulanan = $totalKesempatan > 0
+            ? round(($telatBulanan / $totalKesempatan) * 100)
+            : 0;
+
+        $persenTidakHadirBulanan = $totalKesempatan > 0
+            ? round(($tidakHadirBulanan / $totalKesempatan) * 100)
+            : 0;
+
+        // =====================================================
+        // 🔥 TOP 5 RAJIN & TERLAMBAT DARI DATABASE
+        // =====================================================
+        $topRajin = Pegawai::with('user')
+            ->withCount([
+                'absens as total_telat' => function ($q) {
+                    $q->where('status', 'telat');
+                }
+            ])
             ->orderBy('total_telat', 'asc')
             ->limit(5)
             ->get();
 
-
-        $topTerlambat = Pegawai::withCount([
-            'absens as total_telat' => function ($q) {
-                $q->where('status', 'telat');
-            }
-        ])
+        $topTerlambat = Pegawai::with('user')
+            ->withCount([
+                'absens as total_telat' => function ($q) {
+                    $q->where('status', 'telat');
+                }
+            ])
             ->orderBy('total_telat', 'desc')
             ->limit(5)
             ->get();
 
+        // =====================================================
+        // 📊 GRAFIK 7 HARI
+        // =====================================================
+        $dates = collect();
+        for ($i = 6; $i >= 0; $i--) {
+            $dates->push(today()->subDays($i)->format('Y-m-d'));
+        }
+
+        $hadirMingguan = $dates->map(function ($date) {
+            return Absen::whereDate('tanggal', $date)
+                ->whereIn('status', ['hadir', 'telat'])
+                ->count();
+        });
 
         // =====================================================
-        // KIRIM KE VIEW
+        // KIRIM DATA KE VIEW
         // =====================================================
         return view("admin.dashboard", compact(
             "hadir",
@@ -164,7 +226,12 @@ class DashboardController extends Controller
             "scanPersen",
             "rekapDepartemen",
             "topRajin",
-            "topTerlambat"
+            "topTerlambat",
+            "dates",
+            "hadirMingguan",
+            "persenHadirBulanan",
+            "persenTelatBulanan",
+            "persenTidakHadirBulanan",
         ));
     }
 
