@@ -14,7 +14,7 @@ class AbsenController extends Controller
     // ============================ ADMIN ============================
     public function absen()
     {
-        $absens = Absen::with(['pegawai'])->orderBy('tanggal', 'desc')->get();
+        $absens = Absen::with(['pegawai'])->orderBy('tanggal', 'desc')->orderBy('jam_masuk','desc')->orderBy('jam_pulang','desc')->get();
         return view('admin.absen.index', compact('absens'));
     }
 
@@ -60,6 +60,7 @@ class AbsenController extends Controller
         // 🔹 Ambil absen terakhir pegawai
         $lastAbsen = Absen::where('pegawai_id', $pegawaiId)
             ->orderBy('tanggal', 'desc')
+            ->orderBy('jam_masuk', 'desc')
             ->first();
 
         // Jika ada absen sebelumnya → cek hari yang terlewat
@@ -156,68 +157,124 @@ class AbsenController extends Controller
         $pegawai = Pegawai::where('user_id', Auth::id())->first();
 
         $absens = Absen::where('pegawai_id', $pegawai->id)
-            ->orderBy('tanggal', 'desc')
+            ->orderBy('tanggal', 'desc')    
             ->get();
 
         return view('staff.absen.index', compact('absens'));
     }
     // STAFF ABSEN via QR
     public function staffStore(Request $request)
-    {
-        $request->validate([
-            'qr' => 'required|string'
+{
+    $request->validate([
+        'qr' => 'required|string',
+        'latitude' => 'required|numeric',
+        'longitude' => 'required|numeric',
+    ]);
+
+    $qr = trim($request->qr);
+
+    $pegawai = Pegawai::where('user_id', Auth::id())
+        ->where('uid_qr', $qr)
+        ->first();
+
+    if (!$pegawai) {
+        return back()->with('error', 'QR Code tidak sesuai dengan akun Anda!');
+    }
+
+    // =======================================
+    // Validasi lokasi (Haversine Formula)
+    // =======================================
+
+    // Lokasi kantor (ISI DENGAN LAT-LONG KANTOR ANDA)
+    $officeLat  = -5.1408167;    // contoh Woka Academy
+    $officeLong = 105.3098427;   // contoh Woka Academy
+
+    $userLat  = $request->latitude;
+    $userLong = $request->longitude;
+
+    // Rumus haversine
+    $earthRadius = 6371000; // meter
+
+    $latDelta = deg2rad($userLat - $officeLat);
+    $longDelta = deg2rad($userLong - $officeLong);
+
+    $a = sin($latDelta/2) * sin($latDelta/2) +
+        cos(deg2rad($officeLat)) * cos(deg2rad($userLat)) *
+        sin($longDelta/2) * sin($longDelta/2);
+
+    $c = 2 * atan2(sqrt($a), sqrt(1-$a));
+    $distance = $earthRadius * $c;
+
+    $radius = 50; // meter
+
+    if ($distance > $radius) {
+        return back()->with('error', 'Anda berada di luar radius lokasi absen! Jarak anda: ' . round($distance) . ' meter');
+    }
+
+    // ======================
+    // Isi ALPA otomatis
+    // ======================
+    $today = Carbon::today();
+
+    $lastAbsensi = Absen::where('pegawai_id', $pegawai->id)
+        ->orderBy('tanggal', 'desc')
+        ->orderBy('jam_masuk', 'desc')
+        ->first();
+
+    if ($lastAbsensi) {
+        $nextDate = Carbon::parse($lastAbsensi->tanggal)->addDay();
+
+        while ($nextDate->lt($today)) {
+
+            if (!in_array($nextDate->dayOfWeek, [Carbon::SATURDAY, Carbon::SUNDAY])) {
+                Absen::create([
+                    'pegawai_id' => $pegawai->id,
+                    'tanggal'    => $nextDate->toDateString(),
+                    'status'     => 'alpha',
+                    'keterangan' => 'Tidak melakukan absen',
+                ]);
+            }
+
+            $nextDate->addDay();
+        }
+    }
+
+    // ======================
+    // Ambil jadwal
+    // ======================
+    $hariIni = now()->format('l');
+    $jadwal = Jadwal_kerja::where('hari', $hariIni)->first();
+
+    $jamBatas = $jadwal->jam_masuk ?? "08:00:00";
+
+    $absen = Absen::where('pegawai_id', $pegawai->id)
+        ->whereDate('tanggal', now()->toDateString())
+        ->first();
+
+    if (!$absen) {
+        $jamMasuk = now()->format('H:i:s');
+        $status = ($jamMasuk > $jamBatas) ? "telat" : "hadir";
+
+        Absen::create([
+            'pegawai_id' => $pegawai->id,
+            'tanggal'    => now()->format('Y-m-d'),
+            'jam_masuk'  => $jamMasuk,
+            'status'     => $status,
         ]);
 
-        $qr = trim($request->qr);
-
-        $pegawai = Pegawai::where('user_id', Auth::id())
-            ->where('uid_qr', $qr)
-            ->first();
-
-        if (!$pegawai) {
-            return back()->with('error', 'QR Code tidak sesuai dengan akun Anda!');
-        }
-
-        // ======================
-        // Ambil jadwal hari ini
-        // ======================
-        $hariIni = now()->format('l'); // Senin, Selasa, ...
-        $jadwal = Jadwal_kerja::where('hari', $hariIni)->first();
-
-        // Jika admin tidak membuat jadwal, pakai default jam 08:00
-        $jamBatas = $jadwal->jam_masuk ?? "08:00:00";
-
-
-        // Cek absen hari ini
-        $absen = Absen::where('pegawai_id', $pegawai->id)
-            ->whereDate('tanggal', now()->toDateString())
-            ->first();
-
-        if (!$absen) {
-            $jamMasuk = now()->format('H:i:s');
-            $status = ($jamMasuk > $jamBatas) ? "Telat" : "Hadir";
-
-            Absen::create([
-                'pegawai_id' => $pegawai->id,
-                'tanggal'    => now()->format('Y-m-d'),
-                'jam_masuk'  => $jamMasuk,
-                'status'     => $status,
-            ]);
-
-            return back()->with('success', $status == "Telat" ? 'Anda Telat!' : 'Absen masuk berhasil!');
-        }
-
-
-        if (!$absen->jam_pulang) {
-            $absen->update([
-                'jam_pulang' => now()->format('H:i:s'),
-            ]);
-
-            return back()->with('success', 'Absen pulang berhasil!');
-        }
-
-        return back()->with('info', 'Anda sudah absen hari ini.');
+        return back()->with('success', $status == "telat" ? 'Anda Telat!' : 'Absen masuk berhasil!');
     }
+
+    if (!$absen->jam_pulang) {
+        $absen->update([
+            'jam_pulang' => now()->format('H:i:s'),
+        ]);
+
+        return back()->with('success', 'Absen pulang berhasil!');
+    }
+
+    return back()->with('info', 'Anda sudah absen hari ini.');
+}
 
 
     // Halaman scan QR (kamera)

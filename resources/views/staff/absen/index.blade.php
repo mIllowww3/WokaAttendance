@@ -6,7 +6,7 @@
 
 <div class="container-fluid py-4">
 
-    {{-- NOTIFIKASI DARI BACKEND --}}
+    {{-- NOTIFIKASI BACKEND --}}
     @if(session('success'))
     <div class="alert alert-success text-center" id="alertMessage">
         {{ session('success') }}
@@ -25,6 +25,7 @@
     </div>
     @endif
 
+
     <div class="row">
         <div class="col-lg-6 mx-auto">
             <div class="card shadow-lg border-0">
@@ -36,38 +37,36 @@
 
                     <div class="text-center mb-3">
                         <p class="text-sm text-muted">
-                            Anda bisa scan menggunakan kamera atau memilih gambar QR dari file.
+                            Anda dapat scan melalui kamera atau memilih gambar QR dari file.
                         </p>
                     </div>
 
                     <!-- Tombol kamera -->
                     <div class="text-center mb-3">
-                        <button id="startCameraBtn" class="btn btn-primary me-2">
-                            Aktifkan Kamera
-                        </button>
-                        <button id="stopCameraBtn" class="btn btn-danger d-none">
-                            Matikan Kamera
-                        </button>
+                        <button id="startCameraBtn" class="btn btn-primary me-2">Aktifkan Kamera</button>
+                        <button id="stopCameraBtn" class="btn btn-danger d-none">Matikan Kamera</button>
                     </div>
 
-                    <!-- Tombol pilih file QR -->
+                    <!-- Tombol pilih file -->
                     <div class="text-center mb-3">
-                        <button id="chooseFileBtn" class="btn btn-secondary">
-                            Pilih QR dari File
-                        </button>
+                        <button id="chooseFileBtn" class="btn btn-secondary">Pilih QR dari File</button>
                         <input type="file" id="qrFileInput" accept="image/*" class="d-none">
                     </div>
 
-                    <!-- Kamera / reader -->
+                    <!-- Area kamera -->
                     <div id="reader" style="width:100%; display:none;"></div>
 
                     <!-- Hasil scan -->
                     <div id="scanResult" class="alert alert-info mt-3 d-none text-center"></div>
 
-                    <!-- Form Auto Submit -->
-                    <form id="absenForm" action="{{ route('staff.absen.store') }}" method="POST" style="display:none;">
+                    <!-- FORM AUTO SUBMIT -->
+                    <form id="absenForm" method="POST" action="{{ route('staff.absen.store') }}" style="display:none;">
                         @csrf
-                        <input type="hidden" name="qr" id="qrData">
+                        <input type="hidden" id="qrData" name="qr">
+
+                        <!-- LOKASI -->
+                        <input type="hidden" id="latitude" name="latitude">
+                        <input type="hidden" id="longitude" name="longitude">
                     </form>
 
                 </div>
@@ -80,14 +79,6 @@
 <script src="https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 
 <script>
-    // Auto hide alert dari backend
-    setTimeout(() => {
-        let alertBox = document.getElementById('alertMessage');
-        if (alertBox) {
-            alertBox.style.opacity = "0";
-            setTimeout(() => alertBox.remove(), 500);
-        }
-    }, 3000);
 
     let scanner = null;
     let isCameraRunning = false;
@@ -104,15 +95,9 @@
 
         scanner = new Html5Qrcode("reader");
 
-        scanner.start({
-                facingMode: "environment"
-            }, {
-                fps: 10,
-                qrbox: {
-                    width: 280,
-                    height: 280
-                }
-            },
+        scanner.start(
+            { facingMode: "environment" },
+            { fps: 10, qrbox: { width: 280, height: 280 } },
             onScanSuccess,
             onScanError
         ).catch(err => {
@@ -122,31 +107,24 @@
         isCameraRunning = true;
     });
 
-    document.getElementById('stopCameraBtn').addEventListener('click', function() {
-        stopCamera();
-    });
+    document.getElementById('stopCameraBtn').addEventListener('click', stopCamera);
 
     function stopCamera() {
         if (!scanner || !isCameraRunning) return;
 
         scanner.stop().then(() => {
-                scanner.clear();
-                document.getElementById('reader').style.display = "none";
-
-                document.getElementById('startCameraBtn').classList.remove('d-none');
-                document.getElementById('stopCameraBtn').classList.add('d-none');
-
-                isCameraRunning = false;
-            })
-            .catch(err => {
-                console.log("Error menghentikan kamera:", err);
-            });
+            scanner.clear();
+            document.getElementById('reader').style.display = "none";
+            document.getElementById('startCameraBtn').classList.remove('d-none');
+            document.getElementById('stopCameraBtn').classList.add('d-none');
+            isCameraRunning = false;
+        });
     }
 
     // ==========================================================
     // UPLOAD FILE QR
     // ==========================================================
-    document.getElementById('chooseFileBtn').addEventListener('click', function() {
+    document.getElementById('chooseFileBtn').addEventListener('click', () => {
         document.getElementById('qrFileInput').click();
     });
 
@@ -156,21 +134,36 @@
 
         stopCamera();
 
+        const html5Qr = new Html5Qrcode("reader");
         document.getElementById('reader').style.display = "block";
 
-        const html5Qr = new Html5Qrcode("reader");
-
         html5Qr.scanFile(file, true)
-            .then(decodedText => {
-                onScanSuccess(decodedText);
-            })
-            .catch(err => {
-                alert("Gagal membaca QR dari file: " + err);
-            });
+            .then(decodedText => onScanSuccess(decodedText))
+            .catch(err => alert("Gagal membaca gambar QR: " + err));
     });
 
     // ==========================================================
-    // SUKSES SCAN
+    // LOKASI + SUBMIT
+    // ==========================================================
+    function getLocationAndSubmit() {
+        if (!navigator.geolocation) {
+            alert("Perangkat Anda tidak mendukung GPS!");
+            return;
+        }
+
+        navigator.geolocation.getCurrentPosition(function(pos) {
+            document.getElementById('latitude').value = pos.coords.latitude;
+            document.getElementById('longitude').value = pos.coords.longitude;
+
+            document.getElementById('absenForm').submit();
+
+        }, function() {
+            alert("GPS tidak diizinkan. Tidak dapat absen.");
+        });
+    }
+
+    // ==========================================================
+    // QR Terdeteksi
     // ==========================================================
     function onScanSuccess(decodedText) {
         let resultBox = document.getElementById('scanResult');
@@ -182,9 +175,10 @@
 
         document.getElementById('qrData').value = decodedText;
 
+        // Ambil lokasi lalu submit
         setTimeout(() => {
-            document.getElementById('absenForm').submit();
-        }, 900);
+            getLocationAndSubmit();
+        }, 800);
     }
 
     function onScanError(error) {
