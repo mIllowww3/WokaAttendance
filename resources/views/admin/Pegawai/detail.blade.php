@@ -35,7 +35,15 @@
 
                     <div class="text-center mt-3">
                         @if(isset($pegawai->qr_image))
-                            <img src="{{ asset('storage/' . $pegawai->qr_image) }}" width="250">
+                            <img id="qrImage" src="{{ asset('storage/' . $pegawai->qr_image) }}" width="250">
+                            
+                            {{-- Tombol Download QR --}}
+                            <div class="mt-3">
+                                <button onclick="downloadQR()" class="btn btn-success px-4">
+                                    Download QR Code
+                                </button>
+                            </div>
+
                         @else
                             <p class="text-danger">QR Code tidak tersedia.</p>
                         @endif
@@ -53,4 +61,18 @@
     </div>
 
 </div>
+
+{{-- SCRIPT DOWNLOAD QR --}}
+<script>
+function downloadQR() {
+    const qrImg = document.getElementById('qrImage');
+
+    // Membuat link download
+    const link = document.createElement('a');
+    link.href = qrImg.src;
+    link.download = 'qr_pegawai.png'; 
+    link.click();
+}
+</script>
+
 @endsection
