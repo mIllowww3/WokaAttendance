@@ -104,6 +104,7 @@
 
                                 @if ($izin->status == 'pending')
 
+                                {{-- Jika status masih pending tampilkan tombol Setujui & Tolak --}}
                                 <form action="{{ route('admin.izin.approve', $izin->id) }}"
                                     method="POST" class="d-inline">
                                     @csrf
@@ -120,9 +121,17 @@
                                     </button>
                                 </form>
 
+                                @else
+
+                                {{-- Jika sudah disetujui / ditolak tampilkan tombol selesai --}}
+                                <button class="btn btn-sm btn-primary shadow-sm m-0" disabled>
+                                    Selesai
+                                </button>
+
                                 @endif
 
                             </td>
+
 
                         </tr>
                         @endforeach

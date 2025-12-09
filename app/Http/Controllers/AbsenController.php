@@ -194,7 +194,7 @@ class AbsenController extends Controller
 
     // Rumus haversine
     $earthRadius = 6371000; // meter
-
+    
     $latDelta = deg2rad($userLat - $officeLat);
     $longDelta = deg2rad($userLong - $officeLong);
 

@@ -67,12 +67,12 @@
 function downloadQR() {
     const qrImg = document.getElementById('qrImage');
 
-    // Membuat link download
     const link = document.createElement('a');
     link.href = qrImg.src;
-    link.download = 'qr_pegawai.png'; 
+    link.download = 'qr_{{ strtolower(str_replace(" ", "_", $pegawai->user->name)) }}.png';
     link.click();
 }
 </script>
+
 
 @endsection
