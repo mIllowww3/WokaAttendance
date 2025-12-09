@@ -127,46 +127,93 @@
                 <div id="carouselExampleCaptions" class="carousel slide h-100" data-bs-ride="carousel">
                     <div class="carousel-inner border-radius-lg h-100">
 
-                        <div class="carousel-item h-100 active" style="background-image: url('../assets/img/carousel-1.jpg'); background-size: cover;">
+                        <div class="carousel-item h-100 active"
+                            style="background-image: url('https://i.pinimg.com/1200x/6d/3a/fa/6d3afade5e8d56d285ab77c80360508b.jpg'); background-size: cover; background-position: center;">
                             <div class="carousel-caption d-none d-md-block bottom-0 text-start start-0 ms-5">
                                 <div class="icon icon-shape icon-sm bg-white text-center border-radius-md mb-3">
                                     <i class="ni ni-qr-code text-dark opacity-10"></i>
                                 </div>
-                                <h5 class="text-white mb-1">Absensi QR-Code</h5>
-                                <p>Presensi cepat dan akurat dengan scan QR Pegawai.</p>
+                                <h5 class="text-black mb-1">Absensi QR-Code</h5>
+                                <p style="color: black;">Presensi cepat dan akurat dengan scan QR Pegawai.</p>
                             </div>
                         </div>
 
-                        <div class="carousel-item h-100" style="background-image: url('../assets/img/carousel-2.jpg'); background-size: cover;">
+
+                        <div class="carousel-item h-100"
+                            style="background-image: url('https://i.pinimg.com/736x/a4/21/50/a4215086ddb86c8975dfcbc61aaf8048.jpg'); 
+            background-size: cover; 
+            background-position: center;">
                             <div class="carousel-caption d-none d-md-block bottom-0 text-start start-0 ms-5">
                                 <div class="icon icon-shape icon-sm bg-white text-center border-radius-md mb-3">
                                     <i class="ni ni-pin-3 text-dark opacity-10"></i>
                                 </div>
-                                <h5 class="text-white mb-1">Presensi Lokasi (Radius)</h5>
-                                <p>Validasi kehadiran berdasarkan titik kantor.</p>
+                                <h5 class="text-black mb-1">Presensi Lokasi (Radius)</h5>
+                                <p style="color: black;">Validasi kehadiran berdasarkan titik kantor.</p>
                             </div>
                         </div>
 
-                        <div class="carousel-item h-100" style="background-image: url('../assets/img/carousel-3.jpg'); background-size: cover;">
+                        <div class="carousel-item h-100" style="background-image: url('../assets/img/grafik-kehadiran.png'); background-size: cover; background-position: center;">
                             <div class="carousel-caption d-none d-md-block bottom-0 text-start start-0 ms-5">
                                 <div class="icon icon-shape icon-sm bg-white text-center border-radius-md mb-3">
                                     <i class="ni ni-chart-bar-32 text-dark opacity-10"></i>
                                 </div>
-                                <h5 class="text-white mb-1">Analitik Kehadiran</h5>
-                                <p>Pantau performa kehadiran pegawai dengan grafik.</p>
+                                <h5 class="text-black mb-1">Analitik Kehadiran</h5>
+                                <p style="color: black;">Pantau performa kehadiran pegawai dengan grafik.</p>
                             </div>
                         </div>
-
                     </div>
 
-                    <button class="carousel-control-prev w-5 me-3" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <button class="carousel-control-prev dark-btn"
+                        type="button"
+                        data-bs-target="#carouselExampleCaptions"
+                        data-bs-slide="prev">
+                        <i class="fas fa-chevron-left"></i>
                     </button>
 
-                    <button class="carousel-control-next w-5 me-3" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <button class="carousel-control-next dark-btn"
+                        type="button"
+                        data-bs-target="#carouselExampleCaptions"
+                        data-bs-slide="next">
+                        <i class="fas fa-chevron-right"></i>
                     </button>
 
+                    <style>
+                        .dark-btn {
+                            margin-top: 50%;
+                            width: 38px;
+                            /* lebih kecil */
+                            height: 38px;
+                            background: rgba(0, 0, 0, 0.4);
+                            /* lebih gelap */
+                            border-radius: 50%;
+                            border: none;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            color: white;
+                            font-size: 1.1rem;
+                            /* ikon diperkecil */
+                            position: absolute;
+                            top: 50%;
+                            transform: translateY(-50%);
+                            z-index: 10;
+                            transition: 0.2s ease;
+                        }
+
+                        /* tambah jarak, biar makin tidak menyatu */
+                        .carousel-control-prev.dark-btn {
+                            left: 10px !important;
+                        }
+
+                        .carousel-control-next.dark-btn {
+                            right: 10px !important;
+                        }
+
+                        /* efek hover */
+                        .dark-btn:hover {
+                            background: rgba(0, 0, 0, 0.95);
+                        }
+                    </style>
                 </div>
             </div>
         </div>

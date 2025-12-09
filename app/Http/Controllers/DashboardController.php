@@ -73,9 +73,8 @@ class DashboardController extends Controller
         // FUNGSI HITUNG PERSEN
         // =====================================================
         $persen = function ($today, $yesterday) {
-            if ($today == 0 && $yesterday == 0) return 0;
             if ($yesterday == 0) return 0;
-            return round((($today - $yesterday) / $yesterday) * 100, 1);
+            return round(($today / $yesterday) * 100, 1);
         };
 
         // Hitung persen
