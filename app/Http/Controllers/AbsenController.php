@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Absen;
 use App\Models\Jadwal_kerja;
 use App\Models\Pegawai;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -29,14 +30,15 @@ class AbsenController extends Controller
         return view('absen.create', compact('pegawai'));
     }
 
+
     public function store(Request $request)
     {
+        // Validasi input
         $request->validate([
             'pegawai_id'    => 'required|exists:pegawais,id',
-            'tanggal'       => 'required|date',
+            'status'        => 'required|string', // hadir, izin, sakit, dll
             'jam_masuk'     => 'nullable',
             'jam_pulang'    => 'nullable',
-            'status'        => 'required|string',
             'lokasi_masuk'  => 'nullable|string',
             'lokasi_pulang' => 'nullable|string',
             'jarak_masuk'   => 'nullable|numeric',
@@ -44,10 +46,65 @@ class AbsenController extends Controller
             'catatan'       => 'nullable|string',
         ]);
 
-        Absen::create($request->all());
+        $pegawaiId = $request->pegawai_id;
+        $today = Carbon::today();
 
-        return redirect()->route('absen.index')->with('success', 'Data absen berhasil ditambahkan!');
+        // 🔹 Cek apakah pegawai sudah absen hari ini
+        if (Absen::where('pegawai_id', $pegawaiId)
+            ->where('tanggal', $today)
+            ->exists()
+        ) {
+            return back()->with('error', 'Pegawai sudah absen hari ini');
+        }
+
+        // 🔹 Ambil absen terakhir pegawai
+        $lastAbsen = Absen::where('pegawai_id', $pegawaiId)
+            ->orderBy('tanggal', 'desc')
+            ->first();
+
+        // Jika ada absen sebelumnya → cek hari yang terlewat
+        if ($lastAbsen) {
+            $nextDate = Carbon::parse($lastAbsen->tanggal)->addDay();
+
+            // Loop sampai hari sebelum hari ini
+            while ($nextDate->lt($today)) {
+
+                // Lewati Sabtu & Minggu
+                if (!in_array($nextDate->dayOfWeek, [Carbon::SATURDAY, Carbon::SUNDAY])) {
+
+                    // Buat absensi otomatis ALPA
+                    Absen::create([
+                        'pegawai_id'  => $pegawaiId,
+                        'tanggal'     => $nextDate->toDateString(),
+                        'status'      => 'alpha',
+                        'jam_masuk'   => null,
+                        'jam_pulang'  => null,
+                        'catatan'     => 'Tidak Melakukan Absensi',
+                    ]);
+                }
+
+                // ke tanggal berikutnya
+                $nextDate->addDay();
+            }
+        }
+
+        // 🔹 Simpan absensi hari ini
+        Absen::create([
+            'pegawai_id'    => $pegawaiId,
+            'tanggal'       => $today,
+            'jam_masuk'     => $request->jam_masuk,
+            'jam_pulang'    => $request->jam_pulang,
+            'status'        => $request->status,
+            'lokasi_masuk'  => $request->lokasi_masuk,
+            'lokasi_pulang' => $request->lokasi_pulang,
+            'jarak_masuk'   => $request->jarak_masuk,
+            'jarak_pulang'  => $request->jarak_pulang,
+            'catatan'       => $request->catatan,
+        ]);
+
+        return redirect()->route('absen.index')->with('success', 'Absensi berhasil ditambahkan!');
     }
+
 
     public function show($id)
     {

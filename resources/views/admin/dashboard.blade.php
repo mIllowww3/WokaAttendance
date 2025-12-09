@@ -15,7 +15,7 @@
                             <p class="text-sm mb-0 text-uppercase font-weight-bold">Hadir Hari Ini</p>
                             <h5 class="font-weight-bolder">{{ $hadir }} Pegawai</h5>
                             <p class="mb-0">
-                                <span class="text-success text-sm font-weight-bolder"></span><a href="{{ route('admin.absen.index') }}">lihat kehadiran</a>
+                                <span class="text-success text-sm font-weight-bolder">{{ $hadirPersen }}%</span> dari kemarin
                             </p>
                         </div>
                     </div>
@@ -39,7 +39,7 @@
                             <p class="text-sm mb-0 text-uppercase font-weight-bold">Terlambat</p>
                             <h5 class="font-weight-bolder">{{ $terlambat }} Pegawai</h5>
                             <p class="mb-0">
-                                <span class="text-danger text-sm font-weight-bolder"></span><a href="{{ route('admin.absen.index') }}">Data Terlambat</a>
+                                <span class="text-danger text-sm font-weight-bolder">{{ $terlambatPersen }}%</span> minggu ini
                             </p>
                         </div>
                     </div>
@@ -63,7 +63,7 @@
                             <p class="text-sm mb-0 text-uppercase font-weight-bold">Izin / Sakit / Alpha</p>
                             <h5 class="font-weight-bolder">{{ $izinSakitAlpha }} Pegawai</h5>
                             <p class="mb-0">
-                                <span class="text-warning text-sm font-weight-bolder"></span><a href="{{ route('admin.absen.index') }}">Lihat Status</a>
+                                <span class="text-warning text-sm font-weight-bolder">{{ $izinSakitAlphaPersen }}%</span> hari ini
                             </p>
                         </div>
                     </div>
@@ -87,7 +87,7 @@
                             <p class="text-sm mb-0 text-uppercase font-weight-bold">Scan QR Hari Ini</p>
                             <h5 class="font-weight-bolder">{{ $scan }} Scan</h5>
                             <p class="mb-0">
-                                <span class="text-success text-sm font-weight-bolder"></span><a href="{{ route('admin.absen.index') }}">Data scan</a>
+                                <span class="text-success text-sm font-weight-bolder">{{ $scanPersen }}%</span> dari kemarin
                             </p>
                         </div>
                     </div>
