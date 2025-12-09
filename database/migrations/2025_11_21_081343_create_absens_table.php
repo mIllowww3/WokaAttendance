@@ -17,7 +17,7 @@ public function up()
         $table->time('jam_masuk')->nullable();
         $table->time('jam_pulang')->nullable();
 
-        $table->enum('status', ['hadir','izin','sakit','alpha'])->default('alpha');
+        $table->enum('status', ['hadir','telat','izin','sakit','alpha'])->default('alpha');
 
         $table->string('lokasi_masuk')->nullable();
         $table->string('lokasi_pulang')->nullable();

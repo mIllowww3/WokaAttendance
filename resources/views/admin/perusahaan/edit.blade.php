@@ -87,17 +87,6 @@
 
     var marker = L.marker(defaultLocation, { draggable: true }).addTo(map);
 
-
-    var map = L.map('map').setView(defaultLocation, 15);
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-    }).addTo(map);
-
-    var marker = L.marker(defaultLocation, {
-        draggable: true
-    }).addTo(map);
-
     marker.on('dragend', function(e) {
         var latlng = e.target.getLatLng();
         document.getElementById('lat').value = latlng.lat;
