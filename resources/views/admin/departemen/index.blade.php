@@ -42,7 +42,7 @@
 
                 <!-- Search -->
                 <form method="GET" class="mb-4">
-                    <div class="d-flex">
+                    <div class="d-flex">] 
                         <input type="text" name="cari" class="form-control me-3" placeholder="Cari Departemen..."
                             value="{{ request('cari') }}">
                         <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>

@@ -234,25 +234,126 @@ use Illuminate\Http\Request;
         ));
     }
 
-    public function staff()
-    {
-        // Ambil pegawai yang login
-        $pegawai = auth()->user()->pegawai;
+public function staff()
+{
+    // Ambil pegawai yang login
+    $pegawai = auth()->user()->pegawai;
 
-        // Jika user belum punya data pegawai
-        if (!$pegawai) {
-            return back()->with('error', 'Data pegawai tidak ditemukan.');
-        }
-
-        // Total absen khusus pegawai yang login
-        $totalAbsen = $pegawai->absens()->count();
-
-        // Total izin khusus pegawai yang login
-        $totalIzin = $pegawai->izins()->count();
-
-        // Jadwal kerja ambil semua (atau khusus pegawai jika ada relasi)
-        $jadwal = Jadwal_kerja::orderBy('id')->get();
-
-        return view('staff.dashboard', compact("totalAbsen", "totalIzin", "jadwal"));
+    if (!$pegawai) {
+        return back()->with('error', 'Data pegawai tidak ditemukan.');
     }
+
+    // =====================================================
+    // TOTAL ABSEN & IZIN PEGAWAI
+    // =====================================================
+    $totalAbsen = $pegawai->absens()->count();
+    $totalIzin  = $pegawai->izins()->count();
+
+    // =====================================================
+    // JADWAL KERJA
+    // =====================================================
+    $jadwal = Jadwal_kerja::orderBy('id')->get();
+
+    // =====================================================
+    // 📊 GRAFIK 7 HARI (KHUSUS PEGAWAI INI)
+    // =====================================================
+    $dates = collect();
+    for ($i = 6; $i >= 0; $i--) {
+        $dates->push(today()->subDays($i)->format('Y-m-d'));
+    }
+
+    $hadirMingguan = $dates->map(function ($date) use ($pegawai) {
+        return Absen::where('pegawai_id', $pegawai->id)
+            ->whereDate('tanggal', $date)
+            ->whereIn('status', ['hadir', 'telat'])
+            ->count();
+    });
+
+    // =====================================================
+    // 📌 REKAP KEHADIRAN STAFF
+    // =====================================================
+    $hadir = $pegawai->absens()
+        ->whereIn('status', ['hadir', 'telat'])
+        ->count();
+
+    $terlambat = $pegawai->absens()
+        ->where('status', 'telat')
+        ->count();
+
+    $alpha = $pegawai->absens()
+        ->where('status', 'alpha')
+        ->count();
+
+    $izinSakit = $pegawai->izins()
+        ->where('status', 'disetujui')
+        ->count();
+
+    $tidakHadir = $alpha + $izinSakit;
+
+    // =====================================================
+// 📅 REKAP KEHADIRAN BULAN INI (KHUSUS PEGAWAI INI)
+// =====================================================
+$bulan = today()->month;
+$tahun = today()->year;
+
+// Total hari dalam sebulan
+$totalHari = now()->daysInMonth;
+
+// Kesempatan hadir = 1 pegawai × jumlah hari
+$totalKesempatan = $totalHari;
+
+// Hadir bulan ini
+$hadirBulanan = $pegawai->absens()
+    ->whereMonth('tanggal', $bulan)
+    ->whereYear('tanggal', $tahun)
+    ->whereIn('status', ['hadir', 'telat'])
+    ->count();
+
+// Telat bulan ini
+$telatBulanan = $pegawai->absens()
+    ->whereMonth('tanggal', $bulan)
+    ->whereYear('tanggal', $tahun)
+    ->where('status', 'telat')
+    ->count();
+
+// Tidak hadir = alpha + izin/sakit
+$alphaBulanan = $pegawai->absens()
+    ->whereMonth('tanggal', $bulan)
+    ->whereYear('tanggal', $tahun)
+    ->where('status', 'alpha')
+    ->count();
+
+$izinSakitBulanan = $pegawai->izins()
+    ->where('status', 'disetujui')
+    ->whereMonth('tanggal_mulai', $bulan)
+    ->whereYear('tanggal_mulai', $tahun)
+    ->count();
+
+$tidakHadirBulanan = $alphaBulanan + $izinSakitBulanan;
+
+// Persentase
+$persenHadirBulanan = round(($hadirBulanan / $totalKesempatan) * 100);
+$persenTelatBulanan = round(($telatBulanan / $totalKesempatan) * 100);
+$persenTidakHadirBulanan = round(($tidakHadirBulanan / $totalKesempatan) * 100);
+
+
+    // =====================================================
+    // KIRIM DATA KE VIEW
+    // =====================================================
+ return view('staff.dashboard', compact(
+    "totalAbsen",
+    "totalIzin",
+    "jadwal",
+    "dates",
+    "hadirMingguan",
+    "hadir",
+    "terlambat",
+    "tidakHadir",
+    "persenHadirBulanan",
+    "persenTelatBulanan",
+    "persenTidakHadirBulanan"
+));
+
+}
+
 }
