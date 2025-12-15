@@ -10,7 +10,7 @@ use App\Models\Pegawai;
 use App\Models\Perusahaan;
 use Illuminate\Http\Request;
 
-class DashboardController extends Controller
+    class DashboardController extends Controller
 {
     //
     public function admin()

@@ -41,7 +41,7 @@
             <div class="table-responsive">
                 <table class="table table-bordered table-hover align-middle">
                     <thead class="text-center" style="background: #f8f9fa; font-weight: bold;">
-                        <tr>
+                          <tr>
                             <th>No</th>
                             <th>Pegawai</th>
                             <th>Jenis</th>
